@@ -19,14 +19,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.601603, 0)
 shape = SubResource("CapsuleShape3D_ep87d")
 disabled = true
 
-[node name="head" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
-
-[node name="Camera3D" type="Camera3D" parent="head"]
-
 [node name="raycasts" type="Node3D" parent="."]
 
 [node name="top_of_head" type="RayCast3D" parent="raycasts"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 exclude_parent = false
 target_position = Vector3(0, 2, 0)
+
+[node name="neck" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+
+[node name="head" type="Node3D" parent="neck"]
+
+[node name="Camera3D" type="Camera3D" parent="neck/head"]
