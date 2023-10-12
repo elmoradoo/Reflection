@@ -7,7 +7,7 @@ extends CharacterBody3D
 @onready var crouching_collision_shape = $crouching_collision_shape
 @onready var top_of_head = $raycasts/top_of_head
 @onready var neck = $neck
-
+@onready var camera_3d = $neck/head/Camera3D
 #Config vars
 const mouse_sensitivity: float = 0.2
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -52,6 +52,7 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		if free_looking:
 			neck.rotate_y(deg_to_rad(-event.relative.x * mouse_sensitivity))
+			neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
 		else:
 			rotate_y(deg_to_rad(-event.relative.x * mouse_sensitivity))
 		head.rotate_x(deg_to_rad(-event.relative.y * mouse_sensitivity))
@@ -92,7 +93,9 @@ func inputs_checks(delta):
 	elif is_on_floor() and Input.is_action_pressed("crouch"):
 		current_state = player_states.Crouching
 	elif is_on_floor() and Input.is_action_just_released("crouch") and not top_of_head.is_colliding():
+		print(free_looking)
 		free_looking = false
+		neck.rotation.y = lerp(neck.rotation.y, 0.0, delta * lerp_speed) # ICI 0.0
 		current_state = player_states.Idle
 		head.position.y = 0.0
 		#head.position.y = lerp(head.position.y, 0.0, lerp_speed * delta)
@@ -104,13 +107,16 @@ func inputs_checks(delta):
 		current_state = player_states.Walking
 	if is_on_floor() and Input.is_action_just_pressed("jump"):
 		current_state = player_states.Jumping
-	if not is_on_floor():
-		velocity.y -= gravity * delta
+
 
 
 func _physics_process(delta):
+	#Get state from inputs
 	inputs_checks(delta)
-
+	#Add gravity
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+	#Call state function
 	match current_state:
 		player_states.Idle:
 			pass
@@ -124,15 +130,15 @@ func _physics_process(delta):
 			crouching(delta)
 		player_states.Sliding:
 			sliding(delta)
-			
+
+	#Calculate direction from inputs
 	direction = lerp(direction, (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized(), lerp_speed * delta)
 	
+	#If direction is not vector zero 
 	if direction:
-		if is_sliding:
-			pass
-		else:
-			velocity.x = direction.x * current_speed
-			velocity.z = direction.z * current_speed
+		velocity.x = direction.x * current_speed
+		velocity.z = direction.z * current_speed
+	#Decrease character speed if there is no input
 	else:
 		velocity.x = move_toward(velocity.x, 0, current_speed)
 		velocity.z = move_toward(velocity.z, 0, current_speed)
@@ -140,6 +146,3 @@ func _physics_process(delta):
 		is_sliding = false
 	current_state = player_states.Idle
 	move_and_slide()
-	
-func _process(_delta):
-	pass
