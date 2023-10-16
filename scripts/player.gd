@@ -39,12 +39,25 @@ var lerp_speed: float = 10.0
 var direction: Vector3 = Vector3.ZERO
 
 #Player state
-var is_running: bool = false
-var is_sprinting: bool = false
-var is_sliding: bool = false
 var free_looking: bool = false
+var input_dir: Vector2 = Vector2.ZERO
 
-var input_dir
+func debug_print_player_state():
+	print(input_dir)
+	match current_state:
+		player_states.Idle:
+			print("idle")
+		player_states.Walking:
+			print("walking")
+		player_states.Sprinting:
+			print("sprinting")
+		player_states.Jumping:
+			print("jumping")
+		player_states.Crouching:
+			print("crouching")
+		player_states.Sliding:
+			print("sliding")
+	
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
@@ -59,56 +72,73 @@ func _input(event):
 		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-89), deg_to_rad(89))
 
 func sprinting():
-	is_running = true
 	current_speed = sprinting_speed
+	velocity.x = direction.x * current_speed
+	velocity.z = direction.z * current_speed
 
 func crouching(delta):
 	current_speed = crouching_speed
 	standing_collision_shape.disabled = true
 	crouching_collision_shape.disabled = false
 	head.position.y = lerp(head.position.y, crouching_depth, lerp_speed * delta)
+	velocity.x = direction.x * current_speed
+	velocity.z = direction.z * current_speed
 	
 func sliding(delta):
-	is_sliding = true
 	free_looking = true
 	standing_collision_shape.disabled = true
 	crouching_collision_shape.disabled = false
 	head.position.y = lerp(head.position.y, crouching_depth, lerp_speed * delta)
 	var slide_force = direction.normalized() * sliding_initial_force
-	velocity.x = slide_force.x
-	velocity.z = slide_force.z
+	#velocity.x = slide_force.x
+	#velocity.z = slide_force.z
 	velocity.x = move_toward(velocity.x, 0, sliding_friction * delta)
 	velocity.z = move_toward(velocity.z, 0, sliding_friction * delta)
 
 func walking():
 	current_speed = walking_speed
+	velocity.x = direction.x * current_speed
+	velocity.z = direction.z * current_speed
 
 func jumping():
 	velocity.y = jump_velocity
 	
-func inputs_checks(delta):
+func idle(delta):
+	free_looking = false
+	neck.rotation.y = lerp(neck.rotation.y, 0.0, delta * lerp_speed) # ICI 0.0
+	head.position.y = 0.0
+	#head.position.y = lerp(head.position.y, 0.0, lerp_speed * delta)
+	standing_collision_shape.disabled = false
+	crouching_collision_shape.disabled = true
+	velocity.x = move_toward(velocity.x, 0, current_speed)
+	velocity.z = move_toward(velocity.z, 0, current_speed)
+	
+func inputs_checks(_delta):
+	#Get player inputs
 	input_dir = Input.get_vector("left", "right", "forward", "backward")
-	if is_on_floor() and Input.is_action_pressed("crouch") and velocity.length() >= sliding_minimum_velocity:
-		current_state = player_states.Sliding
-	elif is_on_floor() and Input.is_action_pressed("crouch"):
-		current_state = player_states.Crouching
-	elif is_on_floor() and Input.is_action_just_released("crouch") and not top_of_head.is_colliding():
-		print(free_looking)
-		free_looking = false
-		neck.rotation.y = lerp(neck.rotation.y, 0.0, delta * lerp_speed) # ICI 0.0
-		current_state = player_states.Idle
-		head.position.y = 0.0
-		#head.position.y = lerp(head.position.y, 0.0, lerp_speed * delta)
-		standing_collision_shape.disabled = false
-		crouching_collision_shape.disabled = true
-	elif Input.is_action_pressed("sprint"):
-		current_state = player_states.Sprinting
-	else:
-		current_state = player_states.Walking
-	if is_on_floor() and Input.is_action_just_pressed("jump"):
-		current_state = player_states.Jumping
-
-
+	
+	if is_on_floor():
+		#If the player can slide
+		if Input.is_action_pressed("crouch") and velocity.length() >= sliding_minimum_velocity:
+			current_state = player_states.Sliding
+		#If the player is not sliding and press crouch
+		elif Input.is_action_pressed("crouch") and current_state != player_states.Sliding:
+			current_state = player_states.Crouching
+		#If the player release crouch and has clearance above his head
+		elif Input.is_action_just_released("crouch") and not top_of_head.is_colliding():
+			current_state = player_states.Idle
+		#If the player is not pressing anything
+		elif input_dir == Vector2.ZERO and current_state != player_states.Crouching:
+			current_state = player_states.Idle
+		#If the player is pressing sprint and moving
+		elif Input.is_action_pressed("sprint") and input_dir != Vector2.ZERO:
+			current_state = player_states.Sprinting
+		#If the player is walking
+		elif input_dir != Vector2.ZERO:
+			current_state = player_states.Walking
+		#If the player is pressing jump
+		if Input.is_action_just_pressed("jump"):
+			current_state = player_states.Jumping
 
 func _physics_process(delta):
 	#Get state from inputs
@@ -117,9 +147,10 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	#Call state function
+	debug_print_player_state()
 	match current_state:
 		player_states.Idle:
-			pass
+			idle(delta)
 		player_states.Walking:
 			walking()
 		player_states.Sprinting:
@@ -133,16 +164,5 @@ func _physics_process(delta):
 
 	#Calculate direction from inputs
 	direction = lerp(direction, (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized(), lerp_speed * delta)
-	
-	#If direction is not vector zero 
-	if direction:
-		velocity.x = direction.x * current_speed
-		velocity.z = direction.z * current_speed
-	#Decrease character speed if there is no input
-	else:
-		velocity.x = move_toward(velocity.x, 0, current_speed)
-		velocity.z = move_toward(velocity.z, 0, current_speed)
-	if is_sliding and velocity.length() < 1.0:
-		is_sliding = false
-	current_state = player_states.Idle
+
 	move_and_slide()
