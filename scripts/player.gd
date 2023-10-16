@@ -31,9 +31,9 @@ const sprinting_speed: float = 8.0
 const jump_velocity: float = 4.5
 const sliding_minimum_velocity: float = 7.0
 const sliding_initial_force: float = 9.0
-const sliding_friction: float = 4.0
 #Mouvement vars
 var current_speed: float = 5.0
+var current_maximum_speed: float = 5.0
 var crouching_depth: float = -0.5
 var lerp_speed: float = 10.0
 var direction: Vector3 = Vector3.ZERO
@@ -89,12 +89,10 @@ func sliding(delta):
 	standing_collision_shape.disabled = true
 	crouching_collision_shape.disabled = false
 	head.position.y = lerp(head.position.y, crouching_depth, lerp_speed * delta)
-	var slide_force = direction.normalized() * sliding_initial_force
-	#velocity.x = slide_force.x
-	#velocity.z = slide_force.z
-	velocity.x = move_toward(velocity.x, 0, sliding_friction * delta)
-	velocity.z = move_toward(velocity.z, 0, sliding_friction * delta)
-
+	const sliding_friction: float = 0.5
+	velocity.x = move_toward(velocity.x, 0, current_speed)
+	velocity.z = move_toward(velocity.z, 0, current_speed)
+	print(current_speed)
 func walking():
 	current_speed = walking_speed
 	velocity.x = direction.x * current_speed
