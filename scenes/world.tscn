@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://c3w8ru7jpavew" path="res://assets/grids/dark.png" id="1_fqjqu"]
 [ext_resource type="Texture2D" uid="uid://bawjh34i4i8my" path="res://assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_atadw"]
-[ext_resource type="PackedScene" uid="uid://bjle0h4cg5wjf" path="res://scenes/player.tscn" id="3_lmu8e"]
+[ext_resource type="PackedScene" uid="uid://ba1e2q3t5cyfk" path="res://scenes/player.tscn" id="3_lmu8e"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lcn1r"]
 albedo_texture = ExtResource("1_fqjqu")

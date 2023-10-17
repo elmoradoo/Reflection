@@ -1,6 +1,30 @@
 extends CharacterBody3D
 
-#Nodes
+#Config vars
+const mouse_sensitivity: float = 0.2
+var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+
+# Player object that have all of the player
+var player_data_object = preload("res://scripts/player/playerData.gd")
+var player_object
+
+#State scripts
+var idle_ss = preload("res://scripts/player/states/idle.gd")
+var walking_ss = preload("res://scripts/player/states/walking.gd")
+var sprinting_ss = preload("res://scripts/player/states/sprinting.gd")
+var crouching_ss = preload("res://scripts/player/states/crouching.gd")
+var sliding_ss = preload("res://scripts/player/states/sliding.gd")
+var jumping_ss = preload("res://scripts/player/states/jumping.gd")
+
+#And associated variables
+var idle_state
+var walking_state
+var sprinting_state
+var crouching_state
+var sliding_state
+var jumping_state
+
+#Nodes of the current scene
 @onready var player = $"."
 @onready var head = $neck/head
 @onready var standing_collision_shape = $standing_collision_shape
@@ -8,9 +32,6 @@ extends CharacterBody3D
 @onready var top_of_head = $raycasts/top_of_head
 @onready var neck = $neck
 @onready var camera_3d = $neck/head/Camera3D
-#Config vars
-const mouse_sensitivity: float = 0.2
-var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 #Player states
 
@@ -25,16 +46,9 @@ enum player_states {
 
 var current_state : player_states = player_states.Idle
 #Player stats
-const crouching_speed: float = 3.0
-const walking_speed: float = 5.0
-const sprinting_speed: float = 8.0
-const jump_velocity: float = 4.5
 const sliding_minimum_velocity: float = 7.0
-const sliding_initial_force: float = 9.0
+
 #Mouvement vars
-var current_speed: float = 5.0
-var current_maximum_speed: float = 5.0
-var crouching_depth: float = -0.5
 var lerp_speed: float = 10.0
 var direction: Vector3 = Vector3.ZERO
 
@@ -59,8 +73,29 @@ func debug_print_player_state():
 			print("sliding")
 	
 func _ready():
+	#Get mouse movement
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
+	#Instanciate state scripts
+	idle_state = idle_ss.new()
+	walking_state = walking_ss.new()
+	sprinting_state = sprinting_ss.new()
+	crouching_state = crouching_ss.new()
+	sliding_state = sliding_ss.new()
+	jumping_state = jumping_ss.new()
+	
+	#Init player object
+	player_object = player_data_object.new()
+	player_object.init(velocity, direction, neck, head, standing_collision_shape, crouching_collision_shape)
+	#Give player node to enter script
+	idle_state.init(player_object)
+	walking_state.init(player_object)
+	sprinting_state.init(player_object)
+	crouching_state.init(player_object)
+	sliding_state.init(player_object)
+	jumping_state.init(player_object)
+
+
 func _input(event):
 	if event is InputEventMouseMotion:
 		if free_looking:
@@ -70,46 +105,6 @@ func _input(event):
 			rotate_y(deg_to_rad(-event.relative.x * mouse_sensitivity))
 		head.rotate_x(deg_to_rad(-event.relative.y * mouse_sensitivity))
 		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-89), deg_to_rad(89))
-
-func sprinting():
-	current_speed = sprinting_speed
-	velocity.x = direction.x * current_speed
-	velocity.z = direction.z * current_speed
-
-func crouching(delta):
-	current_speed = crouching_speed
-	standing_collision_shape.disabled = true
-	crouching_collision_shape.disabled = false
-	head.position.y = lerp(head.position.y, crouching_depth, lerp_speed * delta)
-	velocity.x = direction.x * current_speed
-	velocity.z = direction.z * current_speed
-	
-func sliding(delta):
-	free_looking = true
-	standing_collision_shape.disabled = true
-	crouching_collision_shape.disabled = false
-	head.position.y = lerp(head.position.y, crouching_depth, lerp_speed * delta)
-	const sliding_friction: float = 0.5
-	velocity.x = move_toward(velocity.x, 0, current_speed)
-	velocity.z = move_toward(velocity.z, 0, current_speed)
-	print(current_speed)
-func walking():
-	current_speed = walking_speed
-	velocity.x = direction.x * current_speed
-	velocity.z = direction.z * current_speed
-
-func jumping():
-	velocity.y = jump_velocity
-	
-func idle(delta):
-	free_looking = false
-	neck.rotation.y = lerp(neck.rotation.y, 0.0, delta * lerp_speed) # ICI 0.0
-	head.position.y = 0.0
-	#head.position.y = lerp(head.position.y, 0.0, lerp_speed * delta)
-	standing_collision_shape.disabled = false
-	crouching_collision_shape.disabled = true
-	velocity.x = move_toward(velocity.x, 0, current_speed)
-	velocity.z = move_toward(velocity.z, 0, current_speed)
 	
 func inputs_checks(_delta):
 	#Get player inputs
@@ -142,24 +137,27 @@ func _physics_process(delta):
 	#Get state from inputs
 	inputs_checks(delta)
 	#Add gravity
+	player_object.direction = direction
+	player_object.delta = delta
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	#Call state function
-	debug_print_player_state()
+	#debug_print_player_state()
 	match current_state:
 		player_states.Idle:
-			idle(delta)
+			idle_state.update()
 		player_states.Walking:
-			walking()
+			walking_state.update()
 		player_states.Sprinting:
-			sprinting()
+			sprinting_state.update()
 		player_states.Jumping:
-			jumping()
+			jumping_state.update()
 		player_states.Crouching:
-			crouching(delta)
+			crouching_state.update()
 		player_states.Sliding:
-			sliding(delta)
+			sliding_state.update()
 
+	velocity = player_object.velocity
 	#Calculate direction from inputs
 	direction = lerp(direction, (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized(), lerp_speed * delta)
 
