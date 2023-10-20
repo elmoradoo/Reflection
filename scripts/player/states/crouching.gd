@@ -1,5 +1,6 @@
 extends Node
 
+var enums = preload("res://scripts/player/enums.gd")
 var player
 const max_speed: float = 3.0
 var crouching_depth: float = -0.5
@@ -10,7 +11,12 @@ func init(obj):
 
 func enter():
 	pass
-	
+
+
+func exit():
+	pass
+
+
 func update_event():
 	if player.event is InputEventMouseMotion:
 		player.myself.rotate_y(deg_to_rad(-player.event.relative.x * player.mouse_sensitivity))
@@ -27,5 +33,9 @@ func update():
 	player.velocity.z = player.direction.z * max_speed
 	player.direction = lerp(player.direction, (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized(), lerp_speed * player.delta)
 
-func exit():
-	pass
+func check():
+	if player.myself.is_on_floor():
+		if Input.is_action_pressed("crouch"):
+			player.current_state = enums.player_states.Crouching
+		else:
+			player.current_state = enums.player_states.Idle

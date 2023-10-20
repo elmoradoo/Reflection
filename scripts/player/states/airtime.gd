@@ -14,3 +14,6 @@ func update():
 
 func exit():
 	pass
+
+func check():
+	pass

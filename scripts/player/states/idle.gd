@@ -1,11 +1,16 @@
 extends Node
 
+var enums = preload("res://scripts/player/enums.gd")
+
 var player
 var lerp_speed = 10.0
 func init(obj):
 	player = obj
 
 func enter():
+	pass
+
+func exit():
 	pass
 
 func update_event():
@@ -24,6 +29,9 @@ func update():
 	player.velocity.x = move_toward(player.velocity.x, 0, lerp_speed)
 	player.velocity.z = move_toward(player.velocity.z, 0, lerp_speed)
 	player.current_speed = player.velocity.length()
-	
-func exit():
-	pass
+
+func check():
+	var input_dir = Input.get_vector("left", "right", "forward", "backward")
+	if player.myself.is_on_floor():
+		if Input.is_action_just_pressed("crouch"):
+			player.current_state = enums.player_states.Crouching
