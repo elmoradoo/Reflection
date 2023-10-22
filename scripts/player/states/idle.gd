@@ -2,8 +2,9 @@ extends Node
 
 var enums = preload("res://scripts/player/enums.gd")
 
-var player
-var lerp_speed = 10.0
+var player: playerData
+var lerp_speed = 2.0
+
 func init(obj):
 	player = obj
 
@@ -31,7 +32,15 @@ func update():
 	player.current_speed = player.velocity.length()
 
 func check():
-	var input_dir = Input.get_vector("left", "right", "forward", "backward")
+	#var player.input_dir = Input.get_vector("left", "right", "forward", "backward")
 	if player.myself.is_on_floor():
 		if Input.is_action_just_pressed("crouch"):
 			player.current_state = enums.player_states.Crouching
+		elif Input.is_action_just_released("crouch") and not player.raycasts.get_node("top_of_head").is_colliding():
+			player.current_state = enums.player_states.Idle
+		elif Input.is_action_pressed("sprint") and player.input_dir != Vector2.ZERO:
+			player.current_state = enums.player_states.Sprinting
+		elif player.input_dir != Vector2.ZERO:
+			player.current_state = enums.player_states.Walking
+		if Input.is_action_just_pressed("jump"):
+			player.current_state = enums.player_states.Jumping

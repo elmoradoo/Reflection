@@ -6,13 +6,15 @@ var myself
 var enums = preload("res://scripts/player/enums.gd")
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 const mouse_sensitivity: float = 0.2
+
 var event
 
 #Nodes
-var neck
-var head
-var standing_collision_shape
-var crouching_collision_shape
+var neck: Node3D
+var head: Node3D
+var standing_collision_shape: CollisionShape3D
+var crouching_collision_shape: CollisionShape3D
+var raycasts: Node3D
 var transform
 
 #Movement
@@ -21,13 +23,16 @@ var direction: Vector3 = Vector3.ZERO
 var delta
 var current_speed: float = 0.0
 
+var sliding_minimum_velocity: float = 5.0
+
 #Player state
 var current_state = enums.player_states.Idle
 
-var free_looking: bool = false
 var input_dir: Vector2 = Vector2.ZERO
 
-func init(se, indir):
+
+
+func init(se, rays, topo):
 	#Nodes and references
 	myself = se
 	self.velocity = myself.velocity
@@ -37,10 +42,12 @@ func init(se, indir):
 	self.neck = myself.neck
 	self.head = myself.head
 	self.transform = myself.transform
-	self.input_dir = indir
+	self.raycasts = rays
 
 func update(del):
 	self.delta = del
+	input_dir = Input.get_vector("left", "right", "forward", "backward")
+	velocity.y -= gravity * delta
 
 func update_event(e):
 	event = e

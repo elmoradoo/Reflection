@@ -78,6 +78,8 @@ func get_next_state():
 			crouching_state.check()
 		enums.player_states.Sliding:
 			sliding_state.check()
+		enums.player_states.AirTime:
+			airtime_state.check()
 	if not player.current_state == old_state:
 		set_current_state()
 
@@ -96,6 +98,8 @@ func set_current_state():
 			crouching_state.exit()
 		enums.player_states.Sliding:
 			sliding_state.exit()
+		enums.player_states.AirTime:
+			airtime_state.exit()
 	#Enter new state
 	match player.current_state:
 		enums.player_states.Idle:
@@ -110,6 +114,8 @@ func set_current_state():
 			crouching_state.enter()
 		enums.player_states.Sliding:
 			sliding_state.enter()
+		enums.player_states.AirTime:
+			airtime_state.enter()
 	
 func update_current_state():
 	match player.current_state:
@@ -132,4 +138,6 @@ func run():
 	get_next_state()
 	if player.current_state != old_state:
 		set_current_state()
+		debug_print_player_state()
+		print(player.velocity.length())
 	update_current_state()

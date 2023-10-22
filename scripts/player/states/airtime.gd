@@ -1,7 +1,8 @@
 extends Node
 
-var player
+var player: playerData
 const max_speed: float = 5.0
+var enums = preload("res://scripts/player/enums.gd")
 
 func init(obj):
 	player = obj
@@ -9,11 +10,12 @@ func init(obj):
 func enter():
 	pass
 
-func update():
-	player.velocity.y -= player.gravity * player.delta
-
 func exit():
 	pass
 
-func check():
+func update():
 	pass
+
+func check():
+	if player.myself.is_on_floor():
+		player.current_state = enums.player_states.Idle

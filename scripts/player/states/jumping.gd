@@ -1,7 +1,8 @@
 extends Node
 
-var player
+var player: playerData
 const jump_velocity: float = 4.5
+var enums = preload("res://scripts/player/enums.gd")
 
 func init(obj):
 	player = obj
@@ -19,10 +20,17 @@ func update_event():
 
 func update():
 	update_event()
+	var forward_velocity = Vector3(player.velocity.x, 0, player.velocity.z)
+	print(forward_velocity)
+
 	player.velocity.y += jump_velocity
+	#player.velocity.x = forward_velocity.x
+#	player.velocity.z = forward_velocity.z
+	#var target_velocity = (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized() * max_speed
 
 func exit():
 	pass
 
 func check():
-	pass
+	if not player.myself.is_on_floor():
+		player.current_state = enums.player_states.AirTime

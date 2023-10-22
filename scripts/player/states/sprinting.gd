@@ -1,9 +1,12 @@
 extends Node
 
-var player
+var player: playerData
 const max_speed: float = 8.0
-var lerp_speed: float = 10.0
+var lerp_speed: float = 0.5
 
+var acceleration = 1.0
+
+var enums = preload("res://scripts/player/enums.gd")
 func init(obj):
 	player = obj
 
@@ -19,14 +22,19 @@ func update_event():
 
 func update():
 	update_event()
-	player.velocity.x = player.direction.x * max_speed
-	player.velocity.z = player.direction.z * max_speed
-	player.current_speed = player.velocity.length()
-	player.direction = lerp(player.direction, (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized(), lerp_speed * player.delta)
-
+	var target_velocity = (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized() * max_speed
+	player.velocity = player.velocity.lerp(target_velocity, acceleration * player.delta)
 
 func exit():
 	pass
 
 func check():
-	pass
+	if player.myself.is_on_floor():
+		if Input.is_action_pressed("crouch") and player.velocity.length() >= player.sliding_minimum_velocity:
+			player.current_state = enums.player_states.Sliding
+		elif Input.is_action_pressed("crouch"):
+			player.current_state = enums.player_states.Crouching
+		elif player.input_dir == Vector2.ZERO:
+			player.current_state = enums.player_states.Idle
+		if Input.is_action_just_pressed("jump"):
+			player.current_state = enums.player_states.Jumping

@@ -35,7 +35,7 @@ func update():
 
 func check():
 	if player.myself.is_on_floor():
-		if Input.is_action_pressed("crouch"):
+		if Input.is_action_pressed("crouch") or player.raycasts.get_node("top_of_head").is_colliding():
 			player.current_state = enums.player_states.Crouching
 		else:
 			player.current_state = enums.player_states.Idle
