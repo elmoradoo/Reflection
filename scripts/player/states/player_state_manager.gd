@@ -11,6 +11,7 @@ var crouching_ss = preload("res://scripts/player/states/crouching.gd")
 var sliding_ss = preload("res://scripts/player/states/sliding.gd")
 var jumping_ss = preload("res://scripts/player/states/jumping.gd")
 var airtime_ss = preload("res://scripts/player/states/airtime.gd")
+var wallclimb_ss = preload("res://scripts/player/states/wallclimb.gd")
 
 #And associated variables
 var idle_state
@@ -20,6 +21,7 @@ var crouching_state
 var sliding_state
 var jumping_state
 var airtime_state
+var wallclimb_state
 
 var player: playerData
 
@@ -41,6 +43,8 @@ func debug_print_player_state():
 			print("sliding")
 		enums.player_states.AirTime:
 			print("airtime")
+		enums.player_states.Wallclimb:
+			print("wallclimb")
 	
 
 func init(player_object):
@@ -52,6 +56,7 @@ func init(player_object):
 	sliding_state = sliding_ss.new()
 	jumping_state = jumping_ss.new()
 	airtime_state = airtime_ss.new()
+	wallclimb_state = wallclimb_ss.new()
 	
 	idle_state.init(player_object)
 	walking_state.init(player_object)
@@ -60,6 +65,7 @@ func init(player_object):
 	sliding_state.init(player_object)
 	jumping_state.init(player_object)
 	airtime_state.init(player_object)
+	wallclimb_state.init(player_object)
 	
 	player = player_object
 	
@@ -79,6 +85,8 @@ func get_next_state():
 		enums.player_states.Sliding:
 			sliding_state.check()
 		enums.player_states.AirTime:
+			airtime_state.check()
+		enums.player_states.Wallclimb:
 			airtime_state.check()
 	if not player.current_state == old_state:
 		set_current_state()
@@ -100,6 +108,8 @@ func set_current_state():
 			sliding_state.exit()
 		enums.player_states.AirTime:
 			airtime_state.exit()
+		enums.player_states.Wallclimb:
+			airtime_state.exit()
 	#Enter new state
 	match player.current_state:
 		enums.player_states.Idle:
@@ -115,6 +125,8 @@ func set_current_state():
 		enums.player_states.Sliding:
 			sliding_state.enter()
 		enums.player_states.AirTime:
+			airtime_state.enter()
+		enums.player_states.Wallclimb:
 			airtime_state.enter()
 	
 func update_current_state():

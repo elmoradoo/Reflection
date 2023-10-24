@@ -1,10 +1,9 @@
-extends Node
+extends BaseState
 
 var enums = preload("res://scripts/player/enums.gd")
 
 var player: playerData
-var stand_up_lp = 10.0
-var lerp_speed = 2.0
+var idle_lerp_speed = 2.0 
 
 func init(obj):
 	player = obj
@@ -24,12 +23,9 @@ func update_event():
 
 func update():
 	update_event()
-	player.neck.rotation.y = lerp(player.neck.rotation.y, 0.0, player.delta * stand_up_lp)
-	player.head.position.y = lerp(player.head.position.y, 0.0, stand_up_lp * player.delta)
-	player.standing_collision_shape.disabled = false
-	player.crouching_collision_shape.disabled = true
-	player.velocity.x = move_toward(player.velocity.x, 0, lerp_speed)
-	player.velocity.z = move_toward(player.velocity.z, 0, lerp_speed)
+	self.stand_up(player)
+	player.velocity.x = move_toward(player.velocity.x, 0, idle_lerp_speed)
+	player.velocity.z = move_toward(player.velocity.z, 0, idle_lerp_speed)
 
 func check():
 	#var player.input_dir = Input.get_vector("left", "right", "forward", "backward")

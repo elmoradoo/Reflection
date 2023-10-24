@@ -1,4 +1,4 @@
-extends Node
+extends BaseState
 
 var player: playerData
 const max_speed: float = 3.0
@@ -24,7 +24,6 @@ func update_event():
 func update():
 	update_event()
 	print(player.velocity.y)
-	#print("CLIMB" if player.velocity.y >= climbable else "NOT CLIMB")
 
 func check():
 	if player.myself.is_on_floor() and player.velocity.length() >= 2:

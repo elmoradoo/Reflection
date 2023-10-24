@@ -1,10 +1,10 @@
-extends Node
+extends BaseState
 
 var enums = preload("res://scripts/player/enums.gd")
 var player
 const max_speed: float = 3.0
-var crouching_depth: float = -0.5
-var lerp_speed = 10.0
+#var crouching_depth: float = -0.5
+#var lerp_speed = 10.0
 
 func init(obj):
 	player = obj
@@ -26,9 +26,7 @@ func update_event():
 
 func update():
 	update_event()
-	player.head.position.y = lerp(player.head.position.y, crouching_depth, lerp_speed * player.delta)
-	player.standing_collision_shape.disabled = true
-	player.crouching_collision_shape.disabled = false
+	self.stand_down(player)
 	player.velocity.x = player.direction.x * max_speed
 	player.velocity.z = player.direction.z * max_speed
 	player.direction = lerp(player.direction, (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized(), lerp_speed * player.delta)

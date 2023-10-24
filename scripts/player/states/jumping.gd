@@ -1,4 +1,4 @@
-extends Node
+extends BaseState
 
 var player: playerData
 const jump_velocity: float = 4.5
@@ -20,13 +20,15 @@ func update_event():
 
 func update():
 	update_event()
+	
+	#Set eyes to 0
+	player.eyes.position.x = lerp(player.eyes.position.x, 0.0, player.delta * 1)
+	player.eyes.position.y = lerp(player.eyes.position.x, 0.0, player.delta * 1)
 	var forward_velocity = Vector3(player.velocity.x, 0, player.velocity.z)
 	print(forward_velocity)
 
 	player.velocity.y += jump_velocity
-	#player.velocity.x = forward_velocity.x
-#	player.velocity.z = forward_velocity.z
-	#var target_velocity = (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized() * max_speed
+
 
 func exit():
 	pass
