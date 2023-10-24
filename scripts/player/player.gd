@@ -17,15 +17,14 @@ var player_object: playerData
 @onready var standing_collision_shape = $standing_collision_shape
 @onready var crouching_collision_shape = $crouching_collision_shape
 @onready var neck = $neck
-@onready var camera_3d = $neck/head/Camera3D
-
+@onready var camera_3d = $neck/head/eyes/Camera3D
+@onready var eyes = $neck/head/eyes
+@onready var animation_player = $neck/head/eyes/AnimationPlayer
 @onready var raycasts = $raycasts
 @onready var top_of_head = $raycasts/top_of_head
 
-
 #Mouvement vars
 var direction: Vector3 = Vector3.ZERO
-
 
 func _ready():
 	#Get mouse movement
@@ -33,7 +32,7 @@ func _ready():
 	
 	#Init player object
 	player_object = player_data_object.new()
-	player_object.init(self, raycasts,top_of_head)
+	player_object.init(self, raycasts)
 	#Init script manager
 	player_state_manager = player_state_manager_script.new()
 	player_state_manager.init(player_object)

@@ -12,6 +12,8 @@ var event
 #Nodes
 var neck: Node3D
 var head: Node3D
+var eyes: Node3D
+var animation_player: AnimationPlayer
 var standing_collision_shape: CollisionShape3D
 var crouching_collision_shape: CollisionShape3D
 var raycasts: Node3D
@@ -32,7 +34,7 @@ var input_dir: Vector2 = Vector2.ZERO
 
 
 
-func init(se, rays, topo):
+func init(se, rays):
 	#Nodes and references
 	myself = se
 	self.velocity = myself.velocity
@@ -41,8 +43,10 @@ func init(se, rays, topo):
 	self.crouching_collision_shape= myself.crouching_collision_shape
 	self.neck = myself.neck
 	self.head = myself.head
+	self.eyes = myself.eyes
 	self.transform = myself.transform
 	self.raycasts = rays
+	self.animation_player = myself.animation_player
 
 func update(del):
 	self.delta = del

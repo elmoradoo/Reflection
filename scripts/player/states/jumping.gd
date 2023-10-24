@@ -8,7 +8,7 @@ func init(obj):
 	player = obj
 
 func enter():
-	pass
+	player.animation_player.play("jump")
 
 func update_event():
 	if player.event is InputEventMouseMotion:

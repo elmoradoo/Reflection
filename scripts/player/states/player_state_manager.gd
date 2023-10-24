@@ -85,7 +85,7 @@ func get_next_state():
 
 func set_current_state():
 	#Exit the current state
-	match player.current_state:
+	match old_state:
 		enums.player_states.Idle:
 			idle_state.exit()
 		enums.player_states.Walking:
@@ -138,6 +138,6 @@ func run():
 	get_next_state()
 	if player.current_state != old_state:
 		set_current_state()
-		debug_print_player_state()
-		print(player.velocity.length())
+		#debug_print_player_state()
+		#print(player.velocity.length())
 	update_current_state()
