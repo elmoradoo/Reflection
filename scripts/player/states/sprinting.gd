@@ -4,12 +4,6 @@ var player: playerData
 const max_speed: float = 8.0
 #var lerp_speed: float = 0.5
 
-var head_bobbing_vector: Vector2 = Vector2.ZERO
-var head_bobbing_index: float = 0.0
-var head_bobbing_intensity: float = 0.2
-var head_bobbing_speed: float = 22.0
-var head_bobbing_lerp: float = 10.0
-
 var acceleration = 5.0
 
 var enums = preload("res://scripts/player/enums.gd")
@@ -31,16 +25,9 @@ func update():
 	update_event()
 	
 	self.stand_up(player)
-	
+	self.head_bob(player, 0.2)
 	var target_velocity = (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized() * max_speed
 	player.velocity = player.velocity.lerp(target_velocity, acceleration * player.delta)
-	#Head bobbing
-	head_bobbing_index += head_bobbing_speed * player.delta
-	head_bobbing_vector.y = sin(head_bobbing_index)
-	head_bobbing_vector.x = sin(head_bobbing_index / 2) + 0.5
-	
-	player.eyes.position.y = lerp(player.eyes.position.y, head_bobbing_vector.y * (head_bobbing_intensity / 2.0), player.delta * head_bobbing_lerp)
-	player.eyes.position.x = lerp(player.eyes.position.x, head_bobbing_vector.x * head_bobbing_intensity, player.delta * head_bobbing_lerp)
 	
 func exit():
 	pass

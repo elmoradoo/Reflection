@@ -8,5 +8,6 @@ enum player_states {
 	AirTime,
 	Crouching,
 	Sliding,
-	WallClimb
+	WallClimb,
+	WallRun
 }

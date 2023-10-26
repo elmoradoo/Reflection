@@ -12,6 +12,7 @@ var sliding_ss = preload("res://scripts/player/states/sliding.gd")
 var jumping_ss = preload("res://scripts/player/states/jumping.gd")
 var airtime_ss = preload("res://scripts/player/states/airtime.gd")
 var wallclimb_ss = preload("res://scripts/player/states/wallclimb.gd")
+var wallrun_ss = preload("res://scripts/player/states/wallrun.gd")
 
 #And associated variables
 var idle_state
@@ -22,6 +23,7 @@ var sliding_state
 var jumping_state
 var airtime_state
 var wallclimb_state
+var wallrun_state
 
 var player: playerData
 
@@ -43,8 +45,10 @@ func debug_print_player_state():
 			print("sliding")
 		enums.player_states.AirTime:
 			print("airtime")
-		enums.player_states.Wallclimb:
+		enums.player_states.WallClimb:
 			print("wallclimb")
+		enums.player_states.WallRun:
+			print("wallrun")
 	
 
 func init(player_object):
@@ -57,6 +61,7 @@ func init(player_object):
 	jumping_state = jumping_ss.new()
 	airtime_state = airtime_ss.new()
 	wallclimb_state = wallclimb_ss.new()
+	wallrun_state = wallrun_ss.new()
 	
 	idle_state.init(player_object)
 	walking_state.init(player_object)
@@ -66,6 +71,7 @@ func init(player_object):
 	jumping_state.init(player_object)
 	airtime_state.init(player_object)
 	wallclimb_state.init(player_object)
+	wallrun_state.init(player_object)
 	
 	player = player_object
 	
@@ -86,8 +92,10 @@ func get_next_state():
 			sliding_state.check()
 		enums.player_states.AirTime:
 			airtime_state.check()
-		enums.player_states.Wallclimb:
-			airtime_state.check()
+		enums.player_states.WallClimb:
+			wallclimb_state.check()
+		enums.player_states.WallRun:
+			wallrun_state.check()
 	if not player.current_state == old_state:
 		set_current_state()
 
@@ -108,8 +116,10 @@ func set_current_state():
 			sliding_state.exit()
 		enums.player_states.AirTime:
 			airtime_state.exit()
-		enums.player_states.Wallclimb:
-			airtime_state.exit()
+		enums.player_states.WallClimb:
+			wallclimb_state.exit()
+		enums.player_states.WallRun:
+			wallrun_state.exit()
 	#Enter new state
 	match player.current_state:
 		enums.player_states.Idle:
@@ -126,8 +136,10 @@ func set_current_state():
 			sliding_state.enter()
 		enums.player_states.AirTime:
 			airtime_state.enter()
-		enums.player_states.Wallclimb:
-			airtime_state.enter()
+		enums.player_states.WallClimb:
+			wallclimb_state.enter()
+		enums.player_states.WallRun:
+			wallrun_state.enter()
 	
 func update_current_state():
 	match player.current_state:
@@ -145,11 +157,15 @@ func update_current_state():
 			sliding_state.update()
 		enums.player_states.AirTime:
 			airtime_state.update()
+		enums.player_states.WallClimb:
+			wallclimb_state.update()
+		enums.player_states.WallRun:
+			wallrun_state.update()
 
 func run():
 	get_next_state()
 	if player.current_state != old_state:
 		set_current_state()
-		#debug_print_player_state()
+		debug_print_player_state()
 		#print(player.velocity.length())
 	update_current_state()

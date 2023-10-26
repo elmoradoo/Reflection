@@ -24,9 +24,6 @@ func update():
 	#Set eyes to 0
 	player.eyes.position.x = lerp(player.eyes.position.x, 0.0, player.delta * 1)
 	player.eyes.position.y = lerp(player.eyes.position.x, 0.0, player.delta * 1)
-	var forward_velocity = Vector3(player.velocity.x, 0, player.velocity.z)
-	print(forward_velocity)
-
 	player.velocity.y += jump_velocity
 
 

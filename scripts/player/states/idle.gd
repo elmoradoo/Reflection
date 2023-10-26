@@ -24,6 +24,8 @@ func update_event():
 func update():
 	update_event()
 	self.stand_up(player)
+	self.reset_neck(player)
+	self.reset_head_bob(player)
 	player.velocity.x = move_toward(player.velocity.x, 0, idle_lerp_speed)
 	player.velocity.z = move_toward(player.velocity.z, 0, idle_lerp_speed)
 

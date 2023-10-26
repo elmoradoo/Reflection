@@ -116,6 +116,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 exclude_parent = false
 target_position = Vector3(0, 2, 0)
 
+[node name="front_of_feets" type="RayCast3D" parent="raycasts"]
+target_position = Vector3(0, 0, -1.5)
+
+[node name="half_left_of_feets" type="RayCast3D" parent="raycasts"]
+target_position = Vector3(-1, 0, -1)
+
+[node name="half_right_of_feets" type="RayCast3D" parent="raycasts"]
+target_position = Vector3(1, 0, -1)
+
 [node name="neck" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
 
@@ -130,3 +139,6 @@ root_node = NodePath("../../../..")
 libraries = {
 "": SubResource("AnimationLibrary_y1atu")
 }
+
+[node name="Timers" type="Node3D" parent="."]
+visible = false
