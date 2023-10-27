@@ -121,6 +121,7 @@ func set_current_state():
 		enums.player_states.WallRun:
 			wallrun_state.exit()
 	#Enter new state
+	old_state = player.current_state
 	match player.current_state:
 		enums.player_states.Idle:
 			idle_state.enter()
@@ -165,6 +166,8 @@ func update_current_state():
 func run():
 	get_next_state()
 	if player.current_state != old_state:
+		print(player.current_state)
+		print(old_state)
 		set_current_state()
 		debug_print_player_state()
 		#print(player.velocity.length())

@@ -22,6 +22,8 @@ var player_object: playerData
 @onready var animation_player = $neck/head/eyes/AnimationPlayer
 @onready var raycasts = $raycasts
 @onready var top_of_head = $raycasts/top_of_head
+@onready var timers = $timers
+@onready var wallclimb_time = $timers/wallclimb_time
 
 #Mouvement vars
 var direction: Vector3 = Vector3.ZERO
@@ -29,7 +31,6 @@ var direction: Vector3 = Vector3.ZERO
 func _ready():
 	#Get mouse movement
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	
 	#Init player object
 	player_object = player_data_object.new()
 	player_object.init(self, raycasts)
@@ -51,3 +52,7 @@ func _physics_process(delta):
 	velocity = player_object.velocity
 	direction = player_object.direction
 	move_and_slide()
+
+
+func _on_wallclimb_time_timeout():
+	print("over")

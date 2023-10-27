@@ -29,18 +29,18 @@ func update():
 
 func can_wallclimb() -> bool:
 	if (not player.myself.is_on_floor() 
-		and player.raycasts.get_node("front_of_feets").is_colliding() 
 		and player.velocity.y > climbable_min_velocity
-		and player.raycasts.get_node("half_left_of_feets").is_colliding() 
-		and player.raycasts.get_node("half_right_of_feets").is_colliding()):
+		and player.rc_feets.get_node("front").is_colliding() 
+		and player.rc_feets.get_node("half_left").is_colliding() 
+		and player.rc_feets.get_node("half_right").is_colliding()):
 		return true
 	return false
 	
 func can_wallrun() -> bool:
 	if (not player.myself.is_on_floor() 
-		and player.raycasts.get_node("front_of_feets").is_colliding() 
 		and player.velocity.y > climbable_min_velocity
-		and (player.raycasts.get_node("half_left_of_feets").is_colliding() or player.raycasts.get_node("half_right_of_feets").is_colliding())):
+		and player.rc_feets.get_node("front").is_colliding()  
+		and (player.rc_feets.get_node("half_left").is_colliding() or player.rc_feets.get_node("half_right").is_colliding())):
 			return true
 	return false
 	

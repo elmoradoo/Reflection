@@ -23,7 +23,6 @@ func update_event():
 
 func update():
 	update_event()
-	
 	self.stand_up(player)
 	self.head_bob(player, 0.2)
 	var target_velocity = (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized() * max_speed

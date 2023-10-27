@@ -30,7 +30,6 @@ func update():
 	player.velocity.z = move_toward(player.velocity.z, 0, idle_lerp_speed)
 
 func check():
-	#var player.input_dir = Input.get_vector("left", "right", "forward", "backward")
 	if player.myself.is_on_floor():
 		if Input.is_action_just_pressed("crouch"):
 			player.current_state = enums.player_states.Crouching
@@ -38,7 +37,5 @@ func check():
 			player.current_state = enums.player_states.Idle
 		elif player.input_dir != Vector2.ZERO:
 			player.current_state = enums.player_states.Sprinting
-		#elif player.input_dir != Vector2.ZERO:
-		#	player.current_state = enums.player_states.Walking
 		if Input.is_action_just_pressed("jump"):
 			player.current_state = enums.player_states.Jumping

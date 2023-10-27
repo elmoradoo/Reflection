@@ -10,10 +10,8 @@ func init(obj):
 func enter():
 	pass
 
-
 func exit():
 	pass
-
 
 func update_event():
 	if player.event is InputEventMouseMotion:

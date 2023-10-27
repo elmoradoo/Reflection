@@ -27,7 +27,7 @@ func update_event():
 
 func update():
 	update_event()
-	player.velocity.y += 0.3
+	player.velocity.y += 0.1
 	
 func check():
 	if player.myself.is_on_floor() and player.velocity.length() >= 2:

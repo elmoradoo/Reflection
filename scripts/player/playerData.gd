@@ -18,6 +18,10 @@ var standing_collision_shape: CollisionShape3D
 var crouching_collision_shape: CollisionShape3D
 var raycasts: Node3D
 var transform
+var timers: Node
+
+#Raycasts groups
+var rc_feets : Node3D
 
 #Movement
 var velocity: Vector3 = Vector3.ZERO
@@ -46,7 +50,10 @@ func init(se, rays):
 	self.eyes = myself.eyes
 	self.transform = myself.transform
 	self.raycasts = rays
+	self.rc_feets = self.raycasts.get_node("feets")
 	self.animation_player = myself.animation_player
+	self.timers = myself.timers
+	#print(self.timers.get_node("wallclimb_time"))
 
 func update(del):
 	self.delta = del
