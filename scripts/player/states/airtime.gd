@@ -40,7 +40,9 @@ func can_wallrun() -> bool:
 	if (not player.myself.is_on_floor() 
 		and player.velocity.y > climbable_min_velocity
 		and player.rc_feets.get_node("front").is_colliding()  
-		and (player.rc_feets.get_node("half_left").is_colliding() or player.rc_feets.get_node("half_right").is_colliding())):
+		and (player.rc_feets.get_node("half_left").is_colliding() or player.rc_feets.get_node("half_right").is_colliding())
+		and (player.rc_head.get_node("half_left").is_colliding() or player.rc_head.get_node("half_right").is_colliding())
+		and player.rc_head.get_node("front").is_colliding()):
 			return true
 	return false
 	

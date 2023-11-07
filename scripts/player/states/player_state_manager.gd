@@ -166,8 +166,8 @@ func update_current_state():
 func run():
 	get_next_state()
 	if player.current_state != old_state:
-		print(player.current_state)
-		print(old_state)
+		#print(player.current_state)
+		#print(old_state)
 		set_current_state()
 		debug_print_player_state()
 		#print(player.velocity.length())
