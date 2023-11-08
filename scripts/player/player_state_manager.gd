@@ -1,6 +1,5 @@
 extends Node
 
-
 var enums = preload("res://scripts/player/enums.gd")
 
 var player: playerData
@@ -29,7 +28,6 @@ func init(player_object):
 	for state_script in state_scripts.values():
 		state_script.init(player)
 	player.current_state = state_scripts[enums.player_states.Idle]
-	player.myself.move_and_slide()
 
 func run():
 	next_state = player.current_state.get_next_state()

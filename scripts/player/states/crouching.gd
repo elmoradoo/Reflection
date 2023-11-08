@@ -31,4 +31,5 @@ func get_next_state():
 			return enums.player_states.Crouching
 		else:
 			return enums.player_states.Idle
-	return enums.player_states.NULL
+	else:
+		return enums.player_states.AirTime
