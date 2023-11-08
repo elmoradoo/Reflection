@@ -24,9 +24,6 @@ func debug_print_player_state():
 	print(enums.player_states.keys()[player.current_state.get_state_name()])
 
 func init(player_object):
-	print(state_scripts)
-	print(enums.player_states.Idle)
-	print(state_scripts[enums.player_states.Idle].get_state_name())
 	player = player_object
 	for state_script in state_scripts.values():
 		state_script.init(player)
@@ -35,11 +32,9 @@ func init(player_object):
 
 func run():
 	next_state = player.current_state.get_next_state()
-	if next_state == 0:
-		print("Invalid_state")
-	elif next_state != player.current_state.get_state_name():
+	if next_state != player.current_state.get_state_name():
 		player.current_state.exit()
 		player.current_state = state_scripts[next_state]
-		debug_print_player_state()
 		player.current_state.enter()
+		debug_print_player_state()
 	player.current_state.update()
