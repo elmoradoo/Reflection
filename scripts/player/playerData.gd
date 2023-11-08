@@ -23,6 +23,7 @@ var timers: Node
 #Raycasts groups
 var rc_feets : Node3D
 var rc_head : Node3D
+var rc_torso : Node3D
 
 #Movement
 var velocity: Vector3 = Vector3.ZERO
@@ -53,6 +54,7 @@ func init(se, rays):
 	self.raycasts = rays
 	self.rc_feets = self.raycasts.get_node("feets")
 	self.rc_head = self.raycasts.get_node("head")
+	self.rc_head = self.raycasts.get_node("torso")
 	self.animation_player = myself.animation_player
 	self.timers = myself.timers
 	#print(self.timers.get_node("wallclimb_time"))

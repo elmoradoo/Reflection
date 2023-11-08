@@ -102,10 +102,12 @@ script = ExtResource("1_wmnds")
 
 [node name="standing_collision_shape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
 shape = SubResource("CapsuleShape3D_6pobs")
 
 [node name="crouching_collision_shape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.601603, 0)
+visible = false
 shape = SubResource("CapsuleShape3D_ep87d")
 disabled = true
 
@@ -141,8 +143,23 @@ target_position = Vector3(1, 0, -1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 target_position = Vector3(0, 0, -1.5)
 
+[node name="torso" type="Node3D" parent="raycasts"]
+
+[node name="half_left" type="RayCast3D" parent="raycasts/torso"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+target_position = Vector3(-1, 0, -1)
+
+[node name="half_right" type="RayCast3D" parent="raycasts/torso"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+target_position = Vector3(1, 0, -1)
+
+[node name="front" type="RayCast3D" parent="raycasts/torso"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+target_position = Vector3(0, 0, -1.5)
+
 [node name="neck" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+visible = false
 
 [node name="head" type="Node3D" parent="neck"]
 
@@ -157,6 +174,7 @@ libraries = {
 }
 
 [node name="timers" type="Node3D" parent="."]
+visible = false
 
 [node name="wallclimb_time" type="Timer" parent="timers"]
 
