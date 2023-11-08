@@ -3,17 +3,20 @@ extends Node
 class_name BaseState
 
 #Stand up vars
-var stand_up_lp = 10.0
+var stand_up_lp: float = 10.0
 
 #Crouching vars
 var crouching_depth: float = -0.5
-var lerp_speed = 10.0
+var lerp_speed:float = 10.0
 
 #Head bobbing vars
 var head_bobbing_vector: Vector2 = Vector2.ZERO
 var head_bobbing_index: float = 0.0
 var head_bobbing_speed: float = 22.0
 var head_bobbing_lerp: float = 10.0
+
+#Climbing vars
+var climbable_min_velocity: float = 2.0
 
 func stand_up(player: playerData):
 	player.neck.rotation.y = lerp(player.neck.rotation.y, 0.0, player.delta * stand_up_lp)
@@ -46,3 +49,18 @@ func update_event(player: playerData):
 		player.head.rotate_x(deg_to_rad(-player.event.relative.y * player.mouse_sensitivity))
 		player.head.rotation.x = clamp(player.head.rotation.x, deg_to_rad(-89), deg_to_rad(89))
 	player.event = null
+
+func can_wallclimb(player: playerData) -> bool:
+	return (not player.myself.is_on_floor()
+		and player.velocity.y > climbable_min_velocity
+		and player.rc_feets.get_node("front").is_colliding()
+		and player.rc_feets.get_node("half_left").is_colliding()
+		and player.rc_feets.get_node("half_right").is_colliding())
+
+func can_wallrun(player: playerData) -> bool:
+	return (not player.myself.is_on_floor()
+		and player.velocity.y > climbable_min_velocity
+		and player.rc_feets.get_node("front").is_colliding()
+		and (player.rc_feets.get_node("half_left").is_colliding() or player.rc_feets.get_node("half_right").is_colliding())
+		and (player.rc_head.get_node("half_left").is_colliding() or player.rc_head.get_node("half_right").is_colliding())
+		and player.rc_head.get_node("front").is_colliding())
