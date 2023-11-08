@@ -160,4 +160,7 @@ libraries = {
 
 [node name="wallclimb_time" type="Timer" parent="timers"]
 
+[node name="wallrun_time" type="Timer" parent="timers"]
+wait_time = 0.5
+
 [connection signal="timeout" from="timers/wallclimb_time" to="." method="_on_wallclimb_time_timeout"]

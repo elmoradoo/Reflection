@@ -18,6 +18,9 @@ var head_bobbing_lerp: float = 10.0
 #Climbing vars
 var climbable_min_velocity: float = 2.0
 
+#Wallrun vars
+var wallrun_jumping_velocity: float = 7.0
+
 func stand_up(player: playerData):
 	player.neck.rotation.y = lerp(player.neck.rotation.y, 0.0, player.delta * stand_up_lp)
 	player.head.position.y = lerp(player.head.position.y, 0.0, stand_up_lp * player.delta)
@@ -61,6 +64,4 @@ func can_wallrun(player: playerData) -> bool:
 	return (not player.myself.is_on_floor()
 		and player.velocity.y > climbable_min_velocity
 		and player.rc_feets.get_node("front").is_colliding()
-		and (player.rc_feets.get_node("half_left").is_colliding() or player.rc_feets.get_node("half_right").is_colliding())
-		and (player.rc_head.get_node("half_left").is_colliding() or player.rc_head.get_node("half_right").is_colliding())
-		and player.rc_head.get_node("front").is_colliding())
+		and (player.rc_feets.get_node("half_left").is_colliding() or player.rc_feets.get_node("half_right").is_colliding()))
