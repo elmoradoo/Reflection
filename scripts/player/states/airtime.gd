@@ -8,6 +8,9 @@ var climbable_min_velocity = 2.0
 func init(obj):
 	player = obj
 
+func get_state_name():
+	return enums.player_states.AirTime
+
 func enter():
 	pass
 
@@ -46,13 +49,11 @@ func can_wallrun() -> bool:
 			return true
 	return false
 	
-func check():
-	if player.myself.is_on_floor() and player.velocity.length() >= 2:
-		player.current_state = enums.player_states.Sprinting
-	elif player.myself.is_on_floor():
-		player.current_state = enums.player_states.Idle		
-	if can_wallclimb():
-		player.current_state = enums.player_states.WallClimb
+func get_next_state():
+	if player.myself.is_on_floor():
+		return enums.player_states.Idle
+	elif can_wallclimb():
+		return enums.player_states.WallClimb
 	elif can_wallrun():
-		player.current_state = enums.player_states.WallRun
-		
+		return enums.player_states.WallRun
+	return enums.player_states.AirTime

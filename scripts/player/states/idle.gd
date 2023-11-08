@@ -14,6 +14,9 @@ func enter():
 func exit():
 	pass
 
+func get_state_name():
+	return enums.player_states.Idle
+
 func update_event():
 	if player.event is InputEventMouseMotion:
 		player.myself.rotate_y(deg_to_rad(-player.event.relative.x * player.mouse_sensitivity))
@@ -29,13 +32,14 @@ func update():
 	player.velocity.x = move_toward(player.velocity.x, 0, idle_lerp_speed)
 	player.velocity.z = move_toward(player.velocity.z, 0, idle_lerp_speed)
 
-func check():
+func get_next_state():
 	if player.myself.is_on_floor():
 		if Input.is_action_just_pressed("crouch"):
-			player.current_state = enums.player_states.Crouching
+			return enums.player_states.Crouching
 		elif Input.is_action_just_released("crouch") and not player.raycasts.get_node("top_of_head").is_colliding():
-			player.current_state = enums.player_states.Idle
+			return enums.player_states.Idle
 		elif player.input_dir != Vector2.ZERO:
-			player.current_state = enums.player_states.Sprinting
+			return enums.player_states.Sprinting
 		if Input.is_action_just_pressed("jump"):
-			player.current_state = enums.player_states.Jumping
+			return enums.player_states.Jumping
+	return enums.player_states.Idle

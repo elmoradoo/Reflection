@@ -4,7 +4,7 @@ extends CharacterBody3D
 var enums = preload("res://scripts/player/enums.gd")
 
 #State manager
-var player_state_manager_script = preload("res://scripts/player/states/player_state_manager.gd")
+var player_state_manager_script = preload("res://scripts/player/player_state_manager.gd")
 var player_state_manager
 
 #Player object that have all of the player and associated variable

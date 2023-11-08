@@ -11,6 +11,9 @@ var enums = preload("res://scripts/player/enums.gd")
 func init(obj):
 	player = obj
 
+func get_state_name():
+	return enums.player_states.Sprinting
+
 func enter():
 	pass
 
@@ -31,16 +34,17 @@ func update():
 func exit():
 	pass
 
-func check():
+func get_next_state():
 	if player.myself.is_on_floor():
 		if Input.is_action_pressed("crouch") and player.velocity.length() >= player.sliding_minimum_velocity:
-			player.current_state = enums.player_states.Sliding
+			return enums.player_states.Sliding
 		elif Input.is_action_pressed("crouch"):
-			player.current_state = enums.player_states.Crouching
+			return enums.player_states.Crouching
 		elif player.input_dir == Vector2.ZERO:
-			player.current_state = enums.player_states.Idle
+			return enums.player_states.Idle
 		if Input.is_action_just_pressed("jump"):
-			player.current_state = enums.player_states.Jumping
+			return enums.player_states.Jumping
+		return enums.player_states.Sprinting
 	else:
-		player.current_state = enums.player_states.AirTime
+		return enums.player_states.AirTime
 		

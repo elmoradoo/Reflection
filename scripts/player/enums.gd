@@ -1,6 +1,7 @@
 extends Object
 
 enum player_states {
+	NULL,
 	Idle,
 	Walking,
 	Sprinting,

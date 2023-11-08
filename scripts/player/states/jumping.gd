@@ -7,6 +7,9 @@ var enums = preload("res://scripts/player/enums.gd")
 func init(obj):
 	player = obj
 
+func get_state_name():
+	return enums.player_states.Jumping
+
 func enter():
 	player.animation_player.play("jump")
 
@@ -30,6 +33,7 @@ func update():
 func exit():
 	pass
 
-func check():
+func get_next_state():
 	if not player.myself.is_on_floor():
-		player.current_state = enums.player_states.AirTime
+		return enums.player_states.AirTime
+	return enums.player_states.NULL

@@ -33,7 +33,7 @@ var current_speed: float = 0.0
 var sliding_minimum_velocity: float = 5.0
 
 #Player state
-var current_state = enums.player_states.Idle
+var current_state: BaseState
 
 var input_dir: Vector2 = Vector2.ZERO
 
