@@ -19,7 +19,8 @@ func get_state_name():
 func update():
 	super.update_event(player)
 	super.stand_down(player)
-	super.head_bob(player, 0.1)
+	if player.input_dir != Vector2.ZERO:
+		super.head_bob(player, 0.1)
 	player.velocity.x = player.direction.x * max_speed
 	player.velocity.z = player.direction.z * max_speed
 	player.direction = lerp(player.direction, (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized(), lerp_speed * player.delta)
