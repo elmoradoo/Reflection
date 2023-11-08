@@ -39,3 +39,10 @@ func head_bob(player: playerData, intensity):
 func reset_head_bob(player: playerData):
 	player.eyes.position.y = lerp(player.eyes.position.y, 0.0, player.delta * head_bobbing_lerp)
 	player.eyes.position.x = lerp(player.eyes.position.x, 0.0, player.delta * head_bobbing_lerp)
+
+func update_event(player: playerData):
+	if player.event is InputEventMouseMotion:
+		player.myself.rotate_y(deg_to_rad(-player.event.relative.x * player.mouse_sensitivity))
+		player.head.rotate_x(deg_to_rad(-player.event.relative.y * player.mouse_sensitivity))
+		player.head.rotation.x = clamp(player.head.rotation.x, deg_to_rad(-89), deg_to_rad(89))
+	player.event = null

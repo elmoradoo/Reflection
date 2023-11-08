@@ -16,16 +16,9 @@ func enter():
 	player.velocity.x *= sliding_initial_force
 	player.velocity.z *= sliding_initial_force
 
-func update_event():
-	if player.event is InputEventMouseMotion:
-		player.myself.rotate_y(deg_to_rad(-player.event.relative.x * player.mouse_sensitivity))
-		player.neck.rotate_x(deg_to_rad(-player.event.relative.y * player.mouse_sensitivity))
-		player.neck.rotation.x = clamp(player.neck.rotation.x, deg_to_rad(-89), deg_to_rad(89))
-	player.event = null
-
 func update():
-	update_event()
-	self.stand_down(player)
+	super.update_event(player)
+	super.stand_down(player)
 	player.velocity.x = lerp(player.velocity.x, 0.0, player.delta * 1)
 	player.velocity.z = lerp(player.velocity.z, 0.0, player.delta * 1)
 	

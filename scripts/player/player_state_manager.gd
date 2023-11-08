@@ -18,6 +18,7 @@ var state_scripts = {
 	enums.player_states.AirTime: preload("res://scripts/player/states/airtime.gd").new(),
 	enums.player_states.WallClimb: preload("res://scripts/player/states/wallclimb.gd").new(),
 	enums.player_states.WallRun: preload("res://scripts/player/states/wallrun.gd").new(),
+	enums.player_states.LedgeGrab: preload("res://scripts/player/states/ledgegrab.gd").new(),
 }
 
 func debug_print_player_state():
