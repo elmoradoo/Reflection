@@ -36,4 +36,5 @@ func run():
 		player.current_state = state_scripts[next_state]
 		player.current_state.enter()
 		debug_print_player_state()
+		#print(player.velocity.y)
 	player.current_state.update()

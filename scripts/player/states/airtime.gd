@@ -22,7 +22,11 @@ func update():
 	super.reset_head_bob(player)
 	#print(player.velocity.y)
 	
+
+		
+		# Wall is not perpendicular
 func get_next_state():
+	#test()
 	if player.myself.is_on_floor():
 		return enums.player_states.Idle
 	elif super.can_wallclimb(player):
