@@ -54,45 +54,33 @@ func update_event(player: playerData):
 		player.head.rotation.x = clamp(player.head.rotation.x, deg_to_rad(-89), deg_to_rad(89))
 	player.event = null
 
-func test(player: playerData):
+func can_wallclimb(player: playerData) -> bool:
 	if not player.rc_torso.get_node("front").is_colliding():
-		return -1
+		return false
 	var collision = player.rc_torso.get_node("front").get_collision_normal()
 	var ray_direction = player.rc_torso.get_node("front").global_transform.basis.z.normalized()
 	var dot_product = abs(collision.dot(ray_direction))
-	#print(dot_product)
-#	if dot_product < 0.8:  # Adjust the threshold as needed
-#		print("WALLRUNNING")
-#	else:
-#		print("WALLCLIMBING")
-	return dot_product
-
-
-func can_wallclimb(player: playerData) -> bool:
-	var tmp = test(player)
-	if tmp == -1:
+	if dot_product == -1:
 		return false
-	if tmp < 0.8:
+	if dot_product < 0.8:
 		return false
 	else:
 		return true
-	#Old
-	return (not player.myself.is_on_floor()
-		and player.velocity.y > climbable_min_velocity
-		and player.rc_feets.get_node("front").is_colliding()
-		and player.rc_feets.get_node("half_left").is_colliding()
-		and player.rc_feets.get_node("half_right").is_colliding())
 
 func can_wallrun(player: playerData) -> bool:
-	var tmp = test(player)
-	if tmp == -1:
+	if not player.rc_torso.get_node("front").is_colliding():
 		return false
-	if tmp < 0.8:
+	var collision = player.rc_torso.get_node("front").get_collision_normal()
+	var ray_direction = player.rc_torso.get_node("front").global_transform.basis.z.normalized()
+	var dot_product = abs(collision.dot(ray_direction))
+	if dot_product == -1:
+		return false
+	if dot_product < 0.8:
 		return true
 	else:
 		return false
-	#Old
-	return (not player.myself.is_on_floor()
-		and player.velocity.y > wallrun_min_velocity
-		and player.rc_feets.get_node("front").is_colliding()
-		and (player.rc_feets.get_node("half_left").is_colliding() or player.rc_feets.get_node("half_right").is_colliding()))
+
+func can_vault(player: playerData) -> bool:
+	if not player.rc_torso.get_node("front").is_colliding() and player.rc_feets.get_node("front").is_colliding():
+		return true
+	return false

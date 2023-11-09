@@ -106,7 +106,6 @@ shape = SubResource("CapsuleShape3D_6pobs")
 
 [node name="crouching_collision_shape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.601603, 0)
-visible = false
 shape = SubResource("CapsuleShape3D_ep87d")
 disabled = true
 
