@@ -31,7 +31,6 @@ var direction: Vector3 = Vector3.ZERO
 func _enter_tree():
 	if str(name).is_valid_int():
 		set_multiplayer_authority(str(name).to_int())
-		print(name)
 
 func _ready():
 	if not is_multiplayer_authority(): return
