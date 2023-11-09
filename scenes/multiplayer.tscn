@@ -5,33 +5,6 @@
 [node name="Multiplayer" type="Node"]
 script = ExtResource("1_pg5x8")
 
-[node name="UI" type="MarginContainer" parent="."]
-offset_right = 277.0
-offset_bottom = 34.0
-
-[node name="Net" type="VBoxContainer" parent="UI"]
-layout_mode = 2
-
-[node name="Options" type="HBoxContainer" parent="UI/Net"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UI/Net/Options"]
-layout_mode = 2
-text = "Direct:"
-
-[node name="Host" type="Button" parent="UI/Net/Options"]
-layout_mode = 2
-text = "Host"
-
-[node name="Connect" type="Button" parent="UI/Net/Options"]
-layout_mode = 2
-text = "Connect"
-
-[node name="Remote" type="LineEdit" parent="UI/Net/Options"]
-layout_mode = 2
-text = "127.0.0.1"
-expand_to_text_length = true
-
 [node name="LevelSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://scenes/world.tscn")
 spawn_path = NodePath("../Level")
@@ -43,6 +16,3 @@ _spawnable_scenes = PackedStringArray("res://scenes/player.tscn")
 spawn_path = NodePath("../Players")
 
 [node name="Players" type="Node" parent="."]
-
-[connection signal="pressed" from="UI/Net/Options/Host" to="." method="_on_host_pressed"]
-[connection signal="pressed" from="UI/Net/Options/Connect" to="." method="_on_connect_pressed"]

@@ -186,7 +186,6 @@ wait_time = 0.5
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-visible = false
 mesh = SubResource("CapsuleMesh_wqrwg")
 
 [node name="player_model" parent="." instance=ExtResource("2_8sdnf")]
