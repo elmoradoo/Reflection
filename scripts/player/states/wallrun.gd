@@ -14,6 +14,7 @@ func get_state_name():
 
 func enter():
 	old_vel = player.velocity
+	player.velocity.y += 0.5
 	player.timers.get_node("wallrun_time").start()
 
 

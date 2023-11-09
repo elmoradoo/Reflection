@@ -25,6 +25,7 @@ var player_object: playerData
 @onready var top_of_head = $raycasts/top_of_head
 @onready var timers = $timers
 @onready var wallclimb_time = $timers/wallclimb_time
+@onready var player_model = $player_model
 
 #Mouvement vars
 var direction: Vector3 = Vector3.ZERO

@@ -15,7 +15,7 @@ func get_state_name():
 	return enums.player_states.Sprinting
 
 func enter():
-	pass
+	player.model.get_node("AnimationPlayer").play("running")
 
 func update():
 	super.update_event(player)

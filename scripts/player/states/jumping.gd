@@ -12,6 +12,7 @@ func get_state_name():
 
 func enter():
 	player.animation_player.play("jump")
+	player.model.get_node("AnimationPlayer").play("jumping")
 
 func update():
 	super.update_event(player)

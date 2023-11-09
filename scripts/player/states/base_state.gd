@@ -56,8 +56,6 @@ func can_wallclimb(player: playerData) -> bool:
 	var collision = player.rc_torso.get_node("front").get_collision_normal()
 	var ray_direction = player.rc_torso.get_node("front").global_transform.basis.z.normalized()
 	var dot_product = abs(collision.dot(ray_direction))
-	if dot_product == -1:
-		return false
 	if dot_product < 0.8:
 		return false
 	else:
@@ -69,8 +67,6 @@ func can_wallrun(player: playerData) -> bool:
 	var collision = player.rc_torso.get_node("front").get_collision_normal()
 	var ray_direction = player.rc_torso.get_node("front").global_transform.basis.z.normalized()
 	var dot_product = abs(collision.dot(ray_direction))
-	if dot_product == -1:
-		return false
 	if dot_product < 0.8:
 		return true
 	else:

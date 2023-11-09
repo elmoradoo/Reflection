@@ -41,6 +41,9 @@ var input_dir: Vector2 = Vector2.ZERO
 
 var gravity_enabled: bool = true
 
+#TMP model animations
+var model: Node3D
+
 
 func init(se, rays):
 	#Nodes and references
@@ -60,6 +63,8 @@ func init(se, rays):
 	self.rc_torso = self.raycasts.get_node("torso")
 	self.animation_player = myself.animation_player
 	self.timers = myself.timers
+	self.model = myself.player_model
+	print(self.model)
 	#print(self.timers.get_node("wallclimb_time"))
 
 func update(del):
