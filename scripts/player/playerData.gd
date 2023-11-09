@@ -16,6 +16,7 @@ var eyes: Node3D
 var animation_player: AnimationPlayer
 var standing_collision_shape: CollisionShape3D
 var crouching_collision_shape: CollisionShape3D
+var coiling_collision_shape: CollisionShape3D
 var raycasts: Node3D
 var transform
 var timers: Node
@@ -38,6 +39,7 @@ var current_state: BaseState
 
 var input_dir: Vector2 = Vector2.ZERO
 
+var gravity_enabled: bool = true
 
 
 func init(se, rays):
@@ -47,6 +49,7 @@ func init(se, rays):
 	self.direction = myself.direction
 	self.standing_collision_shape = myself.standing_collision_shape
 	self.crouching_collision_shape= myself.crouching_collision_shape
+	self.coiling_collision_shape = myself.coiling_collision_shape
 	self.neck = myself.neck
 	self.head = myself.head
 	self.eyes = myself.eyes
@@ -62,7 +65,8 @@ func init(se, rays):
 func update(del):
 	self.delta = del
 	input_dir = Input.get_vector("left", "right", "forward", "backward")
-	velocity.y -= gravity * delta
+	if gravity_enabled:
+		velocity.y -= gravity * delta
 
 func update_event(e):
 	event = e

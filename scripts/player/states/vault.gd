@@ -8,7 +8,10 @@ func init(obj):
 	player = obj
 
 func enter():
-	pass
+	player.standing_collision_shape.disabled = true
+	player.crouching_collision_shape.disabled = true
+	player.coiling_collision_shape.disabled = false
+	player.gravity_enabled = false
 
 func update():
 	super.update_event(player)
@@ -19,9 +22,12 @@ func update():
 		player.velocity = target_velocity
 
 func exit():
-	pass
+	player.coiling_collision_shape.disabled = true
+	player.standing_collision_shape.disabled = false
+	player.crouching_collision_shape.disabled = false
+	player.gravity_enabled = true
 
-func get_state_name():
+func get_state_name(): 
 	return enums.player_states.Vault
 
 func get_next_state():

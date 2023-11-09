@@ -13,6 +13,8 @@ func get_state_name():
 	return enums.player_states.Sliding
 
 func enter():
+	player.standing_collision_shape.disabled = true
+	player.crouching_collision_shape.disabled = false
 	player.velocity.x *= sliding_initial_force
 	player.velocity.z *= sliding_initial_force
 

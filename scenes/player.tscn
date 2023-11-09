@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ba1e2q3t5cyfk"]
+[gd_scene load_steps=11 format=3 uid="uid://ba1e2q3t5cyfk"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_wmnds"]
 
@@ -15,6 +15,9 @@ properties/2/path = NodePath("neck/head/eyes/Camera3D:rotation")
 properties/2/spawn = true
 properties/2/sync = true
 properties/2/watch = false
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6t23d"]
+height = 1.2
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6pobs"]
 
@@ -120,6 +123,11 @@ script = ExtResource("1_wmnds")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_c8erx")
 
+[node name="coiling_collision_shape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+shape = SubResource("CapsuleShape3D_6t23d")
+disabled = true
+
 [node name="standing_collision_shape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_6pobs")
@@ -138,38 +146,16 @@ target_position = Vector3(0, 2, 0)
 
 [node name="feets" type="Node3D" parent="raycasts"]
 
-[node name="half_left" type="RayCast3D" parent="raycasts/feets"]
-target_position = Vector3(-1, 0, -1)
-
-[node name="half_right" type="RayCast3D" parent="raycasts/feets"]
-target_position = Vector3(1, 0, -1)
-
 [node name="front" type="RayCast3D" parent="raycasts/feets"]
 target_position = Vector3(0, 0, -1.5)
 
 [node name="head" type="Node3D" parent="raycasts"]
-
-[node name="half_left" type="RayCast3D" parent="raycasts/head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-target_position = Vector3(-1, 0, -1)
-
-[node name="half_right" type="RayCast3D" parent="raycasts/head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-target_position = Vector3(1, 0, -1)
 
 [node name="front" type="RayCast3D" parent="raycasts/head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 target_position = Vector3(0, 0, -1.5)
 
 [node name="torso" type="Node3D" parent="raycasts"]
-
-[node name="half_left" type="RayCast3D" parent="raycasts/torso"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-target_position = Vector3(-1, 0, -1)
-
-[node name="half_right" type="RayCast3D" parent="raycasts/torso"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-target_position = Vector3(1, 0, -1)
 
 [node name="front" type="RayCast3D" parent="raycasts/torso"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
@@ -199,6 +185,7 @@ wait_time = 0.5
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
 mesh = SubResource("CapsuleMesh_wqrwg")
 
 [connection signal="timeout" from="timers/wallclimb_time" to="." method="_on_wallclimb_time_timeout"]

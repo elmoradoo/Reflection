@@ -16,6 +16,7 @@ var player_object: playerData
 @onready var head = $neck/head
 @onready var standing_collision_shape = $standing_collision_shape
 @onready var crouching_collision_shape = $crouching_collision_shape
+@onready var coiling_collision_shape = $coiling_collision_shape
 @onready var neck = $neck
 @onready var camera_3d = $neck/head/eyes/Camera3D
 @onready var eyes = $neck/head/eyes

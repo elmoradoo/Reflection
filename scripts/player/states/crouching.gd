@@ -8,7 +8,8 @@ func init(obj):
 	player = obj
 
 func enter():
-	pass
+	player.standing_collision_shape.disabled = true
+	player.crouching_collision_shape.disabled = false
 
 func exit():
 	pass
