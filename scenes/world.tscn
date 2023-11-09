@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://b0sh18cn4rpbs"]
+[gd_scene load_steps=7 format=3 uid="uid://b0sh18cn4rpbs"]
 
 [ext_resource type="Texture2D" uid="uid://c3w8ru7jpavew" path="res://assets/grids/dark.png" id="1_fqjqu"]
 [ext_resource type="Texture2D" uid="uid://bawjh34i4i8my" path="res://assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_atadw"]
-[ext_resource type="PackedScene" uid="uid://ba1e2q3t5cyfk" path="res://scenes/player.tscn" id="3_lmu8e"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lcn1r"]
 albedo_texture = ExtResource("1_fqjqu")
@@ -21,6 +20,10 @@ tonemap_mode = 2
 glow_enabled = true
 
 [node name="world" type="Node3D"]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/player.tscn")
+spawn_path = NodePath("..")
 
 [node name="stage" type="Node3D" parent="."]
 
@@ -188,5 +191,3 @@ environment = SubResource("Environment_mq43r")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="env"]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 shadow_enabled = true
-
-[node name="Player" parent="." instance=ExtResource("3_lmu8e")]

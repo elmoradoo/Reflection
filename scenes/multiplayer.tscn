@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3 uid="uid://wdo2chkhywkc"]
+
+[ext_resource type="Script" path="res://scripts/multiplayer/multiplayer.gd" id="1_pg5x8"]
+
+[node name="Multiplayer" type="Node"]
+script = ExtResource("1_pg5x8")
+
+[node name="LevelSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/world.tscn")
+spawn_path = NodePath(".")
+spawn_limit = 1
+
+[node name="UI" type="MarginContainer" parent="."]
+offset_right = 277.0
+offset_bottom = 34.0
+
+[node name="Net" type="VBoxContainer" parent="UI"]
+layout_mode = 2
+
+[node name="Options" type="HBoxContainer" parent="UI/Net"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Net/Options"]
+layout_mode = 2
+text = "Direct:"
+
+[node name="Host" type="Button" parent="UI/Net/Options"]
+layout_mode = 2
+text = "Host"
+
+[node name="Connect" type="Button" parent="UI/Net/Options"]
+layout_mode = 2
+text = "Connect"
+
+[node name="Remote" type="LineEdit" parent="UI/Net/Options"]
+layout_mode = 2
+text = "127.0.0.1"
+expand_to_text_length = true
+
+[connection signal="pressed" from="UI/Net/Options/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="UI/Net/Options/Connect" to="." method="_on_connect_pressed"]

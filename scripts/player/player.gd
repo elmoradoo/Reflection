@@ -28,7 +28,15 @@ var player_object: playerData
 #Mouvement vars
 var direction: Vector3 = Vector3.ZERO
 
+func _enter_tree():
+	if str(name).is_valid_int():
+		set_multiplayer_authority(str(name).to_int())
+		print(name)
+
 func _ready():
+	if not is_multiplayer_authority(): return
+	camera_3d.current = true
+
 	#Get mouse movement
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	#Init player object
@@ -39,9 +47,11 @@ func _ready():
 	player_state_manager.init(player_object)
 
 func _input(event):
+	if not is_multiplayer_authority(): return
 	player_object.update_event(event)
 
 func _physics_process(delta):
+	if not is_multiplayer_authority(): return
 	#Update player variables
 	player_object.direction = direction
 	player_object.velocity = velocity
