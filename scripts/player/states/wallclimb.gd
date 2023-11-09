@@ -39,7 +39,7 @@ func get_next_state():
 	elif player.rc_feets.get_node("front").is_colliding() and not player.rc_head.get_node("front").is_colliding():
 		return enums.player_states.LedgeGrab
 	elif player.velocity.y >= 6 and not player.rc_feets.get_node("front").is_colliding():
-		return enums.player_states.AirTime
+		return enums.player_states.LedgeGrab
 	else:
 		return enums.player_states.WallClimb
 	

@@ -23,8 +23,8 @@ func update():
 func get_next_state():
 	if player.myself.is_on_floor():
 		return enums.player_states.Idle
-	#elif super.can_vault(player):
-	#	return enums.player_states.Vault
+	elif super.can_vault(player):
+		return enums.player_states.Vault
 	elif super.can_wallclimb(player):
 		return enums.player_states.WallClimb
 	elif super.can_wallrun(player):

@@ -22,7 +22,7 @@ func exit():
 
 func update():
 	super.update_event(player)
-	if is_climbvaulting:
+	if is_climbvaulting == is_climbvaulting:
 		if player.rc_feets.get_node("front").is_colliding():
 			player.velocity.y += 0.1
 		else:
@@ -40,6 +40,6 @@ func get_next_state():
 			return enums.player_states.Idle
 #	else:
 	if is_climbvaulting_over:
-		return enums.player_states.AirTime		
+		return enums.player_states.AirTime
 	return enums.player_states.LedgeGrab
 	
