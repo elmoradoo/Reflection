@@ -6,6 +6,8 @@ var enums = preload("res://scripts/player/enums.gd")
 var old_vel: Vector3 = Vector3.ZERO
 var is_jumping: bool = false
 
+const base_wallclimb_speed: float = 0.3
+
 func init(obj):
 	player = obj
 
@@ -14,7 +16,6 @@ func get_state_name():
 
 func enter():
 	old_vel = player.velocity
-	player.velocity.y += 0.5
 	player.timers.get_node("wallrun_time").start()
 
 
@@ -29,11 +30,11 @@ func exit():
 	player.timers.get_node("wallrun_time").stop()
 #Raycast front wall (2 ?)
 #If enough upwards velocity in airtime
-#Timer for max climb duration
 
 func update():
 	super.update_event(player)
-	player.velocity.y += 0.1 * player.timers.get_node("wallrun_time").time_left
+	var speed_vector = Vector3(base_wallclimb_speed, base_wallclimb_speed, base_wallclimb_speed)
+	player.velocity += player.velocity.normalized() * speed_vector * player.timers.get_node("wallrun_time").time_left
 	
 func get_next_state():
 	if player.myself.is_on_floor() and player.velocity.length() >= 2:
@@ -45,7 +46,5 @@ func get_next_state():
 		return enums.player_states.Jumping
 	elif super.can_wallrun(player):
 		return enums.player_states.WallRun
-	#elif not player.myself.is_on_floor():
-	#	return enums.player_states.AirTime
 	return enums.player_states.WallRun
 	
