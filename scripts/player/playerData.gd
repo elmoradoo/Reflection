@@ -64,8 +64,6 @@ func init(se, rays):
 	self.animation_player = myself.animation_player
 	self.timers = myself.timers
 	self.model = myself.player_model
-	print(self.model)
-	#print(self.timers.get_node("wallclimb_time"))
 
 func update(del):
 	self.delta = del

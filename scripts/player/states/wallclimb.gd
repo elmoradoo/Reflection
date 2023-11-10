@@ -21,15 +21,10 @@ func exit():
 
 #Raycast front wall (2 ?)
 #If enough upwards velocity in airtime
-#Timer for max climb duration
 
 func update():
 	super.update_event(player)
-	#print(player.timers.get_node("wallclimb_time").get_time_left())
-
-#	if player.timers.get_node("wallclimb_time").is_stopped():
-#		print("over")
-	player.velocity.y += 0.3
+	player.velocity.y += 0.2 * player.timers.get_node("wallclimb_time").time_left
 	
 func get_next_state():
 	if player.myself.is_on_floor() and player.velocity.length() >= 2:

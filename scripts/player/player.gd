@@ -63,7 +63,3 @@ func _physics_process(delta):
 	velocity = player_object.velocity
 	direction = player_object.direction
 	move_and_slide()
-
-
-func _on_wallclimb_time_timeout():
-	print("over")

@@ -98,7 +98,7 @@ size_flags_vertical = 8
 [node name="SendMessage" type="TextEdit" parent="Chatbox/Container"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-placeholder_text = "Send message..."
+placeholder_text = "<Enter> Send message..."
 context_menu_enabled = false
 drag_and_drop_selection_enabled = false
 virtual_keyboard_enabled = false
