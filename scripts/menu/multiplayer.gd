@@ -13,6 +13,7 @@ func _on_host_pressed():
 	multiplayer.multiplayer_peer = peer
 	var multiplayer_scene = get_node("/root/MultiplayerScene")
 	multiplayer_scene.set_script(load("res://scripts/multiplayer/server.gd"))
+	multiplayer_scene.set_process_input(true)
 	multiplayer_scene.host_lobby()
 
 func _on_connect_pressed():
@@ -31,4 +32,5 @@ func _on_connect_pressed():
 	multiplayer.multiplayer_peer = peer
 	var multiplayer_scene = get_node("/root/MultiplayerScene")
 	multiplayer_scene.set_script(load("res://scripts/multiplayer/client.gd"))
+	multiplayer_scene.set_process_input(true)
 	multiplayer_scene.join_lobby()
