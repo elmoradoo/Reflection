@@ -1,8 +1,5 @@
-# multiplayer.gd
 extends Node
 
-func _ready():
-	multiplayer.server_relay = false
 
 # The server can restart the level by pressing Home.
 func _input(event):
@@ -40,6 +37,6 @@ func start_game():
 	# Only change level on the server.
 	# Clients will instantiate the level via the spawner.
 	if multiplayer.is_server():
-		multiplayer.peer_connected.connect(spawn_player)
+		multiplayer.peer_connected.connect(spawn_player, CONNECT_DEFERRED)
 		change_level.call_deferred(load("res://scenes/world.tscn"))
 		spawn_all_players.call_deferred()
