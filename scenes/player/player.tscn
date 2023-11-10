@@ -184,6 +184,9 @@ libraries = {
 [node name="wallrun_time" type="Timer" parent="timers"]
 wait_time = 0.5
 
+[node name="roll_time" type="Timer" parent="timers"]
+wait_time = 0.6
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_wqrwg")
