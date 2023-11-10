@@ -7,6 +7,8 @@ var player: playerData
 var current_state
 var next_state
 
+var is_using_ui: bool = false
+
 var state_scripts = {
 	enums.player_states.Idle: preload("res://scripts/player/states/idle.gd").new(),
 	enums.player_states.Walking: preload("res://scripts/player/states/walking.gd").new(),
@@ -31,6 +33,11 @@ func init(player_object):
 	player.current_state = state_scripts[enums.player_states.Idle]
 
 func run():
+	if Input.is_action_just_pressed("ui_text_newline"):
+		is_using_ui = not is_using_ui
+	if is_using_ui:
+		return
+
 	next_state = player.current_state.get_next_state()
 	if next_state != player.current_state.get_state_name():
 		player.current_state.exit()
