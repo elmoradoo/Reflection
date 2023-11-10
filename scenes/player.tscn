@@ -191,5 +191,3 @@ mesh = SubResource("CapsuleMesh_wqrwg")
 [node name="player_model" parent="." instance=ExtResource("2_8sdnf")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 visible = false
-
-[connection signal="timeout" from="timers/wallclimb_time" to="." method="_on_wallclimb_time_timeout"]
