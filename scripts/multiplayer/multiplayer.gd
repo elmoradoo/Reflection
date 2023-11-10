@@ -57,4 +57,4 @@ func join_lobby():
 	multiplayer.server_disconnected.connect(server_disconnected)
 
 func server_disconnected():
-	pass
+	OS.alert("Server disconnected.")
