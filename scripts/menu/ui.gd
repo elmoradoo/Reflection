@@ -16,7 +16,6 @@ func change_menu(new_menu: MarginContainer):
 # Main menu
 func new_game():
 	change_menu(null)
-	OS.alert("test")
 	get_tree().root.add_child(load("res://scenes/world.tscn").instantiate())
 	get_tree().root.add_child(load("res://scenes/player.tscn").instantiate())
 
