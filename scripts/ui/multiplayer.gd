@@ -1,9 +1,6 @@
 extends Node
 
 
-@onready var multiplayer_scene: Node = load(GameVars.MULTIPLAYER_SCENE).instantiate()
-
-
 func prepare_spawners():
 	var level_spawner = get_node(GameVars.MULTIPLAYER_LEVEL_SPAWNER)
 	level_spawner.add_spawnable_scene(GameVars.LEVEL_SCENE)
@@ -11,12 +8,13 @@ func prepare_spawners():
 	player_spawner.add_spawnable_scene(GameVars.PLAYER_SCENE)
 
 func prepare_multiplayer(scene_script: String):
+	GameVars.MULTIPLAYER_SCENE_NODE = load(GameVars.MULTIPLAYER_SCENE).instantiate()
 	UI.multiplayer(false)
 	UI.chatbox(true)
-	get_tree().root.add_child(multiplayer_scene)
+	get_tree().root.add_child(GameVars.MULTIPLAYER_SCENE_NODE)
 	prepare_spawners()
-	multiplayer_scene.set_script(load(scene_script))
-	multiplayer_scene.set_process_input(true)
+	GameVars.MULTIPLAYER_SCENE_NODE.set_script(load(scene_script))
+	GameVars.MULTIPLAYER_SCENE_NODE.set_process_input(true)
 
 func _on_host_pressed():
 	prepare_multiplayer(GameVars.MULTIPLAYER_SERVER_SCRIPT)
@@ -27,7 +25,7 @@ func _on_host_pressed():
 		OS.alert("Failed to start multiplayer server.")
 		return
 	multiplayer.multiplayer_peer = peer
-	multiplayer_scene.host_lobby()
+	GameVars.MULTIPLAYER_SCENE_NODE.host_lobby()
 
 func _on_connect_pressed():
 	prepare_multiplayer(GameVars.MULTIPLAYER_CLIENT_SCRIPT)
@@ -42,4 +40,4 @@ func _on_connect_pressed():
 		OS.alert("Failed to start multiplayer client.")
 		return
 	multiplayer.multiplayer_peer = peer
-	multiplayer_scene.join_lobby()
+	GameVars.MULTIPLAYER_SCENE_NODE.join_lobby()

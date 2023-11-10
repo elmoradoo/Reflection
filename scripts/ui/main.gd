@@ -3,8 +3,11 @@ extends Node
 
 func _on_new_game_pressed():
 	UI.main(false)
-	get_tree().root.add_child(load(GameVars.LEVEL_SCENE).instantiate())
-	get_tree().root.add_child(load(GameVars.PLAYER_SCENE).instantiate())
+	GameVars.LEVEL_NODE = load(GameVars.LEVEL_SCENE).instantiate()
+	get_tree().root.add_child(GameVars.LEVEL_NODE)
+	GameVars.PLAYER_NODE = load(GameVars.PLAYER_SCENE).instantiate()
+	get_tree().root.add_child(GameVars.PLAYER_NODE)
+	UI.hud(true)
 
 func _on_multiplayer_pressed():
 	UI.main(false)

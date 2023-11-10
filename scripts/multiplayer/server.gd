@@ -18,6 +18,8 @@ func change_level(scene: PackedScene):
 	$Level.add_child(level)
 
 func spawn_all_players():
+	# Disable HUD
+	UI.hud(false)
 	# Remove previous players, if any
 	for child in $Players.get_children():
 		$Players.remove_child(child)
@@ -26,11 +28,14 @@ func spawn_all_players():
 	for player_id in multiplayer.get_peers():
 		spawn_player(player_id)
 	spawn_player(multiplayer.multiplayer_peer.get_unique_id())
+	UI.hud(true)
 
 func spawn_player(id: int):
 	var player = load(GameVars.PLAYER_SCENE).instantiate()
 	player.name = str(id)
 	$Players.add_child(player)
+	if id == multiplayer.multiplayer_peer.get_unique_id():
+		GameVars.PLAYER_NODE = player
 	send_server_message("Player " + player.name + " connected.\n")
 
 func despawn_player(id: int):

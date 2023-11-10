@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+signal stats_update
+
 #Game enums
 var enums = preload("res://scripts/player/enums.gd")
 
@@ -34,6 +36,9 @@ func _enter_tree():
 	if str(name).is_valid_int():
 		set_multiplayer_authority(str(name).to_int())
 
+func _on_get_stats_timeout():
+	stats_update.emit(player.velocity.length())
+
 func _ready():
 	if not is_multiplayer_authority(): return
 	camera_3d.current = true
@@ -46,6 +51,8 @@ func _ready():
 	#Init script manager
 	player_state_manager = player_state_manager_script.new()
 	player_state_manager.init(player_object)
+
+	$timers/get_stats.start()
 
 func _input(event):
 	if not is_multiplayer_authority(): return
