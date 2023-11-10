@@ -20,6 +20,7 @@ func enter():
 	old_vel = player.velocity
 	is_rolling = true
 	player.timers.get_node("roll_time").start()
+	player.animation_player.play("roll")
 
 func exit():
 	player.velocity = old_vel

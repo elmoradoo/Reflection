@@ -26,7 +26,7 @@ func update():
 
 func get_next_state():
 	if player.myself.is_on_floor():
-		if velocity_before_landing.y <= roll_min_velocity:
+		if velocity_before_landing.y <= roll_min_velocity and Input.is_action_pressed("crouch"):
 			return enums.player_states.Rolling
 		return enums.player_states.Idle
 	elif super.can_vault(player):
