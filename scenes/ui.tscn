@@ -91,6 +91,7 @@ scroll_following = true
 
 [node name="Panel" type="Panel" parent="Chatbox/Container/ChatHistory"]
 modulate = Color(0.298039, 0.298039, 0.298039, 0.756863)
+show_behind_parent = true
 layout_mode = 1
 offset_right = 500.0
 offset_bottom = 500.0

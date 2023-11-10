@@ -10,8 +10,8 @@ func _ready():
 	$Container/ChatHistory/Panel.modulate.a = HISTORY_UNFOCUS_TRANSPARENCY
 	$Container/SendMessage.modulate.a = SEND_UNFOCUS_TRANSPARENCY
 
-@rpc("any_peer", "call_local", "unreliable")
-func new_chat_message(user: String, message: String, user_color="red", message_color="black"):
+@rpc("any_peer", "call_local", "reliable")
+func new_chat_message(user: String, message: String, user_color="red", message_color="lightsteelblue"):
 	$Container/ChatHistory.text += "[b][color=" + user_color +"]" + user + "[/color][/b]" + ": " + "[color=" + message_color + "]" + message + "[/color]"
 
 func _physics_process(_delta):
