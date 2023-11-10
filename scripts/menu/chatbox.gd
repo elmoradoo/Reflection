@@ -11,14 +11,15 @@ func _ready():
 	$Container/SendMessage.modulate.a = SEND_UNFOCUS_TRANSPARENCY
 
 @rpc("any_peer", "call_local", "unreliable")
-func new_chat_message(user: String, message: String):
-	$Container/ChatHistory.text += "[b][color=red]" + user + "[/color][/b]" + ": " + "[color=black]" + message + "[/color]"
+func new_chat_message(user: String, message: String, user_color="red", message_color="black"):
+	$Container/ChatHistory.text += "[b][color=" + user_color +"]" + user + "[/color][/b]" + ": " + "[color=" + message_color + "]" + message + "[/color]"
 
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("ui_text_newline"):
 		var message = $Container/SendMessage.text
 		if message:
-			new_chat_message.rpc(str(multiplayer.multiplayer_peer.get_unique_id()), message)
+			var username = str(multiplayer.multiplayer_peer.get_unique_id())
+			new_chat_message.rpc(username, message, "blue")
 			$Container/SendMessage.clear()
 			$Container/SendMessage.release_focus()
 		else:
