@@ -16,7 +16,7 @@ var head_bobbing_speed: float = 22.0
 var head_bobbing_lerp: float = 10.0
 
 #Climbing vars
-var climbable_min_velocity: float = 1.0
+var climbable_min_velocity: float = 4.0
 var wallrun_min_velocity: float = 1.0
 
 #Wallrun vars
@@ -51,7 +51,8 @@ func update_event(player: playerData):
 	player.event = null
 
 func can_wallclimb(player: playerData) -> bool:
-	if not player.rc_torso.get_node("front").is_colliding():
+	#print("player= " + str(player.velocity.y) + "  required= " + str(climbable_min_velocity))
+	if not player.rc_torso.get_node("front").is_colliding() or player.velocity.y < climbable_min_velocity:
 		return false
 	var collision = player.rc_torso.get_node("front").get_collision_normal()
 	var ray_direction = player.rc_torso.get_node("front").global_transform.basis.z.normalized()
