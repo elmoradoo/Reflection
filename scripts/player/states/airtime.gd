@@ -3,6 +3,9 @@ extends BaseState
 var player: playerData
 const max_speed: float = 3.0
 var enums = preload("res://scripts/player/enums.gd")
+var velocity_before_landing: Vector3
+
+const roll_min_velocity = -8
 
 func init(obj):
 	player = obj
@@ -11,7 +14,7 @@ func get_state_name():
 	return enums.player_states.AirTime
 
 func enter():
-	pass
+	velocity_before_landing = player.velocity
 
 func exit():
 	player.animation_player.play("land")
@@ -19,10 +22,11 @@ func exit():
 func update():
 	super.update_event(player)
 	super.reset_head_bob(player)
+	velocity_before_landing = player.velocity
 
 func get_next_state():
 	if player.myself.is_on_floor():
-		if Input.is_action_just_pressed("crouch") and player.velocity.length() >= 1 and player.velocity.length() <= 10:
+		if velocity_before_landing.y <= roll_min_velocity:
 			return enums.player_states.Rolling
 		return enums.player_states.Idle
 	elif super.can_vault(player):
