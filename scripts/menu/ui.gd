@@ -35,7 +35,7 @@ func _on_host_pressed():
 		OS.alert("Failed to start multiplayer server.")
 		return
 	multiplayer.multiplayer_peer = peer
-	get_node("/root/MultiplayerScene").start_game()
+	get_node("/root/MultiplayerScene").host_lobby()
 
 
 func _on_connect_pressed():
@@ -51,4 +51,4 @@ func _on_connect_pressed():
 		OS.alert("Failed to start multiplayer client.")
 		return
 	multiplayer.multiplayer_peer = peer
-	get_node("/root/MultiplayerScene").start_game()
+	get_node("/root/MultiplayerScene").join_lobby()

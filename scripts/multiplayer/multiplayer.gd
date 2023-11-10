@@ -1,13 +1,14 @@
 extends Node
 
+################################# GENERAL ##################################
 
-# The server can restart the level by pressing Home.
 func _input(event):
-	if not multiplayer.is_server():
-		return
-	if event.is_action("ui_home") and Input.is_action_just_pressed("ui_home"):
+	# The server can restart the level by pressing Home.
+	if multiplayer.is_server and event.is_action("ui_home") and Input.is_action_just_pressed("ui_home"):
 		change_level.call_deferred(load("res://scenes/world.tscn"))
 		spawn_all_players.call_deferred()
+
+################################## SERVER ##################################
 
 func change_level(scene: PackedScene):
 	var level = scene.instantiate()
@@ -33,10 +34,27 @@ func spawn_player(id: int):
 	player.name = str(id)
 	$Players.add_child(player)
 
+func despawn_player(id: int):
+	var player = get_node(str($Players.get_path()) + "/" + str(id))
+	$Players.remove_child(player)
+	player.queue_free()
+
+func host_lobby():
+	start_game()
+
 func start_game():
 	# Only change level on the server.
 	# Clients will instantiate the level via the spawner.
-	if multiplayer.is_server():
-		multiplayer.peer_connected.connect(spawn_player, CONNECT_DEFERRED)
-		change_level.call_deferred(load("res://scenes/world.tscn"))
-		spawn_all_players.call_deferred()
+	multiplayer.peer_disconnected.connect(despawn_player, CONNECT_DEFERRED)
+	multiplayer.peer_connected.connect(spawn_player, CONNECT_DEFERRED)
+	change_level.call_deferred(load("res://scenes/world.tscn"))
+	spawn_all_players.call_deferred()
+
+
+################################# CLIENTS ##################################
+
+func join_lobby():
+	multiplayer.server_disconnected.connect(server_disconnected)
+
+func server_disconnected():
+	pass
