@@ -18,8 +18,9 @@ func _physics_process(_delta):
 	if Input.is_action_just_pressed("ui_text_newline"):
 		var message = $Container/SendMessage.text
 		if message:
-			var username = str(multiplayer.multiplayer_peer.get_unique_id())
-			new_chat_message.rpc(username, message, "blue")
+			if message != "\n":
+				var username = str(multiplayer.multiplayer_peer.get_unique_id())
+				new_chat_message.rpc(username, message, "blue")
 			$Container/SendMessage.clear()
 			$Container/SendMessage.release_focus()
 		else:
