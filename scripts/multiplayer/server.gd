@@ -6,6 +6,7 @@ func _input(event):
 	if event.is_action("ui_home") and Input.is_action_just_pressed("ui_home"):
 		change_level.call_deferred(load("res://scenes/world.tscn"))
 		spawn_all_players.call_deferred()
+		get_node("/root/UI/Chatbox").new_chat_message.rpc("SERVER", "Level reset\n")
 
 func change_level(scene: PackedScene):
 	var level = scene.instantiate()
@@ -30,11 +31,16 @@ func spawn_player(id: int):
 	var player = load("res://scenes/player.tscn").instantiate()
 	player.name = str(id)
 	$Players.add_child(player)
+	send_server_message("Player " + player.name + " connected.\n")
 
 func despawn_player(id: int):
 	var player = get_node(str($Players.get_path()) + "/" + str(id))
 	$Players.remove_child(player)
 	player.queue_free()
+	send_server_message("Player " + player.name + " disconnected.\n")
+
+func send_server_message(message: String):
+	Chat.send_chat_message("SERVER", message)
 
 func host_lobby():
 	start_game()

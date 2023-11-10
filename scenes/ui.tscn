@@ -16,6 +16,7 @@ grow_vertical = 0
 script = ExtResource("1_ghejl")
 
 [node name="MainMenu" type="MarginContainer" parent="."]
+visible = false
 layout_mode = 0
 offset_right = 97.0
 offset_bottom = 136.0
