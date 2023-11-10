@@ -1,14 +1,11 @@
 extends Node
 
-################################# GENERAL ##################################
 
 func _input(event):
 	# The server can restart the level by pressing Home.
-	if multiplayer.is_server and event.is_action("ui_home") and Input.is_action_just_pressed("ui_home"):
+	if event.is_action("ui_home") and Input.is_action_just_pressed("ui_home"):
 		change_level.call_deferred(load("res://scenes/world.tscn"))
 		spawn_all_players.call_deferred()
-
-################################## SERVER ##################################
 
 func change_level(scene: PackedScene):
 	var level = scene.instantiate()
@@ -49,12 +46,3 @@ func start_game():
 	multiplayer.peer_connected.connect(spawn_player, CONNECT_DEFERRED)
 	change_level.call_deferred(load("res://scenes/world.tscn"))
 	spawn_all_players.call_deferred()
-
-
-################################# CLIENTS ##################################
-
-func join_lobby():
-	multiplayer.server_disconnected.connect(server_disconnected)
-
-func server_disconnected():
-	OS.alert("Server disconnected.")

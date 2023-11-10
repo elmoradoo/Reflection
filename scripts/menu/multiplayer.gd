@@ -11,7 +11,9 @@ func _on_host_pressed():
 		OS.alert("Failed to start multiplayer server.")
 		return
 	multiplayer.multiplayer_peer = peer
-	get_node("/root/MultiplayerScene").host_lobby()
+	var multiplayer_scene = get_node("/root/MultiplayerScene")
+	multiplayer_scene.set_script(load("res://scripts/multiplayer/server.gd"))
+	multiplayer_scene.host_lobby()
 
 func _on_connect_pressed():
 	$"..".change_menu(null)
@@ -27,4 +29,6 @@ func _on_connect_pressed():
 		OS.alert("Failed to start multiplayer client.")
 		return
 	multiplayer.multiplayer_peer = peer
-	get_node("/root/MultiplayerScene").join_lobby()
+	var multiplayer_scene = get_node("/root/MultiplayerScene")
+	multiplayer_scene.set_script(load("res://scripts/multiplayer/client.gd"))
+	multiplayer_scene.join_lobby()
