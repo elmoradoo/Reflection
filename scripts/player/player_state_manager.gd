@@ -25,7 +25,7 @@ var state_scripts = {
 }
 
 func debug_print_player_state():
-	print(enums.player_states.keys()[player.current_state.get_state_name()])
+	return enums.player_states.keys()[player.current_state.get_state_name()]
 
 func init(player_object):
 	player = player_object
@@ -44,6 +44,6 @@ func run():
 		player.current_state.exit()
 		player.current_state = state_scripts[next_state]
 		player.current_state.enter()
-		debug_print_player_state()
+		#debug_print_player_state()
 		#print(player.velocity.y)
 	player.current_state.update()

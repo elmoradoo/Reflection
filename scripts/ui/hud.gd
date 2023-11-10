@@ -1,8 +1,6 @@
-extends MarginContainer
+extends Control
 
-
-func velocity_change(velocity: float):
-	$Stats/Velocity.text = str(snapped(velocity, 0.001))
-
-func _on_stats_update(velocity: float):
-	velocity_change(velocity)
+func _on_stats_update(array):
+	$ItemList.clear()
+	for debug in array:
+		$ItemList.add_item(debug)

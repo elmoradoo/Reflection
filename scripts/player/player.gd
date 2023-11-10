@@ -37,7 +37,13 @@ func _enter_tree():
 		set_multiplayer_authority(str(name).to_int())
 
 func _on_get_stats_timeout():
-	stats_update.emit(player.velocity.length())
+	var DEBUG_ARRAY = [
+	"Current State: " + str(player_state_manager.debug_print_player_state()),
+	"Velocity: " + str(velocity.length()),
+	"FeetDownRC: " + str($raycasts/feets/down.is_colliding()),
+	"WallClimbTimeLeft: " + str($timers/wallclimb_time.time_left)
+	]
+	stats_update.emit(DEBUG_ARRAY)
 
 func _ready():
 	if not is_multiplayer_authority(): return
@@ -51,7 +57,6 @@ func _ready():
 	#Init script manager
 	player_state_manager = player_state_manager_script.new()
 	player_state_manager.init(player_object)
-
 	$timers/get_stats.start()
 
 func _input(event):
