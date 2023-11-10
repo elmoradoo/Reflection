@@ -3,6 +3,7 @@ extends Node
 
 func _on_host_pressed():
 	$"..".change_menu(null)
+	$"../Chatbox".show()
 	# Start as server.
 	var peer = ENetMultiplayerPeer.new()
 	peer.create_server($Net/Options/Port.text.to_int())
@@ -14,6 +15,7 @@ func _on_host_pressed():
 
 func _on_connect_pressed():
 	$"..".change_menu(null)
+	$"../Chatbox".show()
 	# Start as client.
 	var txt : String = $Net/Options/Remote.text
 	if txt == "":

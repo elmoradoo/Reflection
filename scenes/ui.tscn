@@ -1,14 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://boyfws3lkscvi"]
+[gd_scene load_steps=5 format=3 uid="uid://boyfws3lkscvi"]
 
 [ext_resource type="Script" path="res://scripts/menu/ui.gd" id="1_ghejl"]
 [ext_resource type="Script" path="res://scripts/menu/main.gd" id="2_2oujh"]
 [ext_resource type="Script" path="res://scripts/menu/multiplayer.gd" id="3_1abx8"]
+[ext_resource type="Script" path="res://scripts/menu/chatbox.gd" id="4_uvd1u"]
 
 [node name="UI" type="Control"]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -136.0
 offset_right = 97.0
-offset_bottom = 136.0
+grow_vertical = 0
 script = ExtResource("1_ghejl")
 
 [node name="MainMenu" type="MarginContainer" parent="."]
@@ -62,6 +66,35 @@ expand_to_text_length = true
 layout_mode = 2
 text = "25565"
 expand_to_text_length = true
+
+[node name="Chatbox" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -544.0
+offset_right = 500.0
+grow_vertical = 0
+script = ExtResource("4_uvd1u")
+
+[node name="Container" type="VBoxContainer" parent="Chatbox"]
+layout_mode = 2
+
+[node name="ChatHistory" type="RichTextLabel" parent="Chatbox/Container"]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+scroll_following = true
+
+[node name="SendMessage" type="TextEdit" parent="Chatbox/Container"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+placeholder_text = "Send message..."
+context_menu_enabled = false
+drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
+middle_mouse_paste_enabled = false
+caret_blink = true
 
 [connection signal="pressed" from="MainMenu/VBoxContainer/NewGame" to="MainMenu" method="_on_new_game_pressed"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/Multiplayer" to="MainMenu" method="_on_multiplayer_pressed"]
