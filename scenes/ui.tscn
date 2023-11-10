@@ -84,7 +84,16 @@ layout_mode = 2
 [node name="ChatHistory" type="RichTextLabel" parent="Chatbox/Container"]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
+bbcode_enabled = true
+scroll_active = false
 scroll_following = true
+
+[node name="Panel" type="Panel" parent="Chatbox/Container/ChatHistory"]
+modulate = Color(0.298039, 0.298039, 0.298039, 0.756863)
+layout_mode = 1
+offset_right = 500.0
+offset_bottom = 500.0
+size_flags_vertical = 8
 
 [node name="SendMessage" type="TextEdit" parent="Chatbox/Container"]
 custom_minimum_size = Vector2(0, 40)
@@ -100,3 +109,5 @@ caret_blink = true
 [connection signal="pressed" from="MainMenu/VBoxContainer/Multiplayer" to="MainMenu" method="_on_multiplayer_pressed"]
 [connection signal="pressed" from="MultiplayerMenu/Net/Options/Host" to="MultiplayerMenu" method="_on_host_pressed"]
 [connection signal="pressed" from="MultiplayerMenu/Net/Options/Connect" to="MultiplayerMenu" method="_on_connect_pressed"]
+[connection signal="focus_entered" from="Chatbox/Container/SendMessage" to="Chatbox" method="_on_send_message_focus_entered"]
+[connection signal="focus_exited" from="Chatbox/Container/SendMessage" to="Chatbox" method="_on_send_message_focus_exited"]
