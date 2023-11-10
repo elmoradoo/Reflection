@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=3 uid="uid://dj1jyicws5yii"]
+
+[ext_resource type="Script" path="res://scripts/ui/multiplayer.gd" id="1_i2r5o"]
+
+[node name="MultiplayerMenu" type="MarginContainer"]
+visible = false
+offset_right = 277.0
+offset_bottom = 34.0
+script = ExtResource("1_i2r5o")
+
+[node name="Net" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Options" type="HBoxContainer" parent="Net"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Net/Options"]
+layout_mode = 2
+text = "Direct:"
+
+[node name="Host" type="Button" parent="Net/Options"]
+layout_mode = 2
+text = "Host"
+
+[node name="Connect" type="Button" parent="Net/Options"]
+layout_mode = 2
+text = "Connect"
+
+[node name="Remote" type="LineEdit" parent="Net/Options"]
+layout_mode = 2
+text = "127.0.0.1"
+expand_to_text_length = true
+
+[node name="Port" type="LineEdit" parent="Net/Options"]
+layout_mode = 2
+text = "25565"
+expand_to_text_length = true
+
+[connection signal="pressed" from="Net/Options/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="Net/Options/Connect" to="." method="_on_connect_pressed"]

@@ -11,13 +11,15 @@ config_version=5
 [application]
 
 config/name="Reflection"
-run/main_scene="res://scenes/ui.tscn"
+run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Chat="*res://scripts/global/chat_autoload.gd"
+Chat="*res://scripts/global/chat.gd"
+UI="*res://scripts/global/ui.gd"
+GameVars="*res://scripts/global/game_vars.gd"
 
 [display]
 

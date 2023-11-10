@@ -4,7 +4,7 @@ extends Node
 func _input(event):
 	# The server can restart the level by pressing Home.
 	if event.is_action("ui_home") and Input.is_action_just_pressed("ui_home"):
-		change_level.call_deferred(load("res://scenes/world.tscn"))
+		change_level.call_deferred(load(GameVars.LEVEL_SCENE))
 		spawn_all_players.call_deferred()
 		send_server_message("Level reset\n")
 
@@ -28,7 +28,7 @@ func spawn_all_players():
 	spawn_player(multiplayer.multiplayer_peer.get_unique_id())
 
 func spawn_player(id: int):
-	var player = load("res://scenes/player.tscn").instantiate()
+	var player = load(GameVars.PLAYER_SCENE).instantiate()
 	player.name = str(id)
 	$Players.add_child(player)
 	send_server_message("Player " + player.name + " connected.\n")
@@ -50,5 +50,5 @@ func start_game():
 	# Clients will instantiate the level via the spawner.
 	multiplayer.peer_disconnected.connect(despawn_player, CONNECT_DEFERRED)
 	multiplayer.peer_connected.connect(spawn_player, CONNECT_DEFERRED)
-	change_level.call_deferred(load("res://scenes/world.tscn"))
+	change_level.call_deferred(load(GameVars.LEVEL_SCENE))
 	spawn_all_players.call_deferred()

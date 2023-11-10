@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://127tit6n6y37"]
+
+[ext_resource type="Script" path="res://scripts/ui/chatbox.gd" id="1_kiwux"]
+
+[node name="Chatbox" type="MarginContainer"]
+visible = false
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -544.0
+offset_right = 500.0
+grow_vertical = 0
+script = ExtResource("1_kiwux")
+
+[node name="Container" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="ChatHistory" type="RichTextLabel" parent="Container"]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+bbcode_enabled = true
+scroll_active = false
+scroll_following = true
+
+[node name="Panel" type="Panel" parent="Container/ChatHistory"]
+modulate = Color(0.298039, 0.298039, 0.298039, 0.756863)
+show_behind_parent = true
+layout_mode = 1
+offset_right = 500.0
+offset_bottom = 500.0
+size_flags_vertical = 8
+
+[node name="SendMessage" type="TextEdit" parent="Container"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+placeholder_text = "<Enter> Send message..."
+context_menu_enabled = false
+drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
+middle_mouse_paste_enabled = false
+caret_blink = true
+
+[connection signal="focus_entered" from="Container/SendMessage" to="." method="_on_send_message_focus_entered"]
+[connection signal="focus_exited" from="Container/SendMessage" to="." method="_on_send_message_focus_exited"]

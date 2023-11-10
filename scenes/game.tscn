@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://boyfws3lkscvi"]
+
+[ext_resource type="PackedScene" uid="uid://dlthdulwailpp" path="res://scenes/ui/main_menu.tscn" id="1_0vsy5"]
+[ext_resource type="PackedScene" uid="uid://dj1jyicws5yii" path="res://scenes/ui/multiplayer_menu.tscn" id="2_htmvt"]
+[ext_resource type="PackedScene" uid="uid://127tit6n6y37" path="res://scenes/ui/chatbox.tscn" id="3_b046d"]
+
+[node name="Game" type="Node"]
+
+[node name="MainMenu" parent="." instance=ExtResource("1_0vsy5")]
+visible = true
+
+[node name="MultiplayerMenu" parent="." instance=ExtResource("2_htmvt")]
+
+[node name="Chatbox" parent="." instance=ExtResource("3_b046d")]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://ba1e2q3t5cyfk"]
 
-[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_wmnds"]
-[ext_resource type="PackedScene" uid="uid://4o88wc2qx88c" path="res://assets/player/raw/player-model.glb" id="2_8sdnf"]
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_nfg6f"]
+[ext_resource type="PackedScene" uid="uid://4o88wc2qx88c" path="res://assets/player/raw/player-model.glb" id="2_sbkby"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_c8erx"]
 properties/0/path = NodePath(".:position")
@@ -119,7 +119,7 @@ _data = {
 
 [node name="player" type="CharacterBody3D"]
 collision_layer = 2
-script = ExtResource("1_wmnds")
+script = ExtResource("1_nfg6f")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_c8erx")
@@ -188,6 +188,6 @@ wait_time = 0.5
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_wqrwg")
 
-[node name="player_model" parent="." instance=ExtResource("2_8sdnf")]
+[node name="player_model" parent="." instance=ExtResource("2_sbkby")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 visible = false

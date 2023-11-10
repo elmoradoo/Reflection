@@ -1,9 +1,25 @@
 extends Node
 
 
+@onready var multiplayer_scene: Node = load(GameVars.MULTIPLAYER_SCENE).instantiate()
+
+
+func prepare_spawners():
+	var level_spawner = get_node(GameVars.MULTIPLAYER_LEVEL_SPAWNER)
+	level_spawner.add_spawnable_scene(GameVars.LEVEL_SCENE)
+	var player_spawner = get_node(GameVars.MULTIPLAYER_PLAYER_SPAWNER)
+	player_spawner.add_spawnable_scene(GameVars.PLAYER_SCENE)
+
+func prepare_multiplayer(scene_script: String):
+	UI.multiplayer(false)
+	UI.chatbox(true)
+	get_tree().root.add_child(multiplayer_scene)
+	prepare_spawners()
+	multiplayer_scene.set_script(load(scene_script))
+	multiplayer_scene.set_process_input(true)
+
 func _on_host_pressed():
-	$"..".change_menu(null)
-	$"../Chatbox".show()
+	prepare_multiplayer(GameVars.MULTIPLAYER_SERVER_SCRIPT)
 	# Start as server.
 	var peer = ENetMultiplayerPeer.new()
 	peer.create_server($Net/Options/Port.text.to_int())
@@ -11,14 +27,10 @@ func _on_host_pressed():
 		OS.alert("Failed to start multiplayer server.")
 		return
 	multiplayer.multiplayer_peer = peer
-	var multiplayer_scene = get_node("/root/MultiplayerScene")
-	multiplayer_scene.set_script(load("res://scripts/multiplayer/server.gd"))
-	multiplayer_scene.set_process_input(true)
 	multiplayer_scene.host_lobby()
 
 func _on_connect_pressed():
-	$"..".change_menu(null)
-	$"../Chatbox".show()
+	prepare_multiplayer(GameVars.MULTIPLAYER_CLIENT_SCRIPT)
 	# Start as client.
 	var txt : String = $Net/Options/Remote.text
 	if txt == "":
@@ -30,7 +42,4 @@ func _on_connect_pressed():
 		OS.alert("Failed to start multiplayer client.")
 		return
 	multiplayer.multiplayer_peer = peer
-	var multiplayer_scene = get_node("/root/MultiplayerScene")
-	multiplayer_scene.set_script(load("res://scripts/multiplayer/client.gd"))
-	multiplayer_scene.set_process_input(true)
 	multiplayer_scene.join_lobby()
