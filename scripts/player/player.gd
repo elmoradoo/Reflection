@@ -38,8 +38,11 @@ func _enter_tree():
 
 func _on_get_stats_timeout():
 	var DEBUG_ARRAY = [
-	"Current State: " + str(player_state_manager.debug_print_player_state()),
+	"Current State: " + str(player_state_manager.debug_get_player_state()),
 	"Velocity: " + str(velocity.length()),
+	"VelocityX: " + str(velocity.x),
+	"VelocityY: " + str(velocity.y),
+	"VelocityZ: " + str(velocity.z),
 	"FeetDownRC: " + str($raycasts/feets/down.is_colliding()),
 	"WallClimbTimeLeft: " + str($timers/wallclimb_time.time_left)
 	]

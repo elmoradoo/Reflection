@@ -37,10 +37,10 @@ func get_next_state():
 		return enums.player_states.Sprinting
 	elif player.myself.is_on_floor():
 		return enums.player_states.Idle
-	elif player.rc_feets.get_node("front").is_colliding() and not player.rc_head.get_node("front").is_colliding():
+	elif super.can_ledge_grab(player):
 		return enums.player_states.LedgeGrab
-	elif player.velocity.y >= 6 and not player.rc_feets.get_node("front").is_colliding():
-		return enums.player_states.LedgeGrab 
+	elif super.can_vault(player):
+		return enums.player_states.Vault
 	elif player.timers.get_node("wallclimb_time").time_left == 0:
 		return enums.player_states.AirTime
 	else:

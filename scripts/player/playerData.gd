@@ -68,8 +68,8 @@ func init(se, rays):
 func update(del):
 	self.delta = del
 	input_dir = Input.get_vector("left", "right", "forward", "backward")
-	#if gravity_enabled:
-	velocity.y -= gravity * delta
+	if gravity_enabled:
+		velocity.y -= gravity * delta
 
 func update_event(e):
 	event = e

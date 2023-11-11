@@ -29,6 +29,8 @@ func get_next_state():
 		if velocity_before_landing.y <= roll_min_velocity and Input.is_action_pressed("crouch"):
 			return enums.player_states.Rolling
 		return enums.player_states.Idle
+	elif super.can_ledge_grab(player):
+		return enums.player_states.LedgeGrab
 	elif super.can_vault(player):
 		return enums.player_states.Vault
 	elif super.can_wallclimb(player):

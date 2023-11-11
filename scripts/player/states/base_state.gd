@@ -74,6 +74,18 @@ func can_wallrun(player: playerData) -> bool:
 		return false
 
 func can_vault(player: playerData) -> bool:
+	if (player.rc_torso.get_node("front").is_colliding() 
+		and not player.rc_head.get_node("front").is_colliding()
+		and player.velocity.y > 1):
+			return true
+	return false
 	if not player.rc_torso.get_node("front").is_colliding() and player.rc_feets.get_node("front").is_colliding():
+		return true
+	return false
+	
+func can_ledge_grab(player: playerData) -> bool:
+	if (player.rc_torso.get_node("front").is_colliding() 
+		and not player.rc_head.get_node("front").is_colliding()
+		and player.velocity.y < 1):
 		return true
 	return false

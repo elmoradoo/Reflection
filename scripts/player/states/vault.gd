@@ -12,6 +12,8 @@ func enter():
 	player.crouching_collision_shape.disabled = true
 	player.coiling_collision_shape.disabled = false
 	#player.gravity_enabled = false
+	if player.velocity.y > 3:
+		print("fast vault")
 
 func update():
 	super.update_event(player)

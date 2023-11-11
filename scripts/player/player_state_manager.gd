@@ -24,8 +24,11 @@ var state_scripts = {
 	enums.player_states.Rolling: preload("res://scripts/player/states/rolling.gd").new(),
 }
 
-func debug_print_player_state():
+func debug_get_player_state():
 	return enums.player_states.keys()[player.current_state.get_state_name()]
+
+func debug_print_player_state():
+	print(enums.player_states.keys()[player.current_state.get_state_name()])
 
 func init(player_object):
 	player = player_object
@@ -44,6 +47,5 @@ func run():
 		player.current_state.exit()
 		player.current_state = state_scripts[next_state]
 		player.current_state.enter()
-		#debug_print_player_state()
-		#print(player.velocity.y)
+		debug_print_player_state()
 	player.current_state.update()
