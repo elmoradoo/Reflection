@@ -5,6 +5,7 @@ const max_speed: float = 5.0
 var enums = preload("res://scripts/player/enums.gd")
 
 const sliding_initial_force: float = 1.2
+const min_sliding_speed: float = 4
 
 func init(obj):
 	player = obj
@@ -29,11 +30,11 @@ func exit():
 	pass
 
 func get_next_state():
-	if Input.is_action_just_released("crouch"):
+	if Input.is_action_just_released("crouch") and not player.raycasts.get_node("top_of_head").is_colliding():
 		return enums.player_states.Idle
-	elif Input.is_action_pressed("crouch") and player.velocity.length() <= 4:
+	elif Input.is_action_pressed("crouch") and player.velocity.length() <= min_sliding_speed:
 		return enums.player_states.Crouching
-	elif Input.is_action_pressed("crouch"):
+	elif Input.is_action_pressed("crouch") and player.velocity.length() > min_sliding_speed:
 		return enums.player_states.Sliding
 	else:
-		return enums.player_states.NULL
+		return enums.player_states.Crouching
