@@ -39,7 +39,7 @@ func get_next_state():
 	if Input.is_action_just_pressed("crouch"):
 		return enums.player_states.AirTime
 	elif Input.is_action_just_pressed("jump"):
-		return enums.player_states.Vault
+		return enums.player_states.LedgeClimb
 	
 #	if player.myself.is_on_floor():
 #		if player.velocity.length() >= 2:

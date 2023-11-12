@@ -12,6 +12,7 @@ enum player_states {
 	WallClimb,
 	WallRun,
 	LedgeGrab,
+	LedgeClimb,
 	Vault,
 	Rolling,
 }

@@ -43,6 +43,7 @@ func _on_get_stats_timeout():
 	"VelocityX: " + str(velocity.x),
 	"VelocityY: " + str(velocity.y),
 	"VelocityZ: " + str(velocity.z),
+	"Inputs: " + str(player_object.input_dir),
 	"FeetDownRC: " + str($raycasts/feets/down.is_colliding()),
 	"WallClimbTimeLeft: " + str($timers/wallclimb_time.time_left)
 	]

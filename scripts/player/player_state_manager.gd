@@ -20,6 +20,7 @@ var state_scripts = {
 	enums.player_states.WallClimb: preload("res://scripts/player/states/wallclimb.gd").new(),
 	enums.player_states.WallRun: preload("res://scripts/player/states/wallrun.gd").new(),
 	enums.player_states.LedgeGrab: preload("res://scripts/player/states/ledgegrab.gd").new(),
+	enums.player_states.LedgeClimb: preload("res://scripts/player/states/ledgeclimb.gd").new(),
 	enums.player_states.Vault: preload("res://scripts/player/states/vault.gd").new(),
 	enums.player_states.Rolling: preload("res://scripts/player/states/rolling.gd").new(),
 }

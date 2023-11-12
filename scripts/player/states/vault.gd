@@ -3,6 +3,7 @@ extends BaseState
 var enums = preload("res://scripts/player/enums.gd")
 
 var player: playerData
+var is_fast_vault = false
 
 func init(obj):
 	player = obj
@@ -13,12 +14,25 @@ func enter():
 	player.coiling_collision_shape.disabled = false
 	#player.gravity_enabled = false
 	if player.velocity.y > 3:
-		print("fast vault")
+		is_fast_vault = true
 
+func climb_vault():
+	pass
+	
+func fast_vault():
+	player.velocity.y += 0.2
+#	if not player.rc_feets.get_node("front").is_colliding():
+#		var target_velocity = (player.transform.basis * Vector3(0, 0, -1)) * 2
+#		player.velocity = target_velocity
+#		if player.myself.is_on_floor():
+#			is_vault_over = true
+	
 func update():
 	super.update_event(player)
-	if player.rc_feets.get_node("front").is_colliding():
-		player.velocity.y += 0.1
+	if is_fast_vault:
+		fast_vault()
+	else:
+		climb_vault()
 	#else:
 	#	var target_velocity = (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized() * 3
 	#	player.velocity = target_velocity
