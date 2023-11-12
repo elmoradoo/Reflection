@@ -36,7 +36,7 @@ var direction: Vector3 = Vector3.ZERO
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 const mouse_sensitivity: float = 0.2
 var gravity_enabled: bool = true
-var delta
+@onready var delta = get_physics_process_delta_time()
 
 func _enter_tree():
 	if str(name).is_valid_int():
@@ -89,8 +89,8 @@ func _unhandled_key_input(event):
 	if not UI.IS_FOCUSED:
 		player_state_manager.update_event(event)
 
-func _physics_process(delta):
-	self.delta = delta
+func _physics_process(physics_delta):
+	delta = physics_delta
 	move_and_slide()
 	if gravity_enabled and not is_on_floor():
 		velocity.y -= gravity * delta
