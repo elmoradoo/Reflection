@@ -17,9 +17,6 @@ func enter():
 
 func exit():
 	done = false
-	player.coiling_collision_shape.disabled = true
-	player.standing_collision_shape.disabled = false
-	player.crouching_collision_shape.disabled = false
 
 func move_player():
 	#player.myself.position.y += 0.1
@@ -28,6 +25,9 @@ func move_player():
 		player.velocity.y += 2.0
 	if player.velocity.y >= 6.0:
 		done = true
+		player.coiling_collision_shape.disabled = true
+		player.standing_collision_shape.disabled = false
+		player.crouching_collision_shape.disabled = false
 	var target_velocity = (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized() * 2.0
 	player.velocity.x = target_velocity.x
 	player.velocity.z = target_velocity.z
