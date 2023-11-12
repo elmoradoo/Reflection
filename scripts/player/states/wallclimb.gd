@@ -31,7 +31,7 @@ func update():
 	super.reset_head_bob()
 	player.velocity.y += 0.2 * player.timers.get_node("wallclimb_time").time_left
 	
-func get_next_state():
+func get_physics_next_state():
 	if player.is_on_floor() and player.velocity.length() >= 2:
 		return enums.player_states.Sprinting
 	elif player.is_on_floor():

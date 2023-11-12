@@ -23,7 +23,7 @@ func update():
 func exit():
 	pass
 
-func get_next_state():
+func get_physics_next_state():
 	if not player.is_on_floor():
 		return enums.player_states.AirTime
 	return enums.player_states.Jumping

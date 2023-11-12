@@ -51,13 +51,15 @@ func reset_head_bob():
 	player.eyes.position.y = lerp(player.eyes.position.y, 0.0, player.delta * head_bobbing_lerp)
 	player.eyes.position.x = lerp(player.eyes.position.x, 0.0, player.delta * head_bobbing_lerp)
 
-func update_event(event):
+func update_mouse(event):
 	if event is InputEventMouseMotion:
 		player.rotate_y(deg_to_rad(-event.relative.x * player.mouse_sensitivity))
 		player.head.rotate_x(deg_to_rad(-event.relative.y * player.mouse_sensitivity))
 		player.head.rotation.x = clamp(player.head.rotation.x, deg_to_rad(-89), deg_to_rad(89))
-	elif event is InputEventKey:
-		player.input_dir = Input.get_vector("left", "right", "forward", "backward")
+
+func get_input_next_state():
+	player.input_dir = Input.get_vector("left", "right", "forward", "backward")
+
 
 func can_wallclimb() -> bool:
 	if not player.rc_torso.get_node("front").is_colliding() or player.velocity.y < climbable_min_velocity:

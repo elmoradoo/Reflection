@@ -38,7 +38,7 @@ func update():
 #	player.velocity = target_velocity
 
 
-func get_next_state():
+func get_physics_next_state():
 	if player.is_on_floor():
 		return enums.player_states.Idle
 	#if not player.rc_feets.get_node("front").is_colliding():

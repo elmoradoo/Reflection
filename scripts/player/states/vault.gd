@@ -42,7 +42,7 @@ func exit():
 func get_state_name(): 
 	return enums.player_states.Vault
 
-func get_next_state():
+func get_physics_next_state():
 	if player.is_on_floor():
 		if player.velocity.length() >= 2:
 			return enums.player_states.Sprinting

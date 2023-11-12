@@ -22,15 +22,14 @@ func update():
 	player.velocity.x = move_toward(player.velocity.x, 0, idle_lerp_speed)
 	player.velocity.z = move_toward(player.velocity.z, 0, idle_lerp_speed)
 
-func update_event(event: InputEvent):
-	super.update_event(event)
-	if event is InputEventKey:
-		if event.is_action_pressed("crouch"):
-			return enums.player_states.Crouching
-		elif event.is_action_pressed("jump"):
-			return enums.player_states.Jumping
+func get_input_next_state():
+	super.get_input_next_state()
+	if Input.is_action_pressed("crouch"):
+		return enums.player_states.Crouching
+	elif Input.is_action_pressed("jump"):
+		return enums.player_states.Jumping
 
-func get_next_state():
+func get_physics_next_state():
 	if player.input_dir != Vector2.ZERO:
 		return enums.player_states.Sprinting
 	return enums.player_states.Idle

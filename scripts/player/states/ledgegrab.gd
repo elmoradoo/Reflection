@@ -35,16 +35,15 @@ func update():
 		#player.velocity.y += player.gravity
 
 
-func update_event(event: InputEvent):
-	super.update_event(event)
-	if event is InputEventKey:
-		if event.is_action_released("crouch"):
-			return enums.player_states.AirTime
-		elif event.is_action_pressed("jump"):
-			return enums.player_states.LedgeClimb
+func get_input_next_state():
+	super.get_input_next_state()
+	if Input.is_action_just_released("crouch"):
+		return enums.player_states.AirTime
+	elif Input.is_action_pressed("jump"):
+		return enums.player_states.LedgeClimb
 
 
-func get_next_state():
+func get_physics_next_state():
 #	if player.is_on_floor():
 #		if player.velocity.length() >= 2:
 #			return enums.player_states.Sprinting

@@ -31,20 +31,27 @@ func init(player):
 	for state_script in state_scripts.values():
 		state_script.init(player)
 	current_state = state_scripts[enums.player_states.Idle]
+	#Get mouse movement
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func change_state(next_state):
-	if next_state != current_state.get_state_name():
+	if next_state and next_state != current_state.get_state_name():
 		current_state.exit()
 		current_state = state_scripts[next_state]
 		current_state.enter()
 		debug_print_player_state()
 
+
 func update_event(event):
-	var next_state = current_state.update_event(event)
-	if next_state:
-		change_state(next_state)
+	if not UI.IS_FOCUSED and event is InputEventMouseMotion:
+		current_state.update_mouse(event)
+
 
 func run():
-	var next_state = current_state.get_next_state()
-	change_state(next_state)
+	# Handle player inputs only of UI is not focused.
+	if not UI.IS_FOCUSED:
+		change_state(current_state.get_input_next_state())
+
+	# Change state depending on physics, does not care about UI
+	change_state(current_state.get_physics_next_state())
 	current_state.update()

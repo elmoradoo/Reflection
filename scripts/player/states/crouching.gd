@@ -24,20 +24,19 @@ func update():
 	player.velocity.z = player.direction.z * max_speed
 	player.direction = lerp(player.direction, (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized(), lerp_speed * player.delta)
 
-func update_event(event: InputEvent):
-	super.update_event(event)
-	if event is InputEventKey:
-		if event.is_action_pressed("crouch"):
-			crouch_released = false
+func get_input_next_state():
+	super.get_input_next_state()
+	if Input.is_action_pressed("crouch"):
+		crouch_released = false
+		return enums.player_states.Crouching
+	elif Input.is_action_just_released("crouch"):
+		crouch_released = true
+		if player.raycasts.get_node("top_of_head").is_colliding():
 			return enums.player_states.Crouching
-		elif event.is_action_released("crouch"):
-			crouch_released = true
-			if player.raycasts.get_node("top_of_head").is_colliding():
-				return enums.player_states.Crouching
-			else:
-				return enums.player_states.Idle
+		else:
+			return enums.player_states.Idle
 
-func get_next_state():
+func get_physics_next_state():
 	if not crouch_released or player.raycasts.get_node("top_of_head").is_colliding():
 		return enums.player_states.Crouching
 	else:

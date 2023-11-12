@@ -74,20 +74,15 @@ func _ready():
 
 	$neck/head/eyes/Camera3D.current = true
 
-	#Get mouse movement
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	#Init player object
 	#Init script manager
 	player_state_manager.init(self)
 	$timers/get_stats.start()
 
-func _input(event):
-	if event is InputEventMouseMotion:
-		player_state_manager.update_event(event)
 
-func _unhandled_key_input(event):
-	if not UI.IS_FOCUSED:
-		player_state_manager.update_event(event)
+func _input(event):
+	player_state_manager.update_event(event)
+
 
 func _physics_process(physics_delta):
 	delta = physics_delta

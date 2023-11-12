@@ -25,17 +25,16 @@ func update():
 func exit():
 	pass
 
-func update_event(event: InputEvent):
-	super.update_event(event)
-	if event is InputEventKey:
-		if event.is_action_released("crouch"):
-			if not player.raycasts.get_node("top_of_head").is_colliding():
-				return enums.player_states.Idle
-			else:
-				return enums.player_states.Crouching
+func get_input_next_state():
+	super.get_input_next_state()
+	if Input.is_action_just_released("crouch"):
+		if not player.raycasts.get_node("top_of_head").is_colliding():
+			return enums.player_states.Idle
+		else:
+			return enums.player_states.Crouching
 
 
-func get_next_state():
+func get_physics_next_state():
 	if player.velocity.length() > min_sliding_speed:
 		return enums.player_states.Sliding
 	else:

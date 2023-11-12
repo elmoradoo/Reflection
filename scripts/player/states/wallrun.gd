@@ -46,14 +46,13 @@ func exit():
 func update():
 	pass
 
-func update_event(event: InputEvent):
-	super.update_event(event)
-	if event is InputEventKey:
-		if event.is_action_pressed("jump") and not is_jumping:
-			is_jumping = true
-			return enums.player_states.Jumping
+func get_input_next_state():
+	super.get_input_next_state()
+	if Input.is_action_pressed("jump") and not is_jumping:
+		is_jumping = true
+		return enums.player_states.Jumping
 
-func get_next_state():
+func get_physics_next_state():
 	if player.is_on_floor() and player.velocity.length() >= 2:
 		return enums.player_states.Sprinting
 	elif player.is_on_floor():

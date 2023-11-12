@@ -29,7 +29,7 @@ func exit():
 func update():
 	pass
 
-func get_next_state():
+func get_physics_next_state():
 	if not is_rolling:
 		return enums.player_states.Idle
 	return enums.player_states.Rolling
