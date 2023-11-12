@@ -1,11 +1,10 @@
 extends BaseState
 
-var player: playerData
+
 var enums = preload("res://scripts/player/enums.gd")
 var old_vel: Vector3 = Vector3.ZERO
 var done: bool = false
-func init(obj):
-	player = obj
+
 
 func get_state_name():
 	return enums.player_states.LedgeClimb
@@ -23,7 +22,6 @@ func exit():
 	player.crouching_collision_shape.disabled = false
 
 func update():
-	super.update_event(player)
 	#player.myself.position.y += 0.1
 	#player.myself.position.x -= 0.1
 	if not done:
@@ -41,7 +39,7 @@ func update():
 
 
 func get_next_state():
-	if player.myself.is_on_floor():
+	if player.is_on_floor():
 		return enums.player_states.Idle
 	#if not player.rc_feets.get_node("front").is_colliding():
 	#	return enums.player_states.AirTime

@@ -19,7 +19,7 @@ func exit():
 
 func update():
 	super.reset_head_bob()
-	#velocity_before_landing = player.velocity
+	velocity_before_landing = player.velocity
 
 func get_next_state():
 	if player.is_on_floor():
@@ -35,8 +35,6 @@ func get_next_state():
 	elif super.can_wallclimb():
 		return enums.player_states.WallClimb
 	elif super.can_wallrun():
-		player.velocity = velocity_before_landing
-		print("Airtime velocity: " + str(velocity_before_landing))
 		return enums.player_states.WallRun
 
 	return enums.player_states.AirTime

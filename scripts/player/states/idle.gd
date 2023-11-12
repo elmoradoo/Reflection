@@ -16,9 +16,9 @@ func get_state_name():
 	return enums.player_states.Idle
 
 func update():
-	stand_up()
-	reset_neck()
-	reset_head_bob()
+	super.stand_up()
+	super.reset_neck()
+	super.reset_head_bob()
 	player.velocity.x = move_toward(player.velocity.x, 0, idle_lerp_speed)
 	player.velocity.z = move_toward(player.velocity.z, 0, idle_lerp_speed)
 

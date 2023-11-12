@@ -56,14 +56,8 @@ func update_event(event):
 		player.rotate_y(deg_to_rad(-event.relative.x * player.mouse_sensitivity))
 		player.head.rotate_x(deg_to_rad(-event.relative.y * player.mouse_sensitivity))
 		player.head.rotation.x = clamp(player.head.rotation.x, deg_to_rad(-89), deg_to_rad(89))
-	##if player.get_last_slide_collision():
-	#	print(player.get_last_slide_collision().get_travel())
-	#for i in range(player.get_slide_collision_count()):
-		#if player.get_slide_collision(i-1):
-			#print(str(i) + " collision normal: " + str(player.get_slide_collision(i-1).get_normal()))
 
 func can_wallclimb() -> bool:
-	#print("player= " + str(player.velocity.y) + "  required= " + str(climbable_min_velocity))
 	if not player.rc_torso.get_node("front").is_colliding() or player.velocity.y < climbable_min_velocity:
 		return false
 	var collision = player.rc_torso.get_node("front").get_collision_normal()
@@ -75,7 +69,15 @@ func can_wallclimb() -> bool:
 		return true
 
 func can_wallrun() -> bool:
-	return player.is_on_wall_only()
+	if not player.rc_torso.get_node("front").is_colliding():
+		return false
+	var collision = player.rc_torso.get_node("front").get_collision_normal()
+	var ray_direction = player.rc_torso.get_node("front").global_transform.basis.z.normalized()
+	var dot_product = abs(collision.dot(ray_direction))
+	if dot_product < 0.8:
+		return true
+	else:
+		return false
 
 func can_ledgeclimb() -> bool:
 	if (player.rc_torso.get_node("front").is_colliding() 

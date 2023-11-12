@@ -40,9 +40,6 @@ func get_next_state():
 		return enums.player_states.LedgeGrab
 	elif super.can_ledgeclimb():
 		return enums.player_states.LedgeClimb
-	elif player.timers.get_node("wallclimb_time").time_left == 0:
-	elif super.can_vault():
-		return enums.player_states.Vault
 	elif climb_is_over or not super.can_wallclimb():
 		return enums.player_states.AirTime
 	else:
