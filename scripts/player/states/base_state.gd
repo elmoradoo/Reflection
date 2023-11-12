@@ -29,6 +29,10 @@ const sliding_minimum_velocity: float = 5.0
 #Wallrun vars
 const wallrun_jumping_velocity: float = 7.0
 
+var enums = preload("res://scripts/player/enums.gd")
+
+func get_state_name():
+	return null
 
 func init(player_obj: Player):
 	player = player_obj
@@ -69,7 +73,7 @@ func _on_collision(_old_vel, _collider_id):
 func move_player():
 	var oldvel = player.velocity
 	player.move_and_slide()
-	if abs(oldvel.length() - player.velocity.length()) > 1:
+	if abs(oldvel.length() - player.velocity.length()) > 1 and self.get_state_name() == enums.player_states.WallRun:
 		# collision happened!
 		collision.emit(oldvel, player.new_collider_id)
 		player.new_collider_id = player.get_last_slide_collision().get_collider_id()

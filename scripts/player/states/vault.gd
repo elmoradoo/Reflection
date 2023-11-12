@@ -1,6 +1,5 @@
 extends BaseState
 
-var enums = preload("res://scripts/player/enums.gd")
 
 var is_fast_vault = false
 

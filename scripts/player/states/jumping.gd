@@ -2,7 +2,6 @@ extends BaseState
 
 
 const jump_velocity: float = 4.5
-var enums = preload("res://scripts/player/enums.gd")
 
 
 func get_state_name():

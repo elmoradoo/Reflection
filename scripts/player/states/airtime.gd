@@ -2,7 +2,6 @@ extends BaseState
 
 
 const max_speed: float = 3.0
-var enums = preload("res://scripts/player/enums.gd")
 var velocity_before_landing: Vector3
 
 const roll_min_velocity = -8
