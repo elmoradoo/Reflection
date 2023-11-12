@@ -86,12 +86,12 @@ func _input(event):
 		player_state_manager.update_event(event)
 
 func _unhandled_key_input(event):
-	player_state_manager.update_event(event)
+	if not UI.IS_FOCUSED:
+		player_state_manager.update_event(event)
 
 func _physics_process(delta):
 	self.delta = delta
 	move_and_slide()
-	input_dir = Input.get_vector("left", "right", "forward", "backward")
 	if gravity_enabled and not is_on_floor():
 		velocity.y -= gravity * delta
 	elif is_on_floor():

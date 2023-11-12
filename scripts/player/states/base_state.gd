@@ -56,6 +56,8 @@ func update_event(event):
 		player.rotate_y(deg_to_rad(-event.relative.x * player.mouse_sensitivity))
 		player.head.rotate_x(deg_to_rad(-event.relative.y * player.mouse_sensitivity))
 		player.head.rotation.x = clamp(player.head.rotation.x, deg_to_rad(-89), deg_to_rad(89))
+	elif event is InputEventKey:
+		player.input_dir = Input.get_vector("left", "right", "forward", "backward")
 
 func can_wallclimb() -> bool:
 	if not player.rc_torso.get_node("front").is_colliding() or player.velocity.y < climbable_min_velocity:

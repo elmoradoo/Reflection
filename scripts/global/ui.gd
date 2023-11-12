@@ -2,7 +2,7 @@ extends Node
 
 
 const UI_BASE_PATH: String = "/root/Game/"
-
+@export var IS_FOCUSED: bool = false
 
 func _show_ui(ui_name: String):
 	var node = get_node(UI_BASE_PATH + ui_name)

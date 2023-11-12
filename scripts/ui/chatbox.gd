@@ -1,4 +1,4 @@
-extends Node
+extends Control
 
 
 var HISTORY_FOCUS_TRANSPARENCY: float = 1
@@ -14,17 +14,29 @@ func _ready():
 func new_chat_message(user: String, message: String, user_color="red", message_color="lightsteelblue"):
 	$Container/ChatHistory.text += "[b][color=" + user_color +"]" + user + "[/color][/b]" + ": " + "[color=" + message_color + "]" + message + "[/color]"
 
-func _physics_process(_delta):
-	if Input.is_action_just_pressed("ui_text_newline"):
-		var message = $Container/SendMessage.text
-		if message:
-			if message != "\n":
-				var username = str(multiplayer.multiplayer_peer.get_unique_id())
-				new_chat_message.rpc(username, message, "blue")
-			$Container/SendMessage.clear()
-			$Container/SendMessage.release_focus()
-		else:
-			$Container/SendMessage.grab_focus()
+# This allows us to grab the enter key ONLY when SendMessage is not focussed yet.
+func _unhandled_key_input(event):
+	if event.is_action_pressed("ui_text_newline"):
+		$Container/SendMessage.grab_focus()
+		UI.IS_FOCUSED = true
+
+# SendMessage captures all enter key inputs when focussed,
+# so here we use _input instead to override that.
+func _input(event):
+	if event.is_action_pressed("ui_text_newline"):
+		if $Container/SendMessage.has_focus():
+			var message = $Container/SendMessage.text
+			if message:
+				if message != "\n":
+					var username = str(multiplayer.multiplayer_peer.get_unique_id())
+					new_chat_message.rpc(username, message + str("\n"), "blue")
+				$Container/SendMessage.clear()
+				$Container/SendMessage.release_focus()
+				UI.IS_FOCUSED = false
+				# Without accept_event, SendMessage will grab the enter key input
+
+				accept_event()
+
 
 func _on_send_message_focus_entered():
 	$Container/ChatHistory/Panel.modulate.a = HISTORY_FOCUS_TRANSPARENCY
