@@ -42,6 +42,7 @@ func _enter_tree():
 	if str(name).is_valid_int():
 		set_multiplayer_authority(str(name).to_int())
 
+
 func _on_get_stats_timeout():
 	var DEBUG_ARRAY = [
 	"Current State: " + str(player_state_manager.debug_get_player_state()),
@@ -63,7 +64,14 @@ func _on_get_stats_timeout():
 		line_update.emit(current_pos, next_pos, linelength)
 
 func _ready():
-	if not is_multiplayer_authority(): return
+	# Block controlling other players in multiplayer
+	if not is_multiplayer_authority():
+		self.set_process_input(false)
+		self.set_process_unhandled_input(false)
+		self.set_process_unhandled_key_input(false)
+		self.set_physics_process(false)
+		return
+
 	$neck/head/eyes/Camera3D.current = true
 
 	#Get mouse movement
@@ -74,16 +82,13 @@ func _ready():
 	$timers/get_stats.start()
 
 func _input(event):
-	if not is_multiplayer_authority(): return
 	if event is InputEventMouseMotion:
 		player_state_manager.update_event(event)
 
 func _unhandled_key_input(event):
-	if not is_multiplayer_authority(): return
 	player_state_manager.update_event(event)
 
 func _physics_process(delta):
-	if not is_multiplayer_authority(): return
 	self.delta = delta
 	move_and_slide()
 	input_dir = Input.get_vector("left", "right", "forward", "backward")

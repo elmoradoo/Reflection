@@ -42,7 +42,6 @@ func change_state(next_state):
 func update_event(event):
 	var next_state = current_state.update_event(event)
 	if next_state:
-		print(next_state)
 		change_state(next_state)
 
 func run():
