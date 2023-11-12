@@ -6,7 +6,6 @@ var velocity_before_landing: Vector3
 
 const roll_min_velocity = -8
 
-
 func get_state_name():
 	return enums.player_states.AirTime
 

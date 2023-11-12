@@ -20,7 +20,7 @@ const head_bobbing_speed: float = 22.0
 const head_bobbing_lerp: float = 10.0
 
 #Climbing vars
-const climbable_min_velocity: float = 4.0
+const climbable_min_velocity: float = 3.0
 const wallrun_min_velocity: float = 1.0
 
 #Sliding vars

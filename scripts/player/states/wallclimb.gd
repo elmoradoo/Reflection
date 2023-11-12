@@ -1,9 +1,8 @@
 extends BaseState
 
-
 var old_vel: Vector3 = Vector3.ZERO
-
-var climb_is_over = false
+var climb_is_over: bool = false
+var climbing_speed: float = 0.2
 
 func climbing_timer():
 	climb_is_over = true
@@ -22,13 +21,12 @@ func enter():
 	player.velocity.z /= 4
 
 func exit():
-	#player.velocity = old_vel 
 	player.timers.get_node("wallclimb_time").stop()
 	climb_is_over = false
 
 func move_player():
 	super.reset_head_bob()
-	player.velocity.y += 0.2 * player.timers.get_node("wallclimb_time").time_left
+	player.velocity.y += climbing_speed * player.timers.get_node("wallclimb_time").time_left
 	super.move_player()
 
 func get_physics_next_state():

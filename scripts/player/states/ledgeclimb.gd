@@ -3,7 +3,7 @@ extends BaseState
 
 var old_vel: Vector3 = Vector3.ZERO
 var done: bool = false
-
+var ledgeclimb_speed: float = 2.0
 
 func get_state_name():
 	return enums.player_states.LedgeClimb
@@ -18,29 +18,19 @@ func exit():
 	done = false
 
 func move_player():
-	#player.myself.position.y += 0.1
-	#player.myself.position.x -= 0.1
 	if not done:
-		player.velocity.y += 2.0
+		player.velocity.y += ledgeclimb_speed
 	if player.velocity.y >= 6.0:
 		done = true
 		player.coiling_collision_shape.disabled = true
 		player.standing_collision_shape.disabled = false
 		player.crouching_collision_shape.disabled = false
-	var target_velocity = (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized() * 2.0
+	var target_velocity = (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized() * ledgeclimb_speed
 	player.velocity.x = target_velocity.x
 	player.velocity.z = target_velocity.z
 	super.move_player()
-	
-##	if not player.rc_torso.get_node("front").is_colliding() or not player.rc_feets.get_node("front").is_colliding():
-#	var target_velocity = (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)) * 2
-#	#print(target_velocity.z)
-#	player.velocity = target_velocity
-
 
 func get_physics_next_state():
 	if player.is_on_floor():
 		return enums.player_states.Idle
-	#if not player.rc_feets.get_node("front").is_colliding():
-	#	return enums.player_states.AirTime
 	return enums.player_states.LedgeClimb
