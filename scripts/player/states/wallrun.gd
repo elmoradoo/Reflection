@@ -20,8 +20,17 @@ func get_state_name():
 func enter():
 	old_vel = player.velocity
 	player.timers.get_node("wallrun_time").start()
-	player.velocity.y += 1
 
+	# Wait for new velocity to change after collision
+	var old_total_speed = player.velocity.length()
+	var max_move_attempts = 5
+	for i in range(max_move_attempts):
+		if player.velocity != old_vel:
+			break # Collision happened
+		player.move_and_slide()
+
+	# Take the velocity lost in the wall and put it back on the player
+	player.velocity += player.velocity.normalized() * (old_total_speed - player.velocity.length())
 
 func exit():
 	player.velocity = old_vel
@@ -35,7 +44,7 @@ func exit():
 
 
 func update():
-	player.velocity += player.velocity.normalized() * base_wallrun_speed * player.timers.get_node("wallrun_time").time_left
+	pass
 
 
 func get_next_state():
@@ -46,7 +55,7 @@ func get_next_state():
 	elif Input.is_action_just_pressed("jump") and not is_jumping:
 		is_jumping = true
 		return enums.player_states.Jumping
-	elif player.is_on_wall_only():
+	elif super.can_wallrun() or player.is_on_wall_only():
 		return enums.player_states.WallRun
 	return enums.player_states.AirTime
-	
+
