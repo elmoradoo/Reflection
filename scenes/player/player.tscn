@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://ba1e2q3t5cyfk"]
+[gd_scene load_steps=14 format=3 uid="uid://ba1e2q3t5cyfk"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_nfg6f"]
 [ext_resource type="Script" path="res://scripts/player/debug/debug_velocity.gd" id="2_en4pu"]
@@ -25,8 +25,6 @@ height = 1.2
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ep87d"]
 height = 1.2
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j5au7"]
 
 [sub_resource type="Animation" id="Animation_rcd5g"]
 length = 0.001
@@ -170,9 +168,14 @@ target_position = Vector3(0, 2, 0)
 [node name="front" type="RayCast3D" parent="raycasts/feets"]
 target_position = Vector3(0, 0, -1.5)
 
-[node name="down" type="ShapeCast3D" parent="raycasts/feets"]
-transform = Transform3D(1, 0, 0, 0, 0.407171, 0, 0, 0, 1.26889, 0, 0, 0)
-shape = SubResource("CapsuleShape3D_j5au7")
+[node name="down" type="RayCast3D" parent="raycasts/feets"]
+target_position = Vector3(0, -0.5, 0)
+
+[node name="downfront" type="RayCast3D" parent="raycasts/feets"]
+target_position = Vector3(0, -0.5, -0.5)
+
+[node name="downback" type="RayCast3D" parent="raycasts/feets"]
+target_position = Vector3(0, -0.5, 0.5)
 
 [node name="head" type="Node3D" parent="raycasts"]
 
@@ -220,6 +223,9 @@ wait_time = 0.6
 
 [node name="get_stats" type="Timer" parent="timers"]
 wait_time = 0.093
+
+[node name="vault_time" type="Timer" parent="timers"]
+wait_time = 0.3
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

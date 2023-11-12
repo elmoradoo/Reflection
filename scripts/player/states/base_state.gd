@@ -112,6 +112,10 @@ func can_vault() -> bool:
 		and not player.rc_head.get_node("front").is_colliding()
 		and player.velocity.y > 1):
 			return true
+	if (player.rc_feets.get_node("front").is_colliding() 
+		and not player.rc_head.get_node("front").is_colliding()
+		and player.velocity.y < 0):
+			return true
 	return false
 
 func can_ledge_grab() -> bool:

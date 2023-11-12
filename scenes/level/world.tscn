@@ -6,6 +6,7 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lcn1r"]
 albedo_texture = ExtResource("1_fqjqu")
 uv1_triplanar = true
+uv1_world_triplanar = true
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ltpyh"]
 panorama = ExtResource("2_atadw")
@@ -36,7 +37,7 @@ size = Vector3(20, 1, 20)
 material = SubResource("StandardMaterial3D_lcn1r")
 
 [node name="CSGBox3D15" type="CSGBox3D" parent="stage"]
-transform = Transform3D(-0.0292824, 0, 0.999571, 0, 1, 0, -0.999571, 0, -0.0292824, 17.6476, -0.5, 7.73846)
+transform = Transform3D(-0.0642877, 0, 1.03458, 0, 1, 0, -2.1945, 0, -0.0303079, 19.9511, -0.499998, 3.73207)
 use_collision = true
 size = Vector3(5.44905, 1, 20)
 material = SubResource("StandardMaterial3D_lcn1r")
@@ -174,19 +175,55 @@ size = Vector3(20, 1, 20)
 material = SubResource("StandardMaterial3D_lcn1r")
 
 [node name="CSGBox3D24" type="CSGBox3D" parent="stage"]
-transform = Transform3D(0.680371, 0, 0, -1.32e-22, -2.18676e-08, -0.225123, 3.01981e-15, 0.500273, -9.84043e-09, 15.1515, 1.38717, -4.0568)
+transform = Transform3D(0.680371, 0, 0, -1.32e-22, -2.18676e-08, -0.225123, 3.01981e-15, 0.500273, -9.84043e-09, 15.1515, 1.38717, -8.0568)
 use_collision = true
 size = Vector3(11.6896, 1, 20)
 material = SubResource("StandardMaterial3D_lcn1r")
 
 [node name="CSGBox3D26" type="CSGBox3D" parent="stage"]
-transform = Transform3D(-0.680371, -9.60492e-05, 1.88843e-12, -6.87987e-17, -2.18676e-08, -0.225123, 0.000130625, -0.500273, 9.84043e-09, -0.188685, -0.774711, 5.62217)
+transform = Transform3D(0.000130655, -0.500273, 9.84043e-09, -6.87987e-17, -2.18676e-08, -0.225123, 0.680371, 9.60711e-05, -1.88966e-12, 5.8183, -0.774711, 0.62217)
+use_collision = true
+size = Vector3(11.6896, 1, 20)
+material = SubResource("StandardMaterial3D_lcn1r")
+
+[node name="CSGBox3D32" type="CSGBox3D" parent="stage"]
+transform = Transform3D(6.60596e-05, -0.500226, 9.84043e-09, -3.47849e-17, -2.18655e-08, -0.225123, 0.343999, 9.6062e-05, -1.88966e-12, 12.2075, -0.774711, 6.93434)
+use_collision = true
+size = Vector3(11.6896, 1, 20)
+material = SubResource("StandardMaterial3D_lcn1r")
+
+[node name="CSGBox3D35" type="CSGBox3D" parent="stage"]
+transform = Transform3D(3.27072e-05, -1.50058, 5.27382e-09, -1.72226e-17, -6.55922e-08, -0.120651, 0.170319, 0.000288166, -1.01273e-12, 11.947, 1.2773, 2.14456)
+use_collision = true
+size = Vector3(11.6896, 1, 20)
+material = SubResource("StandardMaterial3D_lcn1r")
+
+[node name="CSGBox3D30" type="CSGBox3D" parent="stage"]
+transform = Transform3D(0.000130655, -0.500273, 9.84043e-09, -0.680371, -9.60711e-05, 9.84233e-09, -2.974e-08, -2.18572e-08, -0.225123, 5.8183, -1.07496, 2.32741)
+use_collision = true
+size = Vector3(11.6896, 1, 20)
+material = SubResource("StandardMaterial3D_lcn1r")
+
+[node name="CSGBox3D31" type="CSGBox3D" parent="stage"]
+transform = Transform3D(0.000130655, -0.500273, 9.84043e-09, -0.680371, -9.60711e-05, 9.84233e-09, -2.974e-08, -2.18572e-08, -0.225123, 5.8183, -1.07496, 6.78282)
+use_collision = true
+size = Vector3(11.6896, 1, 20)
+material = SubResource("StandardMaterial3D_lcn1r")
+
+[node name="CSGBox3D33" type="CSGBox3D" parent="stage"]
+transform = Transform3D(-0.680371, 0, -8.47827e-09, 0, 0.500273, 0, 5.94799e-08, 0, -0.0969801, 1.79789, 2.63669, 7.69866)
+use_collision = true
+size = Vector3(11.6896, 1, 20)
+material = SubResource("StandardMaterial3D_lcn1r")
+
+[node name="CSGBox3D34" type="CSGBox3D" parent="stage"]
+transform = Transform3D(-0.144619, 0, -1.57695e-08, 0, 2.24558, 0, 2.18369e-08, 0, -0.104436, -4.1223, 1.01779, 7.92202)
 use_collision = true
 size = Vector3(11.6896, 1, 20)
 material = SubResource("StandardMaterial3D_lcn1r")
 
 [node name="CSGBox3D25" type="CSGBox3D" parent="stage"]
-transform = Transform3D(0.680371, 0, 0, -1.32e-22, -2.18676e-08, -0.225123, 3.01981e-15, 0.500273, -9.84043e-09, 20.4364, 1.38717, -0.507581)
+transform = Transform3D(0.680371, 0, 0, -1.32e-22, -2.18676e-08, -0.225123, 3.01981e-15, 0.500273, -9.84043e-09, 20.4364, 1.38717, -4.50758)
 use_collision = true
 size = Vector3(11.6896, 1, 20)
 material = SubResource("StandardMaterial3D_lcn1r")

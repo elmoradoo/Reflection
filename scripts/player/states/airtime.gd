@@ -30,10 +30,10 @@ func get_input_next_state():
 func get_physics_next_state():
 	if player.is_on_floor():
 		return enums.player_states.Idle
-	#elif super.can_ledgeclimb():
-	#	return enums.player_states.LedgeClimb
 	elif super.can_ledge_grab():
 		return enums.player_states.LedgeGrab
+	elif super.can_ledgeclimb():
+		return enums.player_states.LedgeClimb
 	elif super.can_vault():
 		return enums.player_states.Vault
 	elif super.can_wallclimb():

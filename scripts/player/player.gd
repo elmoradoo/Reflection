@@ -55,6 +55,7 @@ func _on_get_stats_timeout():
 	"WallClimbTimeLeft: " + str($timers/wallclimb_time.time_left),
 	"IsOnFloor: " + str(is_on_floor()),
 	"IsOnWall: " + str(is_on_wall()),
+	"Forward: " + str(transform.basis.z.normalized()) 
 	]
 	stats_update.emit(DEBUG_ARRAY)
 	if velocity:
