@@ -1,7 +1,7 @@
 extends RayCast3D
 
 
-func _on_player_line_update(origin, end, length):
+func _on_player_line_update(end, length):
 	target_position = Vector3(0, 0, -length)
 
 	# Workaround the dumb "Error look_at() failed"

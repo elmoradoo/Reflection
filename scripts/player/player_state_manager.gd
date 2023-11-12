@@ -4,7 +4,9 @@ extends Node
 var enums = preload("res://scripts/player/enums.gd")
 var current_state: BaseState
 
-var is_using_ui: bool = false
+
+var player: Player
+
 
 var state_scripts = {
 	enums.player_states.Idle: preload("res://scripts/player/states/idle.gd").new(),
@@ -27,7 +29,8 @@ func debug_get_player_state():
 func debug_print_player_state():
 	print(enums.player_states.keys()[current_state.get_state_name()])
 
-func init(player):
+func init(player_obj):
+	player = player_obj
 	for state_script in state_scripts.values():
 		state_script.init(player)
 	current_state = state_scripts[enums.player_states.Idle]
@@ -37,7 +40,9 @@ func init(player):
 func change_state(next_state):
 	if next_state and next_state != current_state.get_state_name():
 		current_state.exit()
+		current_state.disconnect("collision", current_state._on_collision)
 		current_state = state_scripts[next_state]
+		current_state.connect("collision", current_state._on_collision)
 		current_state.enter()
 		debug_print_player_state()
 
@@ -54,4 +59,8 @@ func run():
 
 	# Change state depending on physics, does not care about UI
 	change_state(current_state.get_physics_next_state())
+	
+	# Prepare collision handling
+	var previous_velocity = player.velocity
+
 	current_state.move_player()

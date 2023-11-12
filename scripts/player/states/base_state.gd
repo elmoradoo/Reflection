@@ -4,6 +4,8 @@ class_name BaseState
 
 @export var player: Player
 
+signal collision
+
 #Stand up vars
 const stand_up_lp: float = 10.0
 
@@ -26,6 +28,7 @@ const sliding_minimum_velocity: float = 5.0
 
 #Wallrun vars
 const wallrun_jumping_velocity: float = 7.0
+
 
 func init(player_obj: Player):
 	player = player_obj
@@ -60,12 +63,20 @@ func update_mouse(event):
 func get_input_next_state():
 	player.input_dir = Input.get_vector("left", "right", "forward", "backward")
 
+func _on_collision(_old_vel, _new_vel):
+	pass
+
 func move_player():
+	var oldvel = player.velocity
 	player.move_and_slide()
+	if oldvel != player.velocity and abs(oldvel.length() - player.velocity.length()) > 1:
+		# collision happened!
+		collision.emit(oldvel, player.velocity)
 	if player.gravity_enabled and not player.is_on_floor():
 		player.velocity.y -= player.gravity * player.delta
 	elif player.is_on_floor():
 		player.velocity.y = 0
+
 
 func can_wallclimb() -> bool:
 	if not player.rc_torso.get_node("front").is_colliding() or player.velocity.y < climbable_min_velocity:

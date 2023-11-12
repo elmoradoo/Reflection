@@ -17,20 +17,18 @@ func get_state_name():
 	return enums.player_states.WallRun
 
 
+func _on_collision(previous_vel, new_vel):
+	# Compute velocity compensation while avoiding y (we are on a wall, so we should not compensate y)
+	var vel_length = Vector2(new_vel.x, new_vel.z).length()
+	var before_collision_vel_length = Vector2(previous_vel.x, previous_vel.z).length()
+	player.velocity += new_vel.normalized() * Vector3(1, 0, 1) * (before_collision_vel_length - vel_length)
+
+
 func enter():
 	old_vel = player.velocity
+	player.velocity.y += 1
 	player.timers.get_node("wallrun_time").start()
 
-	# Wait for new velocity to change after collision
-	var old_total_speed = player.velocity.length()
-	var max_move_attempts = 5
-	for i in range(max_move_attempts):
-		if player.velocity != old_vel:
-			break # Collision happened
-		player.move_and_slide()
-
-	# Take the velocity lost in the wall and put it back on the player
-	player.velocity += player.velocity.normalized() * (old_total_speed - player.velocity.length())
 
 func exit():
 	player.velocity = old_vel

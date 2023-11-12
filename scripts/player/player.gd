@@ -59,9 +59,8 @@ func _on_get_stats_timeout():
 	stats_update.emit(DEBUG_ARRAY)
 	if velocity:
 		var linelength = clamp(velocity.length()/2, 0, 10)
-		var current_pos = global_transform.origin
 		var next_pos = global_transform.origin + velocity
-		line_update.emit(current_pos, next_pos, linelength)
+		line_update.emit(next_pos, linelength)
 
 func _ready():
 	# Block controlling other players in multiplayer
@@ -72,14 +71,17 @@ func _ready():
 		self.set_physics_process(false)
 		return
 
+	# Activate camera
 	$neck/head/eyes/Camera3D.current = true
 
-	#Init player object
-	#Init script manager
+	# Initialize state manager
 	player_state_manager.init(self)
+
+	# HUD update timer
 	$timers/get_stats.start()
 
 
+# This is only used for mouse events.
 func _input(event):
 	player_state_manager.update_event(event)
 
