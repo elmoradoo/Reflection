@@ -8,7 +8,7 @@ var old_rotation_head: Vector3 = Vector3.ZERO
 
 var is_jumping: bool = false
 
-const base_wallrun_speed: float = 1
+const base_wallrun_speed: float = 0.1
 
 var first_collision_travel: Vector3 = Vector3.ZERO
 
@@ -20,7 +20,7 @@ func get_state_name():
 func enter():
 	old_vel = player.velocity
 	player.timers.get_node("wallrun_time").start()
-	player.velocity.y += 0.5
+	player.velocity.y += 1
 
 
 func exit():
@@ -35,8 +35,7 @@ func exit():
 
 
 func update():
-	var speed_vector = Vector3(base_wallrun_speed, base_wallrun_speed, base_wallrun_speed)
-	player.velocity += player.velocity.normalized() * speed_vector * player.timers.get_node("wallrun_time").time_lef
+	player.velocity += player.velocity.normalized() * base_wallrun_speed * player.timers.get_node("wallrun_time").time_left
 
 
 func get_next_state():
@@ -47,7 +46,7 @@ func get_next_state():
 	elif Input.is_action_just_pressed("jump") and not is_jumping:
 		is_jumping = true
 		return enums.player_states.Jumping
-	elif super.can_wallrun():
+	elif player.is_on_wall_only():
 		return enums.player_states.WallRun
-	return enums.player_states.WallRun
+	return enums.player_states.AirTime
 	
