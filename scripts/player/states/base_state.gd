@@ -73,7 +73,7 @@ func _on_collision(_old_vel, _collider_id):
 func move_player():
 	var oldvel = player.velocity
 	player.move_and_slide()
-	if abs(oldvel.length() - player.velocity.length()) > 1 and self.get_state_name() == enums.player_states.WallRun:
+	if abs(oldvel.length() - player.velocity.length()) > 1:
 		# collision happened!
 		collision.emit(oldvel, player.new_collider_id)
 		player.new_collider_id = player.get_last_slide_collision().get_collider_id()
