@@ -30,7 +30,7 @@ func get_input_next_state():
 	if Input.is_action_pressed("crouch"):
 		crouch_released = false
 		return enums.player_states.Crouching
-	elif Input.is_action_just_released("crouch"):
+	elif not Input.is_action_pressed("crouch"):
 		crouch_released = true
 		if player.raycasts.get_node("top_of_head").is_colliding():
 			return enums.player_states.Crouching
