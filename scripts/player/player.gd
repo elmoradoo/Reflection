@@ -75,6 +75,11 @@ func _ready():
 
 func _input(event):
 	if not is_multiplayer_authority(): return
+	if event is InputEventMouseMotion:
+		player_state_manager.update_event(event)
+
+func _unhandled_key_input(event):
+	if not is_multiplayer_authority(): return
 	player_state_manager.update_event(event)
 
 func _physics_process(delta):

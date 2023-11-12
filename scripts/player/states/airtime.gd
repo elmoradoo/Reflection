@@ -21,10 +21,15 @@ func update():
 	super.reset_head_bob()
 	velocity_before_landing = player.velocity
 
+func update_event(event: InputEvent):
+	super.update_event(event)
+	if event is InputEventKey:
+		# TODO: use test_move to predict if floor is going to be touched.
+		if event.is_action_pressed("crouch") and player.is_on_floor() and velocity_before_landing.y <= roll_min_velocity:
+			return enums.player_states.Rolling
+
 func get_next_state():
 	if player.is_on_floor():
-		if velocity_before_landing.y <= roll_min_velocity and Input.is_action_pressed("crouch"):
-			return enums.player_states.Rolling
 		return enums.player_states.Idle
 	elif super.can_ledgeclimb():
 		return enums.player_states.LedgeClimb
@@ -36,5 +41,4 @@ func get_next_state():
 		return enums.player_states.WallClimb
 	elif super.can_wallrun():
 		return enums.player_states.WallRun
-
 	return enums.player_states.AirTime

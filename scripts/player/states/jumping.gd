@@ -26,4 +26,4 @@ func exit():
 func get_next_state():
 	if not player.is_on_floor():
 		return enums.player_states.AirTime
-	return enums.player_states.NULL
+	return enums.player_states.Jumping

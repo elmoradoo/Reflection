@@ -21,16 +21,22 @@ func update():
 	super.stand_down()
 	player.velocity.x = lerp(player.velocity.x, 0.0, player.delta * 1)
 	player.velocity.z = lerp(player.velocity.z, 0.0, player.delta * 1)
-	
+
 func exit():
 	pass
 
+func update_event(event: InputEvent):
+	super.update_event(event)
+	if event is InputEventKey:
+		if event.is_action_released("crouch"):
+			if not player.raycasts.get_node("top_of_head").is_colliding():
+				return enums.player_states.Idle
+			else:
+				return enums.player_states.Crouching
+
+
 func get_next_state():
-	if Input.is_action_just_released("crouch") and not player.raycasts.get_node("top_of_head").is_colliding():
-		return enums.player_states.Idle
-	elif Input.is_action_pressed("crouch") and player.velocity.length() <= min_sliding_speed:
-		return enums.player_states.Crouching
-	elif Input.is_action_pressed("crouch") and player.velocity.length() > min_sliding_speed:
+	if player.velocity.length() > min_sliding_speed:
 		return enums.player_states.Sliding
 	else:
 		return enums.player_states.Crouching

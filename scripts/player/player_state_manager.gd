@@ -3,13 +3,11 @@ extends Node
 
 var enums = preload("res://scripts/player/enums.gd")
 var current_state
-var next_state
 
 var is_using_ui: bool = false
 
 var state_scripts = {
 	enums.player_states.Idle: preload("res://scripts/player/states/idle.gd").new(),
-	enums.player_states.Walking: preload("res://scripts/player/states/walking.gd").new(),
 	enums.player_states.Sprinting: preload("res://scripts/player/states/sprinting.gd").new(),
 	enums.player_states.Crouching: preload("res://scripts/player/states/crouching.gd").new(),
 	enums.player_states.Sliding: preload("res://scripts/player/states/sliding.gd").new(),
@@ -34,14 +32,20 @@ func init(player):
 		state_script.init(player)
 	current_state = state_scripts[enums.player_states.Idle]
 
-func update_event(event):
-	current_state.update_event(event)
-
-func run():
-	next_state = current_state.get_next_state()
+func change_state(next_state):
 	if next_state != current_state.get_state_name():
 		current_state.exit()
 		current_state = state_scripts[next_state]
 		current_state.enter()
 		debug_print_player_state()
+
+func update_event(event):
+	var next_state = current_state.update_event(event)
+	if next_state:
+		print(next_state)
+		change_state(next_state)
+
+func run():
+	var next_state = current_state.get_next_state()
+	change_state(next_state)
 	current_state.update()

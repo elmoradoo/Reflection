@@ -3,11 +3,12 @@ extends BaseState
 var enums = preload("res://scripts/player/enums.gd")
 
 const max_speed: float = 3.0
-
+var crouch_released: bool = false
 
 func enter():
 	player.standing_collision_shape.disabled = true
 	player.crouching_collision_shape.disabled = false
+	crouch_released = false
 
 func exit():
 	pass
@@ -23,11 +24,21 @@ func update():
 	player.velocity.z = player.direction.z * max_speed
 	player.direction = lerp(player.direction, (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized(), lerp_speed * player.delta)
 
-func get_next_state():
-	if player.is_on_floor():
-		if Input.is_action_pressed("crouch") or player.raycasts.get_node("top_of_head").is_colliding():
+func update_event(event: InputEvent):
+	super.update_event(event)
+	if event is InputEventKey:
+		if event.is_action_pressed("crouch"):
+			crouch_released = false
 			return enums.player_states.Crouching
-		else:
-			return enums.player_states.Idle
+		elif event.is_action_released("crouch"):
+			crouch_released = true
+			if player.raycasts.get_node("top_of_head").is_colliding():
+				return enums.player_states.Crouching
+			else:
+				return enums.player_states.Idle
+
+func get_next_state():
+	if not crouch_released or player.raycasts.get_node("top_of_head").is_colliding():
+		return enums.player_states.Crouching
 	else:
-		return enums.player_states.AirTime
+		return enums.player_states.Idle

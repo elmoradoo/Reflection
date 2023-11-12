@@ -22,14 +22,15 @@ func update():
 	player.velocity.x = move_toward(player.velocity.x, 0, idle_lerp_speed)
 	player.velocity.z = move_toward(player.velocity.z, 0, idle_lerp_speed)
 
-func get_next_state():
-	if player.is_on_floor():
-		if Input.is_action_just_pressed("crouch"):
+func update_event(event: InputEvent):
+	super.update_event(event)
+	if event is InputEventKey:
+		if event.is_action_pressed("crouch"):
 			return enums.player_states.Crouching
-		elif Input.is_action_just_released("crouch") and not player.raycasts.get_node("top_of_head").is_colliding():
-			return enums.player_states.Idle
-		elif player.input_dir != Vector2.ZERO:
-			return enums.player_states.Sprinting
-		if Input.is_action_just_pressed("jump"):
+		elif event.is_action_pressed("jump"):
 			return enums.player_states.Jumping
+
+func get_next_state():
+	if player.input_dir != Vector2.ZERO:
+		return enums.player_states.Sprinting
 	return enums.player_states.Idle
