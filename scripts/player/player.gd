@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
 signal stats_update
+signal line_update
 
 #Game enums
 var enums = preload("res://scripts/player/enums.gd")
@@ -45,9 +46,15 @@ func _on_get_stats_timeout():
 	"VelocityZ: " + str(velocity.z),
 	"Inputs: " + str(player_object.input_dir),
 	"FeetDownRC: " + str($raycasts/feets/down.is_colliding()),
-	"WallClimbTimeLeft: " + str($timers/wallclimb_time.time_left)
+	"WallClimbTimeLeft: " + str($timers/wallclimb_time.time_left),
+	"IsOnFloor: " + str(player.is_on_floor()),
+	"IsOnWall: " + str(player.is_on_wall()),
 	]
 	stats_update.emit(DEBUG_ARRAY)
+	var linelength = clamp(player.velocity.length()/2, 0, 10)
+	var current_pos = player.global_transform.origin
+	var next_pos = player.global_transform.origin + player.velocity
+	line_update.emit(current_pos, next_pos, linelength)
 
 func _ready():
 	if not is_multiplayer_authority(): return
@@ -69,7 +76,7 @@ func _input(event):
 
 func _physics_process(delta):
 	if not is_multiplayer_authority(): return
-	#Update player variables
+
 	player_object.direction = direction
 	player_object.velocity = velocity
 	player_object.delta = delta

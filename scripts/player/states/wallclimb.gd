@@ -19,6 +19,8 @@ func get_state_name():
 func enter():
 	old_vel = player.velocity
 	player.timers.get_node("wallclimb_time").start()
+	player.velocity.x /= 4
+	player.velocity.z /= 4
 
 func exit():
 	#player.velocity = old_vel 
@@ -31,8 +33,6 @@ func update():
 	player.velocity.y += 0.2 * player.timers.get_node("wallclimb_time").time_left
 	
 func get_next_state():
-	if climb_is_over:
-		return enums.player_states.AirTime
 	if player.myself.is_on_floor() and player.velocity.length() >= 2:
 		return enums.player_states.Sprinting
 	elif player.myself.is_on_floor():
@@ -42,6 +42,9 @@ func get_next_state():
 	elif super.can_ledgeclimb(player):
 		return enums.player_states.LedgeClimb
 	elif player.timers.get_node("wallclimb_time").time_left == 0:
+	elif super.can_vault(player):
+		return enums.player_states.Vault
+	elif climb_is_over or not super.can_wallclimb(player):
 		return enums.player_states.AirTime
 	else:
 		return enums.player_states.WallClimb

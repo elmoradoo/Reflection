@@ -1,6 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://ba1e2q3t5cyfk"]
+[gd_scene load_steps=15 format=3 uid="uid://ba1e2q3t5cyfk"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_nfg6f"]
+[ext_resource type="Script" path="res://scripts/player/debug/debug_velocity.gd" id="2_en4pu"]
 [ext_resource type="PackedScene" uid="uid://4o88wc2qx88c" path="res://assets/player/raw/player-model.glb" id="2_sbkby"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_c8erx"]
@@ -185,6 +186,13 @@ target_position = Vector3(0, 0, -1.5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 target_position = Vector3(0, 0, -1.5)
 
+[node name="debug_velocity" type="RayCast3D" parent="raycasts/torso"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+target_position = Vector3(0, 0, -1.5)
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.756863, 0.564706, 0, 1)
+script = ExtResource("2_en4pu")
+
 [node name="neck" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
 
@@ -211,7 +219,7 @@ wait_time = 0.5
 wait_time = 0.6
 
 [node name="get_stats" type="Timer" parent="timers"]
-wait_time = 0.21
+wait_time = 0.093
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -222,4 +230,5 @@ mesh = SubResource("CapsuleMesh_wqrwg")
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 visible = false
 
+[connection signal="line_update" from="." to="raycasts/torso/debug_velocity" method="_on_player_line_update"]
 [connection signal="timeout" from="timers/get_stats" to="." method="_on_get_stats_timeout"]
