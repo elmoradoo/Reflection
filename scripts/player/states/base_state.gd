@@ -63,15 +63,16 @@ func update_mouse(event):
 func get_input_next_state():
 	player.input_dir = Input.get_vector("left", "right", "forward", "backward")
 
-func _on_collision(_old_vel, _new_vel):
+func _on_collision(_old_vel, _collider_id):
 	pass
 
 func move_player():
 	var oldvel = player.velocity
 	player.move_and_slide()
-	if oldvel != player.velocity and abs(oldvel.length() - player.velocity.length()) > 1:
+	if abs(oldvel.length() - player.velocity.length()) > 1:
 		# collision happened!
-		collision.emit(oldvel, player.velocity)
+		collision.emit(oldvel, player.new_collider_id)
+		player.new_collider_id = player.get_last_slide_collision().get_collider_id()
 	if player.gravity_enabled and not player.is_on_floor():
 		player.velocity.y -= player.gravity * player.delta
 	elif player.is_on_floor():
@@ -81,9 +82,9 @@ func move_player():
 func can_wallclimb() -> bool:
 	if not player.rc_torso.get_node("front").is_colliding() or player.velocity.y < climbable_min_velocity:
 		return false
-	var collision = player.rc_torso.get_node("front").get_collision_normal()
+	var col = player.rc_torso.get_node("front").get_collision_normal()
 	var ray_direction = player.rc_torso.get_node("front").global_transform.basis.z.normalized()
-	var dot_product = abs(collision.dot(ray_direction))
+	var dot_product = abs(col.dot(ray_direction))
 	if dot_product < 0.8:
 		return false
 	else:
@@ -92,9 +93,9 @@ func can_wallclimb() -> bool:
 func can_wallrun() -> bool:
 	if not player.rc_torso.get_node("front").is_colliding():
 		return false
-	var collision = player.rc_torso.get_node("front").get_collision_normal()
+	var col = player.rc_torso.get_node("front").get_collision_normal()
 	var ray_direction = player.rc_torso.get_node("front").global_transform.basis.z.normalized()
-	var dot_product = abs(collision.dot(ray_direction))
+	var dot_product = abs(col.dot(ray_direction))
 	if dot_product < 0.8:
 		return true
 	else:
