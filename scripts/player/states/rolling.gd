@@ -1,13 +1,13 @@
 extends BaseState
 
-var player: playerData
+
 var enums = preload("res://scripts/player/enums.gd")
 
 var old_vel: Vector3 = Vector3.ZERO
 var is_rolling = true
 
 func init(obj):
-	player = obj
+	super.init(obj)
 	player.timers.get_node("roll_time").timeout.connect(timer_end)
 
 func timer_end():
@@ -27,7 +27,7 @@ func exit():
 	player.velocity.y = 0
 
 func update():
-	super.update_event(player)
+	pass
 
 func get_next_state():
 	if not is_rolling:

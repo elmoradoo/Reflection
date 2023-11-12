@@ -2,11 +2,8 @@ extends BaseState
 
 var enums = preload("res://scripts/player/enums.gd")
 
-var player: playerData
 var idle_lerp_speed = 2.0 
 
-func init(obj):
-	player = obj
 
 func enter():
 	player.standing_collision_shape.disabled = false
@@ -19,15 +16,14 @@ func get_state_name():
 	return enums.player_states.Idle
 
 func update():
-	super.update_event(player)
-	self.stand_up(player)
-	self.reset_neck(player)
-	self.reset_head_bob(player)
+	stand_up()
+	reset_neck()
+	reset_head_bob()
 	player.velocity.x = move_toward(player.velocity.x, 0, idle_lerp_speed)
 	player.velocity.z = move_toward(player.velocity.z, 0, idle_lerp_speed)
 
 func get_next_state():
-	if player.myself.is_on_floor():
+	if player.is_on_floor():
 		if Input.is_action_just_pressed("crouch"):
 			return enums.player_states.Crouching
 		elif Input.is_action_just_released("crouch") and not player.raycasts.get_node("top_of_head").is_colliding():

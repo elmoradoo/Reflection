@@ -1,6 +1,6 @@
 extends BaseState
 
-var player: playerData
+
 var enums = preload("res://scripts/player/enums.gd")
 var old_vel: Vector3 = Vector3.ZERO
 
@@ -10,7 +10,7 @@ func climbing_timer():
 	climb_is_over = true
 	
 func init(obj):
-	player = obj
+	super.init(obj)
 	player.timers.get_node("wallclimb_time").timeout.connect(climbing_timer)
 
 func get_state_name():
@@ -28,23 +28,22 @@ func exit():
 	climb_is_over = false
 
 func update():
-	super.update_event(player)
-	super.reset_head_bob(player)
+	super.reset_head_bob()
 	player.velocity.y += 0.2 * player.timers.get_node("wallclimb_time").time_left
 	
 func get_next_state():
-	if player.myself.is_on_floor() and player.velocity.length() >= 2:
+	if player.is_on_floor() and player.velocity.length() >= 2:
 		return enums.player_states.Sprinting
-	elif player.myself.is_on_floor():
+	elif player.is_on_floor():
 		return enums.player_states.Idle
-	elif super.can_ledge_grab(player):
+	elif super.can_ledge_grab():
 		return enums.player_states.LedgeGrab
-	elif super.can_ledgeclimb(player):
+	elif super.can_ledgeclimb():
 		return enums.player_states.LedgeClimb
 	elif player.timers.get_node("wallclimb_time").time_left == 0:
-	elif super.can_vault(player):
+	elif super.can_vault():
 		return enums.player_states.Vault
-	elif climb_is_over or not super.can_wallclimb(player):
+	elif climb_is_over or not super.can_wallclimb():
 		return enums.player_states.AirTime
 	else:
 		return enums.player_states.WallClimb

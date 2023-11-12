@@ -1,6 +1,6 @@
 extends BaseState
 
-var player: playerData
+
 const max_speed: float = 5.0
 var enums = preload("res://scripts/player/enums.gd")
 
@@ -14,8 +14,7 @@ func enter():
 	pass
 
 func update():
-	super.update_event(player)
-	super.stand_up(player)
+	super.stand_up()
 	player.velocity.x = player.direction.x * max_speed
 	player.velocity.z = player.direction.z * max_speed
 	player.direction = lerp(player.direction, (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized(), lerp_speed * player.delta)
@@ -24,7 +23,7 @@ func exit():
 	pass
 
 func get_next_state():
-	if player.myself.is_on_floor():
+	if player.is_on_floor():
 		if Input.is_action_pressed("crouch") and player.velocity.length() >= player.sliding_minimum_velocity:
 			return enums.player_states.Sliding
 		elif Input.is_action_pressed("crouch"):

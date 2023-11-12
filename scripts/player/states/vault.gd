@@ -2,11 +2,8 @@ extends BaseState
 
 var enums = preload("res://scripts/player/enums.gd")
 
-var player: playerData
 var is_fast_vault = false
 
-func init(obj):
-	player = obj
 
 func enter():
 	player.standing_collision_shape.disabled = true
@@ -28,7 +25,6 @@ func fast_vault():
 #			is_vault_over = true
 	
 func update():
-	super.update_event(player)
 	if is_fast_vault:
 		fast_vault()
 	else:
@@ -47,7 +43,7 @@ func get_state_name():
 	return enums.player_states.Vault
 
 func get_next_state():
-	if player.myself.is_on_floor():
+	if player.is_on_floor():
 		if player.velocity.length() >= 2:
 			return enums.player_states.Sprinting
 		else:

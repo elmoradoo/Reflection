@@ -1,14 +1,11 @@
 extends BaseState
 
-var player: playerData
+
 const max_speed: float = 5.0
 var enums = preload("res://scripts/player/enums.gd")
 
 const sliding_initial_force: float = 1.2
 const min_sliding_speed: float = 4
-
-func init(obj):
-	player = obj
 
 func get_state_name():
 	return enums.player_states.Sliding
@@ -21,8 +18,7 @@ func enter():
 	player.velocity.z *= sliding_initial_force
 
 func update():
-	super.update_event(player)
-	super.stand_down(player)
+	super.stand_down()
 	player.velocity.x = lerp(player.velocity.x, 0.0, player.delta * 1)
 	player.velocity.z = lerp(player.velocity.z, 0.0, player.delta * 1)
 	

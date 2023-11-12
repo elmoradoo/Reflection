@@ -1,9 +1,7 @@
 extends Node
 
+
 var enums = preload("res://scripts/player/enums.gd")
-
-var player: playerData
-
 var current_state
 var next_state
 
@@ -26,27 +24,24 @@ var state_scripts = {
 }
 
 func debug_get_player_state():
-	return enums.player_states.keys()[player.current_state.get_state_name()]
+	return enums.player_states.keys()[current_state.get_state_name()]
 
 func debug_print_player_state():
-	print(enums.player_states.keys()[player.current_state.get_state_name()])
+	print(enums.player_states.keys()[current_state.get_state_name()])
 
-func init(player_object):
-	player = player_object
+func init(player):
 	for state_script in state_scripts.values():
 		state_script.init(player)
-	player.current_state = state_scripts[enums.player_states.Idle]
+	current_state = state_scripts[enums.player_states.Idle]
+
+func update_event(event):
+	current_state.update_event(event)
 
 func run():
-	if Input.is_action_just_pressed("ui_text_newline"):
-		is_using_ui = not is_using_ui
-	if is_using_ui:
-		return
-
-	next_state = player.current_state.get_next_state()
-	if next_state != player.current_state.get_state_name():
-		player.current_state.exit()
-		player.current_state = state_scripts[next_state]
-		player.current_state.enter()
+	next_state = current_state.get_next_state()
+	if next_state != current_state.get_state_name():
+		current_state.exit()
+		current_state = state_scripts[next_state]
+		current_state.enter()
 		debug_print_player_state()
-	player.current_state.update()
+	current_state.update()

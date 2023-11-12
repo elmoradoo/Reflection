@@ -1,37 +1,42 @@
-extends CharacterBody3D
+class_name Player extends CharacterBody3D
 
 signal stats_update
 signal line_update
 
-#Game enums
-var enums = preload("res://scripts/player/enums.gd")
+# Raycasts
+@onready var raycasts = $raycasts
+@onready var rc_feets = $raycasts/feets
+@onready var rc_head = $raycasts/head
+@onready var rc_torso = $raycasts/torso
 
-#State manager
-var player_state_manager_script = preload("res://scripts/player/player_state_manager.gd")
-var player_state_manager
+# Timers
+@onready var timers = $timers
 
-#Player object that have all of the player and associated variable
-var player_data_object = preload("res://scripts/player/playerData.gd")
-var player_object: playerData
-
-#Nodes of the current scene
-@onready var player = $"."
+# Body
+@onready var neck = $neck
 @onready var head = $neck/head
+@onready var eyes = $neck/head/eyes
+
+# Animations
+@onready var model = $player_model
+@onready var animation_player = $neck/head/eyes/AnimationPlayer
+
+# Collisions
 @onready var standing_collision_shape = $standing_collision_shape
 @onready var crouching_collision_shape = $crouching_collision_shape
 @onready var coiling_collision_shape = $coiling_collision_shape
-@onready var neck = $neck
-@onready var camera_3d = $neck/head/eyes/Camera3D
-@onready var eyes = $neck/head/eyes
-@onready var animation_player = $neck/head/eyes/AnimationPlayer
-@onready var raycasts = $raycasts
-@onready var top_of_head = $raycasts/top_of_head
-@onready var timers = $timers
-@onready var wallclimb_time = $timers/wallclimb_time
-@onready var player_model = $player_model
 
-#Mouvement vars
+# State manager
+@onready var player_state_manager = load("res://scripts/player/player_state_manager.gd").new()
+
+
+#Movement
+var input_dir: Vector2 = Vector2.ZERO
 var direction: Vector3 = Vector3.ZERO
+var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+const mouse_sensitivity: float = 0.2
+var gravity_enabled: bool = true
+var delta
 
 func _enter_tree():
 	if str(name).is_valid_int():
@@ -47,42 +52,38 @@ func _on_get_stats_timeout():
 	"Inputs: " + str(player_object.input_dir),
 	"FeetDownRC: " + str($raycasts/feets/down.is_colliding()),
 	"WallClimbTimeLeft: " + str($timers/wallclimb_time.time_left),
-	"IsOnFloor: " + str(player.is_on_floor()),
-	"IsOnWall: " + str(player.is_on_wall()),
+	"IsOnFloor: " + str(is_on_floor()),
+	"IsOnWall: " + str(is_on_wall()),
 	]
 	stats_update.emit(DEBUG_ARRAY)
-	var linelength = clamp(player.velocity.length()/2, 0, 10)
-	var current_pos = player.global_transform.origin
-	var next_pos = player.global_transform.origin + player.velocity
-	line_update.emit(current_pos, next_pos, linelength)
+	if velocity:
+		var linelength = clamp(velocity.length()/2, 0, 10)
+		var current_pos = global_transform.origin
+		var next_pos = global_transform.origin + velocity
+		line_update.emit(current_pos, next_pos, linelength)
 
 func _ready():
 	if not is_multiplayer_authority(): return
-	camera_3d.current = true
+	$neck/head/eyes/Camera3D.current = true
 
 	#Get mouse movement
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	#Init player object
-	player_object = player_data_object.new()
-	player_object.init(self, raycasts)
 	#Init script manager
-	player_state_manager = player_state_manager_script.new()
-	player_state_manager.init(player_object)
+	player_state_manager.init(self)
 	$timers/get_stats.start()
 
 func _input(event):
 	if not is_multiplayer_authority(): return
-	player_object.update_event(event)
+	player_state_manager.update_event(event)
 
 func _physics_process(delta):
 	if not is_multiplayer_authority(): return
-
-	player_object.direction = direction
-	player_object.velocity = velocity
-	player_object.delta = delta
-	player_object.transform = transform
-	player_object.update(delta)
-	player_state_manager.run()
-	velocity = player_object.velocity
-	direction = player_object.direction
+	self.delta = delta
 	move_and_slide()
+	input_dir = Input.get_vector("left", "right", "forward", "backward")
+	if gravity_enabled and not is_on_floor():
+		velocity.y -= gravity * delta
+	elif is_on_floor():
+		velocity.y = 0
+	player_state_manager.run()
