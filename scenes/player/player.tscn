@@ -222,7 +222,7 @@ wait_time = 0.5
 wait_time = 0.6
 
 [node name="get_stats" type="Timer" parent="timers"]
-wait_time = 0.093
+wait_time = 0.1
 
 [node name="vault_time" type="Timer" parent="timers"]
 wait_time = 0.3

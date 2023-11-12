@@ -2,7 +2,6 @@ extends BaseState
 
 
 const max_speed: float = 5.0
-var enums = preload("res://scripts/player/enums.gd")
 
 const sliding_initial_force: float = 1.2
 const min_sliding_speed: float = 4

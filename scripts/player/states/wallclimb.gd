@@ -1,7 +1,6 @@
 extends BaseState
 
 
-var enums = preload("res://scripts/player/enums.gd")
 var old_vel: Vector3 = Vector3.ZERO
 
 var climb_is_over = false

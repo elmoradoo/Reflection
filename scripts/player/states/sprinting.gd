@@ -5,7 +5,6 @@ const max_speed: float = 8.0
 #var lerp_speed: float = 0.5
 var acceleration = 5.0
 
-var enums = preload("res://scripts/player/enums.gd")
 
 func init(obj):
 	player = obj

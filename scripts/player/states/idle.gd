@@ -1,6 +1,5 @@
 extends BaseState
 
-var enums = preload("res://scripts/player/enums.gd")
 
 var idle_lerp_speed = 2.0 
 

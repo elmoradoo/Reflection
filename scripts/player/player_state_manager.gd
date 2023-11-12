@@ -34,6 +34,7 @@ func init(player_obj):
 	for state_script in state_scripts.values():
 		state_script.init(player)
 	current_state = state_scripts[enums.player_states.Idle]
+	current_state.connect("collision", current_state._on_collision)
 	#Get mouse movement
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
@@ -59,8 +60,5 @@ func run():
 
 	# Change state depending on physics, does not care about UI
 	change_state(current_state.get_physics_next_state())
-	
-	# Prepare collision handling
-	var previous_velocity = player.velocity
 
 	current_state.move_player()

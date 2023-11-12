@@ -37,6 +37,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 const mouse_sensitivity: float = 0.2
 var gravity_enabled: bool = true
 @onready var delta = get_physics_process_delta_time()
+var new_collider_id = null
 
 func _enter_tree():
 	if str(name).is_valid_int():

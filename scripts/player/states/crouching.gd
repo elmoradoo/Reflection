@@ -1,6 +1,5 @@
 extends BaseState
 
-var enums = preload("res://scripts/player/enums.gd")
 
 const max_speed: float = 3.0
 var crouch_released: bool = false
