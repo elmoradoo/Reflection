@@ -21,7 +21,7 @@ func exit():
 	player.standing_collision_shape.disabled = false
 	player.crouching_collision_shape.disabled = false
 
-func update():
+func move_player():
 	#player.myself.position.y += 0.1
 	#player.myself.position.x -= 0.1
 	if not done:
@@ -31,6 +31,7 @@ func update():
 	var target_velocity = (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized() * 2.0
 	player.velocity.x = target_velocity.x
 	player.velocity.z = target_velocity.z
+	super.move_player()
 	
 ##	if not player.rc_torso.get_node("front").is_colliding() or not player.rc_feets.get_node("front").is_colliding():
 #	var target_velocity = (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)) * 2

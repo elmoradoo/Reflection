@@ -15,12 +15,13 @@ func exit():
 func get_state_name():
 	return enums.player_states.Idle
 
-func update():
+func move_player():
 	super.stand_up()
 	super.reset_neck()
 	super.reset_head_bob()
 	player.velocity.x = move_toward(player.velocity.x, 0, idle_lerp_speed)
 	player.velocity.z = move_toward(player.velocity.z, 0, idle_lerp_speed)
+	super.move_player()
 
 func get_input_next_state():
 	super.get_input_next_state()

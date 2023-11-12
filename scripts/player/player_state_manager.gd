@@ -2,7 +2,7 @@ extends Node
 
 
 var enums = preload("res://scripts/player/enums.gd")
-var current_state
+var current_state: BaseState
 
 var is_using_ui: bool = false
 
@@ -54,4 +54,4 @@ func run():
 
 	# Change state depending on physics, does not care about UI
 	change_state(current_state.get_physics_next_state())
-	current_state.update()
+	current_state.move_player()

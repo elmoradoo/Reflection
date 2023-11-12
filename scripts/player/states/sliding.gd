@@ -17,10 +17,11 @@ func enter():
 	player.velocity.x *= sliding_initial_force
 	player.velocity.z *= sliding_initial_force
 
-func update():
+func move_player():
 	super.stand_down()
 	player.velocity.x = lerp(player.velocity.x, 0.0, player.delta * 1)
 	player.velocity.z = lerp(player.velocity.z, 0.0, player.delta * 1)
+	super.move_player()
 
 func exit():
 	pass

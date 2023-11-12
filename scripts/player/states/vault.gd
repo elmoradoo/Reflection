@@ -24,7 +24,7 @@ func fast_vault():
 #		if player.myself.is_on_floor():
 #			is_vault_over = true
 	
-func update():
+func move_player():
 	if is_fast_vault:
 		fast_vault()
 	else:
@@ -32,6 +32,7 @@ func update():
 	#else:
 	#	var target_velocity = (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized() * 3
 	#	player.velocity = target_velocity
+	super.move_player()
 
 func exit():
 	player.coiling_collision_shape.disabled = true

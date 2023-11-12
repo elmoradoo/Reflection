@@ -21,8 +21,7 @@ func exit():
 	player.gravity_enabled = true	
 	#is_climbvaulting_over = false	
 
-func update():
-	pass
+func move_player():
 #	if is_climbvaulting == is_climbvaulting:
 #		if player.rc_feets.get_node("front").is_colliding():
 #			player.velocity.y += 0.1
@@ -33,7 +32,7 @@ func update():
 #	else:
 #		pass
 		#player.velocity.y += player.gravity
-
+	super.move_player()
 
 func get_input_next_state():
 	super.get_input_next_state()

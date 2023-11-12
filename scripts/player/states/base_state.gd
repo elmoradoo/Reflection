@@ -60,6 +60,12 @@ func update_mouse(event):
 func get_input_next_state():
 	player.input_dir = Input.get_vector("left", "right", "forward", "backward")
 
+func move_player():
+	player.move_and_slide()
+	if player.gravity_enabled and not player.is_on_floor():
+		player.velocity.y -= player.gravity * player.delta
+	elif player.is_on_floor():
+		player.velocity.y = 0
 
 func can_wallclimb() -> bool:
 	if not player.rc_torso.get_node("front").is_colliding() or player.velocity.y < climbable_min_velocity:

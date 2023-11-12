@@ -16,13 +16,14 @@ func exit():
 func get_state_name():
 	return enums.player_states.Crouching
 
-func update():
+func move_player():
 	super.stand_down()
 	if player.input_dir != Vector2.ZERO:
 		super.head_bob(0.1)
 	player.velocity.x = player.direction.x * max_speed
 	player.velocity.z = player.direction.z * max_speed
 	player.direction = lerp(player.direction, (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized(), lerp_speed * player.delta)
+	super.move_player()
 
 func get_input_next_state():
 	super.get_input_next_state()

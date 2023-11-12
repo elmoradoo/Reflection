@@ -43,12 +43,12 @@ func exit():
 	player.timers.get_node("wallrun_time").stop()
 
 
-func update():
-	pass
+func move_player():
+	super.move_player()
 
 func get_input_next_state():
 	super.get_input_next_state()
-	if Input.is_action_pressed("jump") and not is_jumping:
+	if Input.is_action_just_pressed("jump") and not is_jumping:
 		is_jumping = true
 		return enums.player_states.Jumping
 

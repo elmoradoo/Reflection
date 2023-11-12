@@ -16,12 +16,13 @@ func get_state_name():
 func enter():
 	player.model.get_node("AnimationPlayer").play("running")
 
-func update():
+func move_player():
 	super.stand_up()
 	super.head_bob(0.2)
 	var target_velocity = (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized() * max_speed
 	player.velocity = player.velocity.lerp(target_velocity, acceleration * player.delta)
-	
+	super.move_player()
+
 func exit():
 	pass
 

@@ -86,9 +86,4 @@ func _input(event):
 
 func _physics_process(physics_delta):
 	delta = physics_delta
-	move_and_slide()
-	if gravity_enabled and not is_on_floor():
-		velocity.y -= gravity * delta
-	elif is_on_floor():
-		velocity.y = 0
 	player_state_manager.run()

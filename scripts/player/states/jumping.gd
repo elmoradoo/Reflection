@@ -12,12 +12,12 @@ func enter():
 	player.animation_player.play("jump")
 	player.model.get_node("AnimationPlayer").play("jumping")
 
-func update():
-
+func move_player():
 	#Set eyes to 0
 	player.eyes.position.x = lerp(player.eyes.position.x, 0.0, player.delta * 1)
 	player.eyes.position.y = lerp(player.eyes.position.x, 0.0, player.delta * 1)
 	player.velocity.y += jump_velocity
+	super.move_player()
 
 
 func exit():

@@ -26,8 +26,8 @@ func exit():
 	player.velocity = old_vel
 	player.velocity.y = 0
 
-func update():
-	pass
+func move_player():
+	super.move_player()
 
 func get_physics_next_state():
 	if not is_rolling:
