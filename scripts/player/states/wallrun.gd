@@ -24,7 +24,7 @@ func _on_collision(previous_vel: Vector3, new_collision: KinematicCollision3D):
 	player.velocity += player.velocity.normalized() * Vector3(1, 0, 1) * (before_collision_vel_length - vel_length)
 
 	# Make sure it's a wall.
-	if not new_collision.get_normal().y:
+	if new_collision.get_normal().y < 1:
 		wall_normal = new_collision.get_normal()
 		rotate_player_outside_wall()
 
@@ -48,16 +48,20 @@ func update_mouse(event):
 func rotate_player_outside_wall():
 	if not can_rotate_player_on_wall(0):
 		# This is the angle relative to the rotation (negative angle is left, positive is right)
-		var player_angle = player.transform.basis.z.signed_angle_to(wall_normal, Vector3.UP)
+		var player_angle_z = player.transform.basis.z.signed_angle_to(wall_normal, Vector3.UP)
+		var player_angle_x = player.transform.basis.x.signed_angle_to(wall_normal, Vector3.UP)
 
 		# This is the angle between what the player is looking at and the wall
-		var angle = player.transform.basis.z.signed_angle_to(wall_normal, player.transform.basis.x)
-		if player_angle < 0:
+		var angle = abs(player.transform.basis.z.signed_angle_to(wall_normal, player.transform.basis.x))
+		print("Angle: " + str(angle))
+		print("Angle_Z: " + str(player_angle_z))
+		print("Angle_x: " + str(player_angle_x))
+		if player_angle_x + player_angle_z > 0:
 			player.animation_player.play("wallrun_left")
-			player.rotate_y(PI/2-angle)
+			player.rotate_y(-(PI/2-angle))
 		else:
 			player.animation_player.play("wallrun_right")
-			player.rotate_y(-(PI/2-angle))
+			player.rotate_y((PI/2-angle))
 
 
 func can_rotate_player_on_wall(rotation=0):
