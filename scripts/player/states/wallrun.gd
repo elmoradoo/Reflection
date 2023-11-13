@@ -37,8 +37,8 @@ func update_mouse(event):
 			if can_rotate_player_on_wall(rotation):
 				player.rotate_y(rotation)
 			else:
-				# The rotation is off-limits, push back mouse.
-				player.rotate_y(-rotation)
+				# The rotation is off-limits
+				player.neck.rotate_y(rotation)
 		else:
 			# wall collision has not happened yet
 			super.update_mouse(event)
@@ -54,9 +54,11 @@ func rotate_player_outside_wall():
 		if player_angle < 0:
 			player.animation_player.play("wallrun_left")
 			player.rotate_y(PI/2-angle)
+			player.neck.rotate_y(-(PI/2-angle))
 		else:
 			player.animation_player.play("wallrun_right")
 			player.rotate_y(-(PI/2-angle))
+			player.neck.rotate_y(PI/2-angle)
 
 
 func can_rotate_player_on_wall(rotation=0):
@@ -99,6 +101,7 @@ func exit():
 
 func move_player():
 	player.velocity.y += base_wallrun_y_speed * player.timers.get_node("wallrun_time").time_left
+	super.reset_neck(wallrun_lerp)
 	super.move_player()
 
 func get_input_next_state():

@@ -16,7 +16,7 @@ func get_state_name():
 
 func move_player():
 	super.stand_up()
-	super.reset_neck()
+	super.reset_neck(2.0)
 	super.reset_head_bob()
 	player.velocity.x = move_toward(player.velocity.x, 0, idle_lerp_speed)
 	player.velocity.z = move_toward(player.velocity.z, 0, idle_lerp_speed)

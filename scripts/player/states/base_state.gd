@@ -28,6 +28,7 @@ const sliding_minimum_velocity: float = 5.0
 
 #Wallrun vars
 const wallrun_jumping_velocity: float = 7.0
+const wallrun_lerp: float = 5.0
 
 var enums = preload("res://scripts/player/enums.gd")
 
@@ -44,8 +45,9 @@ func stand_up():
 func stand_down():
 	player.head.position.y = lerp(player.head.position.y, crouching_depth, lerp_speed * player.delta)
 
-func reset_neck():
-	player.neck.rotation.x = lerp(player.neck.rotation.x, 0.0, player.delta * 2.0)
+func reset_neck(lerp_speed):
+	player.neck.rotation.x = lerp(player.neck.rotation.x, 0.0, player.delta * lerp_speed)
+	player.neck.rotation.y = lerp(player.neck.rotation.y, 0.0, player.delta * lerp_speed)
 
 func head_bob(intensity, bobbing_speed):
 	head_bobbing_index += bobbing_speed * player.delta
