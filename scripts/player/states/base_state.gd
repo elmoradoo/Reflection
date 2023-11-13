@@ -75,7 +75,7 @@ func move_player():
 	var oldvel = player.velocity
 	player.camera.fov = lerp(player.camera.fov, 75 + player.velocity.length(), 0.1)
 	player.move_and_slide()
-	if abs(oldvel.length() - player.velocity.length()) > 1:
+	if abs(oldvel.length() - player.velocity.length()) > 0:
 		# collision happened!
 		collision.emit(oldvel, player.get_last_slide_collision())
 	if player.gravity_enabled and not player.is_on_floor():

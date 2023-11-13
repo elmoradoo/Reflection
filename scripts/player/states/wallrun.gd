@@ -36,9 +36,9 @@ func update_mouse(event):
 			# Collision with wall happened, we know where the player needs to look at.
 			if can_rotate_player_on_wall(rotation):
 				player.rotate_y(rotation)
-			#else:
+			else:
 				# The rotation is off-limits, push back mouse.
-				#player.rotate_y(-rotation)
+				player.rotate_y(-rotation)
 		else:
 			# wall collision has not happened yet
 			super.update_mouse(event)
