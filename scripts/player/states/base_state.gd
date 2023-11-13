@@ -47,8 +47,8 @@ func stand_down():
 func reset_neck():
 	player.neck.rotation.x = lerp(player.neck.rotation.x, 0.0, player.delta * 2.0)
 
-func head_bob(intensity):
-	head_bobbing_index += head_bobbing_speed * player.delta
+func head_bob(intensity, bobbing_speed):
+	head_bobbing_index += bobbing_speed * player.delta
 	head_bobbing_vector.y = sin(head_bobbing_index)
 	head_bobbing_vector.x = sin(head_bobbing_index / 2) + 0.5
 	player.eyes.position.y = lerp(player.eyes.position.y, head_bobbing_vector.y * (intensity / 2.0), player.delta * head_bobbing_lerp)
@@ -72,6 +72,7 @@ func _on_collision(_old_vel, _collider_id):
 
 func move_player():
 	var oldvel = player.velocity
+	player.camera.fov = lerp(player.camera.fov, 75 + player.velocity.length(), 0.1)
 	player.move_and_slide()
 	if abs(oldvel.length() - player.velocity.length()) > 1:
 		# collision happened!

@@ -3,7 +3,7 @@ extends BaseState
 
 const max_speed: float = 8.0
 #var lerp_speed: float = 0.5
-var acceleration = 5.0
+var acceleration = 3.0
 
 
 func init(obj):
@@ -17,7 +17,7 @@ func enter():
 
 func move_player():
 	super.stand_up()
-	super.head_bob(0.2)
+	super.head_bob(0.2, 22.0 + acceleration)
 	var target_velocity = (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized() * max_speed
 	player.velocity = player.velocity.lerp(target_velocity, acceleration * player.delta)
 	super.move_player()

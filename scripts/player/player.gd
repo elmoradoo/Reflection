@@ -16,6 +16,7 @@ signal line_update
 @onready var neck = $neck
 @onready var head = $neck/head
 @onready var eyes = $neck/head/eyes
+@onready var camera = $neck/head/eyes/Camera3D
 
 # Animations
 @onready var model = $player_model
@@ -43,7 +44,6 @@ func _enter_tree():
 	if str(name).is_valid_int():
 		set_multiplayer_authority(str(name).to_int())
 
-
 func _on_get_stats_timeout():
 	var DEBUG_ARRAY = [
 	"Current State: " + str(player_state_manager.debug_get_player_state()),
@@ -56,7 +56,8 @@ func _on_get_stats_timeout():
 	"WallClimbTimeLeft: " + str($timers/wallclimb_time.time_left),
 	"IsOnFloor: " + str(is_on_floor()),
 	"IsOnWall: " + str(is_on_wall()),
-	"Forward: " + str(transform.basis.z.normalized()) 
+	"Forward: " + str(transform.basis.z.normalized()),
+	"FOV: " + str(int(camera.fov))
 	]
 	stats_update.emit(DEBUG_ARRAY)
 	if velocity:
