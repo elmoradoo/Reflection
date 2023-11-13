@@ -31,8 +31,7 @@ func _on_collision(previous_vel: Vector3, new_collision: KinematicCollision3D):
 
 func update_mouse(event):
 	if event is InputEventMouseMotion:
-		# if wall_normal.y is present, then it's simply not a wall!
-		if wall_normal and not wall_normal.y:
+		if wall_normal:
 			var rotation = deg_to_rad(-event.relative.x * player.mouse_sensitivity)
 			# Collision with wall happened, we know where the player needs to look at.
 			if can_rotate_player_on_wall(rotation):
@@ -48,20 +47,16 @@ func update_mouse(event):
 func rotate_player_outside_wall():
 	if not can_rotate_player_on_wall(0):
 		# This is the angle relative to the rotation (negative angle is left, positive is right)
-		var player_angle_z = player.transform.basis.z.signed_angle_to(wall_normal, Vector3.UP)
-		var player_angle_x = player.transform.basis.x.signed_angle_to(wall_normal, Vector3.UP)
+		var player_angle = player.transform.basis.z.signed_angle_to(wall_normal, Vector3.UP)
 
 		# This is the angle between what the player is looking at and the wall
 		var angle = abs(player.transform.basis.z.signed_angle_to(wall_normal, player.transform.basis.x))
-		print("Angle: " + str(angle))
-		print("Angle_Z: " + str(player_angle_z))
-		print("Angle_x: " + str(player_angle_x))
-		if player_angle_x + player_angle_z > 0:
+		if player_angle < 0:
 			player.animation_player.play("wallrun_left")
-			player.rotate_y(-(PI/2-angle))
+			player.rotate_y(PI/2-angle)
 		else:
 			player.animation_player.play("wallrun_right")
-			player.rotate_y((PI/2-angle))
+			player.rotate_y(-(PI/2-angle))
 
 
 func can_rotate_player_on_wall(rotation=0):
@@ -72,8 +67,7 @@ func can_rotate_player_on_wall(rotation=0):
 	var limit_max = PI
 
 	# This is the angle between what the player is looking at and the wall
-	var angle = player.transform.basis.z.signed_angle_to(wall_normal, player.transform.basis.x)
-
+	var angle = abs(player.transform.basis.z.signed_angle_to(wall_normal, player.transform.basis.x))
 	angle = angle + abs(rotation)
 	return clamp(angle, limit_min, limit_max) == angle
 
@@ -86,7 +80,8 @@ func enter():
 	if player.touched_floor:
 		is_jumping = false
 
-	if player.get_last_slide_collision():
+	var last_collision = player.get_last_slide_collision()
+	if last_collision and last_collision.get_normal().y < 1:
 		# Collision was triggered during AirTime
 		wall_normal = player.get_last_slide_collision().get_normal()
 		rotate_player_outside_wall()
