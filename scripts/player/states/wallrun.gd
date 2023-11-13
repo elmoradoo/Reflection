@@ -16,16 +16,16 @@ func get_state_name():
 	return enums.player_states.WallRun
 
 
-func _on_collision(previous_vel: Vector3, collision: KinematicCollision3D):
-	super._on_collision(previous_vel, collision)
+func _on_collision(previous_vel: Vector3, new_collision: KinematicCollision3D):
+	super._on_collision(previous_vel, new_collision)
 	# Compute velocity compensation while avoiding y (we are on a wall, so we should not compensate y)
 	var vel_length = Vector2(player.velocity.x, player.velocity.z).length()
 	var before_collision_vel_length = Vector2(previous_vel.x, previous_vel.z).length()
 	player.velocity += player.velocity.normalized() * Vector3(1, 0, 1) * (before_collision_vel_length - vel_length)
 
 	# Make sure it's a wall.
-	if not collision.get_normal().y:
-		wall_normal = collision.get_normal()
+	if not new_collision.get_normal().y:
+		wall_normal = new_collision.get_normal()
 		rotate_player_outside_wall()
 
 
