@@ -67,7 +67,8 @@ func update_mouse(event):
 func get_input_next_state():
 	player.input_dir = Input.get_vector("left", "right", "forward", "backward")
 
-func _on_collision(_old_vel, _collider_id):
+func _on_collision(_old_vel: Vector3, _collision: KinematicCollision3D):
+	print(str(enums.player_states.keys()[self.get_state_name()]) + " collided with: " + str(_collision.get_collider_id()))
 	pass
 
 func move_player():
@@ -76,8 +77,7 @@ func move_player():
 	player.move_and_slide()
 	if abs(oldvel.length() - player.velocity.length()) > 1:
 		# collision happened!
-		collision.emit(oldvel, player.new_collider_id)
-		player.new_collider_id = player.get_last_slide_collision().get_collider_id()
+		collision.emit(oldvel, player.get_last_slide_collision())
 	if player.gravity_enabled and not player.is_on_floor():
 		player.velocity.y -= player.gravity * player.delta
 	elif player.is_on_floor():

@@ -15,6 +15,7 @@ func enter():
 func exit():
 	player.animation_player.play("land")
 
+
 func move_player():
 	super.reset_head_bob()
 	velocity_before_landing = player.velocity
