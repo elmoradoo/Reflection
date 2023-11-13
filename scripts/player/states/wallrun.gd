@@ -53,8 +53,10 @@ func rotate_player_outside_wall():
 		# This is the angle between what the player is looking at and the wall
 		var angle = player.transform.basis.z.signed_angle_to(wall_normal, player.transform.basis.x)
 		if player_angle < 0:
+			player.animation_player.play("wallrun_left")
 			player.rotate_y(PI/2-angle)
 		else:
+			player.animation_player.play("wallrun_right")
 			player.rotate_y(-(PI/2-angle))
 
 

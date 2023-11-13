@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ba1e2q3t5cyfk"]
+[gd_scene load_steps=16 format=3 uid="uid://ba1e2q3t5cyfk"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_nfg6f"]
 [ext_resource type="Script" path="res://scripts/player/debug/debug_velocity.gd" id="2_en4pu"]
@@ -125,12 +125,44 @@ tracks/0/keys = {
 "values": [Vector3(6.28319, 0, 0), Vector3(0, 0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_jsp3p"]
+resource_name = "wallrun_right"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("neck/head/eyes/Camera3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, -0.349066), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_lhig4"]
+resource_name = "wallrun_left"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("neck/head/eyes/Camera3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0.349066), Vector3(0, 0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_y1atu"]
 _data = {
 "RESET": SubResource("Animation_rcd5g"),
 "jump": SubResource("Animation_j3hl0"),
 "land": SubResource("Animation_j5eol"),
-"roll": SubResource("Animation_w37d6")
+"roll": SubResource("Animation_w37d6"),
+"wallrun_left": SubResource("Animation_lhig4"),
+"wallrun_right": SubResource("Animation_jsp3p")
 }
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_wqrwg"]
