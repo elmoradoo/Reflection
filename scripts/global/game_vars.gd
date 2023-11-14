@@ -3,6 +3,7 @@ extends Node
 
 # LEVEL
 var LEVEL_SCENE: String = "res://scenes/level/world.tscn"
+var LEVEL_ZERO: String = "res://scenes/level/prefabTests.tscn"
 var LEVEL_NODE: Node = null
 
 # PLAYER

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bw7lo6nqwp727"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tmafi"]
+albedo_color = Color(0.133333, 0.133333, 0.133333, 1)
+
+[node name="Ramp" type="Node3D"]
+
+[node name="CSGMesh3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1.89046, 0, 0, 0, 0.0539519, 0, 0, 0, 3.97991, 0, 0, 0)
+use_collision = true
+material = SubResource("StandardMaterial3D_tmafi")

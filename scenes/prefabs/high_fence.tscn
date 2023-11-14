@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cyvuvqwrh57bx"]
+
+[node name="high_fence" type="Node3D"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(0.23117, 0, 0, 0, 1, 0, 0, 0, 0.138305, 0, 0, 0)
+size = Vector3(0.5, 1, 0.5)

@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://scripts/ui/main.gd" id="1_hbov5"]
 
 [node name="MainMenu" type="MarginContainer"]
-visible = false
 offset_right = 97.0
 offset_bottom = 136.0
 script = ExtResource("1_hbov5")
@@ -19,5 +18,10 @@ text = "New game"
 layout_mode = 2
 text = "Multiplayer"
 
+[node name="level0" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Level 0"
+
 [connection signal="pressed" from="VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="VBoxContainer/Multiplayer" to="." method="_on_multiplayer_pressed"]
+[connection signal="pressed" from="VBoxContainer/level0" to="." method="_on_level_0_pressed"]

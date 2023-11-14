@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://bibifnx82vbs7"]
+
+[ext_resource type="Texture2D" uid="uid://da7pai2008tnk" path="res://addons/kenney_prototype_textures/dark/texture_02.png" id="1_dykcw"]
+[ext_resource type="Texture2D" uid="uid://bk00aq32w5s2o" path="res://addons/kenney_prototype_textures/orange/texture_01.png" id="2_m2lco"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_65e8b"]
+albedo_texture = ExtResource("1_dykcw")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sno0u"]
+albedo_texture = ExtResource("2_m2lco")
+
+[node name="fence02" type="Node3D"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(5.7, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_65e8b")
+use_collision = true
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(5.7, 0, 0, 0, 1.4969, 0, 0, 0, 0.518043, 0, 0.857489, 0)
+material_override = SubResource("StandardMaterial3D_sno0u")
+use_collision = true

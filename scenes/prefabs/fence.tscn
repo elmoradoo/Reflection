@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://duxrcgafm7iia"]
+
+[ext_resource type="Texture2D" uid="uid://c0cuk5iik16n2" path="res://addons/kenney_prototype_textures/orange/texture_03.png" id="1_m2lg3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cychu"]
+albedo_texture = ExtResource("1_m2lg3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a06i3"]
+albedo_color = Color(0, 0.388235, 0.388235, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ai6kh"]
+albedo_texture = ExtResource("1_m2lg3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_blc13"]
+albedo_texture = ExtResource("1_m2lg3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m7xmk"]
+albedo_texture = ExtResource("1_m2lg3")
+
+[node name="Fence" type="Node3D"]
+
+[node name="MeshInstance3D" type="CSGBox3D" parent="."]
+transform = Transform3D(0.085, 0, 0, 0, 1.5, 0, 0, 0, 0.102, 0, 0.755415, 0)
+material_override = SubResource("StandardMaterial3D_cychu")
+use_collision = true
+material = SubResource("StandardMaterial3D_a06i3")
+
+[node name="MeshInstance3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(0.085, 0, 0, 0, 1.5, 0, 0, 0, 0.102, 2.57017, 0.755415, 0)
+material_override = SubResource("StandardMaterial3D_ai6kh")
+use_collision = true
+material = SubResource("StandardMaterial3D_a06i3")
+
+[node name="MeshInstance3D3" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.06516e-09, -2.48561, 0, 0.093, -1.08649e-07, 0, 0, 0, 0.111, 1.28606, 0.503075, -0.00415397)
+material_override = SubResource("StandardMaterial3D_blc13")
+use_collision = true
+material = SubResource("StandardMaterial3D_a06i3")
+
+[node name="MeshInstance3D4" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.07859e-09, -2.51203, 0, 0.0933072, -1.09805e-07, 0, 0, 0, 0.111367, 1.29022, 1.45315, 0)
+material_override = SubResource("StandardMaterial3D_m7xmk")
+use_collision = true
+material = SubResource("StandardMaterial3D_a06i3")

@@ -1,0 +1,71 @@
+[gd_scene load_steps=7 format=3 uid="uid://betn4y0cmqaeb"]
+
+[ext_resource type="Texture2D" uid="uid://da7pai2008tnk" path="res://addons/kenney_prototype_textures/dark/texture_02.png" id="1_y5h1c"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mrobx"]
+albedo_color = Color(0.54902, 0.54902, 0.54902, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bhlsq"]
+albedo_texture = ExtResource("1_y5h1c")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pv33b"]
+lifetime_randomness = 0.12
+emission_shape = 1
+emission_sphere_radius = 1.79
+direction = Vector3(0, 0, 0)
+gravity = Vector3(0, 1, 0)
+scale_min = 42.94
+scale_max = 94.27
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ys1f1"]
+
+[sub_resource type="PointMesh" id="PointMesh_w25dq"]
+material = SubResource("StandardMaterial3D_ys1f1")
+
+[node name="rectangle_vent" type="Node3D"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(4.20352, 0, 0, 0, 1, 0, 0, 0, 1.61083, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_mrobx")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.567687, 0, 0, 0, 1, -1.3081, 0.204367, 0)
+material_override = SubResource("StandardMaterial3D_bhlsq")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="CSGCylinder3D"]
+transform = Transform3D(0.134637, 0, 0, 0, -0.362407, 0, 0, 0, 0.152412, 0, 1.42412, 0)
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_pv33b")
+draw_passes = 4
+draw_pass_1 = SubResource("PointMesh_w25dq")
+draw_pass_2 = null
+draw_pass_3 = null
+draw_pass_4 = null
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.567687, 0, 0, 0, 1, 0.0727931, 0.204367, 0)
+material_override = SubResource("StandardMaterial3D_bhlsq")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="CSGCylinder3D2"]
+transform = Transform3D(0.134637, 0, 0, 0, -0.362407, 0, 0, 0, 0.152412, 0, 1.42412, 0)
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_pv33b")
+draw_passes = 4
+draw_pass_1 = SubResource("PointMesh_w25dq")
+draw_pass_2 = null
+draw_pass_3 = null
+draw_pass_4 = null
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.567687, 0, 0, 0, 1, 1.35239, 0.204367, 0)
+material_override = SubResource("StandardMaterial3D_bhlsq")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="CSGCylinder3D3"]
+transform = Transform3D(0.134637, 0, 0, 0, -0.362407, 0, 0, 0, 0.152412, 0, 1.42412, 0)
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_pv33b")
+draw_passes = 4
+draw_pass_1 = SubResource("PointMesh_w25dq")
+draw_pass_2 = null
+draw_pass_3 = null
+draw_pass_4 = null

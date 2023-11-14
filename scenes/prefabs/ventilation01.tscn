@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://gekk2su7ecck"]
+
+[ext_resource type="Texture2D" uid="uid://b4shnqatybm45" path="res://addons/kenney_prototype_textures/dark/texture_01.png" id="1_0dbni"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_onfp4"]
+albedo_texture = ExtResource("1_0dbni")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jkpqc"]
+albedo_texture = ExtResource("1_0dbni")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_by8ii"]
+albedo_texture = ExtResource("1_0dbni")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t3p68"]
+albedo_texture = ExtResource("1_0dbni")
+
+[node name="ventilation" type="Node3D"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.733516, 0, 0, 0, 0.843651, -0.10111, 2.13112, 0)
+material_override = SubResource("StandardMaterial3D_onfp4")
+use_collision = true
+size = Vector3(5, 1, 1)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0.733516, 0, -1, -3.2063e-08, 0, 0, 0, 0.843651, -2.24724, 1.24657, 0)
+material_override = SubResource("StandardMaterial3D_jkpqc")
+use_collision = true
+size = Vector3(2.5, 1, 1)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="."]
+transform = Transform3D(0.168573, 0, 0, 0, 2.32622, 0, 0, 0, 0.191359, 1.75604, 1.1755, 0.320411)
+material_override = SubResource("StandardMaterial3D_by8ii")
+use_collision = true
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="."]
+transform = Transform3D(0.168573, 0, 0, 0, 2.32622, 0, 0, 0, 0.191359, 1.75604, 1.1755, -0.311979)
+material_override = SubResource("StandardMaterial3D_t3p68")
+use_collision = true
