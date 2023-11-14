@@ -8,7 +8,7 @@ func get_state_name():
 	return enums.player_states.Jumping
 
 func enter():
-	player.animation_player.play("jump")
+	player.animation_player.queue("jump")
 	player.model.get_node("AnimationPlayer").play("jumping")
 
 func move_player():
