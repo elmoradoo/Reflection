@@ -23,11 +23,17 @@ func enter():
 func exit():
 	player.timers.get_node("wallclimb_time").stop()
 	climb_is_over = false
+	player.velocity = Vector3.ZERO
 
 func move_player():
 	super.reset_head_bob()
 	player.velocity.y += climbing_speed * player.timers.get_node("wallclimb_time").time_left
 	super.move_player()
+
+func get_input_next_state():
+	super.get_input_next_state()
+	if Input.is_action_just_pressed("jump"):
+		return enums.player_states.Jumping
 
 func get_physics_next_state():
 	if player.is_on_floor() and player.velocity.length() >= 2:
@@ -38,7 +44,7 @@ func get_physics_next_state():
 		return enums.player_states.LedgeGrab
 	elif super.can_ledgeclimb():
 		return enums.player_states.LedgeClimb
-	elif climb_is_over or not super.can_wallclimb():
+	elif climb_is_over:
 		return enums.player_states.AirTime
 	else:
 		return enums.player_states.WallClimb

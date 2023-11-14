@@ -45,9 +45,9 @@ func stand_up():
 func stand_down():
 	player.head.position.y = lerp(player.head.position.y, crouching_depth, lerp_speed * player.delta)
 
-func reset_neck(lerp_speed):
-	player.neck.rotation.x = lerp(player.neck.rotation.x, 0.0, player.delta * lerp_speed)
-	player.neck.rotation.y = lerp(player.neck.rotation.y, 0.0, player.delta * lerp_speed)
+func reset_neck(lerp_speed_local):
+	player.neck.rotation.x = lerp(player.neck.rotation.x, 0.0, player.delta * lerp_speed_local)
+	player.neck.rotation.y = lerp(player.neck.rotation.y, 0.0, player.delta * lerp_speed_local)
 
 func head_bob(intensity, bobbing_speed):
 	head_bobbing_index += bobbing_speed * player.delta
