@@ -2,7 +2,6 @@ extends BaseState
 
 
 var old_vel: Vector3 = Vector3.ZERO
-var old_rotation_head: Vector3 = Vector3.ZERO
 
 var is_jumping: bool = false
 
@@ -104,19 +103,17 @@ func move_player():
 	super.reset_neck(wallrun_lerp)
 	super.move_player()
 
-func get_input_next_state():
-	super.get_input_next_state()
+func check_input_next_state():
+	super.check_input_next_state()
 	if Input.is_action_just_pressed("jump"):
 		if not is_jumping:
 			is_jumping = true
-			return enums.player_states.Jumping
+			change_state.emit(enums.player_states.Jumping)
 
-func get_physics_next_state():
+func check_physics_next_state():
 	if player.is_on_floor() and player.velocity.length() >= 2:
-		return enums.player_states.Sprinting
+		change_state.emit(enums.player_states.Sprinting)
 	elif player.is_on_floor():
-		return enums.player_states.Idle
-	elif super.can_wallrun() or player.is_on_wall_only():
-		return enums.player_states.WallRun
-	return enums.player_states.AirTime
-
+		change_state.emit(enums.player_states.Idle)
+	elif not (super.can_wallrun() or player.is_on_wall_only()):
+		change_state.emit(enums.player_states.AirTime)

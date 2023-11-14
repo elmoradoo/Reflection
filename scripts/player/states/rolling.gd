@@ -4,8 +4,9 @@ extends BaseState
 var old_vel: Vector3 = Vector3.ZERO
 var is_rolling = true
 
-func init(obj):
-	super.init(obj)
+
+func init(player_obj: Player):
+	super.init(player_obj)
 	player.timers.get_node("roll_time").timeout.connect(timer_end)
 
 func timer_end():
@@ -27,8 +28,7 @@ func exit():
 func move_player():
 	super.move_player()
 
-func get_physics_next_state():
+func check_physics_next_state():
 	if not is_rolling:
-		return enums.player_states.Idle
-	return enums.player_states.Rolling
-	
+		change_state.emit(enums.player_states.Idle)
+

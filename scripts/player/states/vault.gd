@@ -1,13 +1,15 @@
 extends BaseState
 
+
 var vault_timer_end: bool = false
 var old_vel: Vector3 = Vector3.ZERO
 var vault_speed: float = 2.0
 
-func init(obj):
-	super.init(obj)
+
+func init(player_obj: Player):
+	super.init(player_obj)
 	player.timers.get_node("vault_time").timeout.connect(vault_time)
-	
+
 func enter():
 	player.timers.get_node("vault_time").start()
 	old_vel = player.velocity
@@ -43,14 +45,13 @@ func exit():
 func get_state_name(): 
 	return enums.player_states.Vault
 
-func get_physics_next_state():
+func check_physics_next_state():
 	if not vault_timer_end:
-		return enums.player_states.Vault 
+		return
 	if player.is_on_floor():
 		if player.velocity.length() >= 2:
-			return enums.player_states.Sprinting
+			change_state.emit(enums.player_states.Sprinting)
 		else:
-			return enums.player_states.Idle
+			change_state.emit(enums.player_states.Idle)
 	elif not player.rc_feets.get_node("down").is_colliding():
-		return enums.player_states.AirTime
-	return enums.player_states.Vault  
+		change_state.emit(enums.player_states.AirTime)

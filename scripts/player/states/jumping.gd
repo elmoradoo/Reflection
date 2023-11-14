@@ -4,6 +4,7 @@ extends BaseState
 const jump_velocity: float = 4.5
 const forward_velocity: float = 1.1
 
+
 func get_state_name():
 	return enums.player_states.Jumping
 
@@ -19,10 +20,6 @@ func move_player():
 	player.velocity.z += -forward.z * forward_velocity
 	super.move_player()
 
-func exit():
-	pass
-
-func get_physics_next_state():
+func check_physics_next_state():
 	if not player.is_on_floor():
-		return enums.player_states.AirTime
-	return enums.player_states.Jumping
+		change_state.emit(enums.player_states.AirTime)

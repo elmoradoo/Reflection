@@ -1,4 +1,4 @@
-extends Node
+class_name StateManager extends Node
 
 
 var enums = preload("res://scripts/player/enums.gd")
@@ -33,12 +33,14 @@ func init(player_obj):
 	player = player_obj
 	for state_script in state_scripts.values():
 		state_script.init(player)
+		state_script.connect("change_state", _on_change_state)
 	current_state = state_scripts[enums.player_states.Idle]
 	current_state.connect("collision", current_state._on_collision)
+
 	#Get mouse movement
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
-func change_state(next_state):
+func _on_change_state(next_state):
 	if next_state and next_state != current_state.get_state_name():
 		current_state.exit()
 		current_state.disconnect("collision", current_state._on_collision)
@@ -56,9 +58,9 @@ func update_event(event):
 func run():
 	# Handle player inputs only of UI is not focused.
 	if not UI.IS_FOCUSED:
-		change_state(current_state.get_input_next_state())
+		current_state.check_input_next_state()
 
 	# Change state depending on physics, does not care about UI
-	change_state(current_state.get_physics_next_state())
+	current_state.check_physics_next_state()
 
 	current_state.move_player()

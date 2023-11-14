@@ -2,9 +2,10 @@ extends Node
 
 class_name BaseState
 
-@export var player: Player
+var player: Player
 
 signal collision
+signal change_state
 
 #Stand up vars
 const stand_up_lp: float = 10.0
@@ -38,6 +39,7 @@ func get_state_name():
 func init(player_obj: Player):
 	player = player_obj
 
+
 func stand_up():
 	player.neck.rotation.y = lerp(player.neck.rotation.y, 0.0, player.delta * stand_up_lp)
 	player.head.position.y = lerp(player.head.position.y, 0.0, stand_up_lp * player.delta)
@@ -66,7 +68,7 @@ func update_mouse(event):
 		player.head.rotate_x(deg_to_rad(-event.relative.y * player.mouse_sensitivity))
 		player.head.rotation.x = clamp(player.head.rotation.x, deg_to_rad(-89), deg_to_rad(89))
 
-func get_input_next_state():
+func check_input_next_state():
 	player.input_dir = Input.get_vector("left", "right", "forward", "backward")
 
 func _on_collision(_old_vel: Vector3, _collision: KinematicCollision3D):
@@ -132,3 +134,9 @@ func can_ledge_grab() -> bool:
 		and player.velocity.y < 1):
 		return true
 	return false
+
+func check_physics_next_state():
+	pass
+
+func exit():
+	pass

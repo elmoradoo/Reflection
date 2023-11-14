@@ -8,9 +8,6 @@ func enter():
 	player.standing_collision_shape.disabled = false
 	player.crouching_collision_shape.disabled = true
 
-func exit():
-	pass
-
 func get_state_name():
 	return enums.player_states.Idle
 
@@ -22,14 +19,13 @@ func move_player():
 	player.velocity.z = move_toward(player.velocity.z, 0, idle_lerp_speed)
 	super.move_player()
 
-func get_input_next_state():
-	super.get_input_next_state()
+func check_input_next_state():
+	super.check_input_next_state()
 	if Input.is_action_pressed("crouch"):
-		return enums.player_states.Crouching
+		change_state.emit(enums.player_states.Crouching)
 	elif Input.is_action_pressed("jump"):
-		return enums.player_states.Jumping
+		change_state.emit(enums.player_states.Jumping)
 
-func get_physics_next_state():
+func check_physics_next_state():
 	if player.input_dir != Vector2.ZERO:
-		return enums.player_states.Sprinting
-	return enums.player_states.Idle
+		change_state.emit(enums.player_states.Sprinting)
