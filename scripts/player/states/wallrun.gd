@@ -90,13 +90,13 @@ func enter():
 
 func exit():
 	player.velocity = old_vel
-	player.velocity.y = 0
 	if is_jumping:
 		player.velocity = \
 			(player.transform.basis * Vector3(player.input_dir.x, 1, player.input_dir.y)).normalized() * \
 			(wallrun_jumping_velocity + player.timers.get_node("wallrun_time").time_left)
 	player.timers.get_node("wallrun_time").stop()
 	wall_normal = Vector3.ZERO
+	player.velocity.y = 0.0	
 
 func move_player():
 	player.velocity.y += base_wallrun_y_speed * player.timers.get_node("wallrun_time").time_left

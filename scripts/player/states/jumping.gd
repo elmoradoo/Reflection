@@ -3,7 +3,7 @@ extends BaseState
 
 const jump_velocity: float = 4.5
 const forward_velocity: float = 1.1
-
+var has_jumped: bool = false
 
 func get_state_name():
 	return enums.player_states.Jumping
@@ -11,9 +11,14 @@ func get_state_name():
 func enter():
 	player.animation_player.queue("jump")
 	player.model.get_node("AnimationPlayer").play("jumping")
+	print(player.velocity.y)
+
+func exit():
+	has_jumped = false
 
 func move_player():
 	super.reset_neck(2.0)
+	has_jumped = true
 	player.velocity.y += jump_velocity
 	var forward = player.transform.basis.z.normalized()
 	player.velocity.x += -forward.x * forward_velocity
@@ -21,5 +26,7 @@ func move_player():
 	super.move_player()
 
 func check_physics_next_state():
+	if not has_jumped:
+		return
 	if not player.is_on_floor():
 		change_state.emit(enums.player_states.AirTime)

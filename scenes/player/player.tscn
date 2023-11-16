@@ -262,7 +262,7 @@ libraries = {
 [node name="timers" type="Node3D" parent="."]
 
 [node name="wallclimb_time" type="Timer" parent="timers"]
-wait_time = 0.5
+wait_time = 0.7
 
 [node name="wallrun_time" type="Timer" parent="timers"]
 wait_time = 0.5
@@ -275,6 +275,9 @@ wait_time = 0.1
 
 [node name="vault_time" type="Timer" parent="timers"]
 wait_time = 0.3
+
+[node name="wallclimb_jump_time" type="Timer" parent="timers"]
+wait_time = 0.7
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

@@ -27,6 +27,7 @@ material = SubResource("StandardMaterial3D_ys1f1")
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(4.20352, 0, 0, 0, 1, 0, 0, 0, 1.61083, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_mrobx")
+use_collision = true
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.567687, 0, 0, 0, 1, -1.3081, 0.204367, 0)
