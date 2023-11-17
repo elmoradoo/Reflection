@@ -10,7 +10,10 @@ func get_state_name():
 
 func enter():
 	if player.animation_player.is_playing():
-		player.animation_player.play(player.animation_player.current_animation, -1, -1.5, false)
+		var current_frame = player.animation_player.current_animation_position
+		# increase speed
+		player.animation_player.play(player.animation_player.current_animation, -1, 2, false)
+		player.animation_player.seek(current_frame)
 	player.animation_player.queue("jump")
 	player.model.get_node("AnimationPlayer").play("jumping")
 
