@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://duxrcgafm7iia"]
+[gd_scene load_steps=8 format=3 uid="uid://duxrcgafm7iia"]
 
 [ext_resource type="Texture2D" uid="uid://c0cuk5iik16n2" path="res://addons/kenney_prototype_textures/orange/texture_03.png" id="1_m2lg3"]
 
@@ -16,6 +16,8 @@ albedo_texture = ExtResource("1_m2lg3")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m7xmk"]
 albedo_texture = ExtResource("1_m2lg3")
+
+[sub_resource type="BoxMesh" id="BoxMesh_yldn8"]
 
 [node name="Fence" type="Node3D"]
 
@@ -42,3 +44,8 @@ transform = Transform3D(-4.07859e-09, -2.51203, 0, 0.0933072, -1.09805e-07, 0, 0
 material_override = SubResource("StandardMaterial3D_m7xmk")
 use_collision = true
 material = SubResource("StandardMaterial3D_a06i3")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.6273, 0, 0, 0, 1.48898, 0, 0, 0, 0.0994391, 1.28419, 0.750118, 0)
+visible = false
+mesh = SubResource("BoxMesh_yldn8")

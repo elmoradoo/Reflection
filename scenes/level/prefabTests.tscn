@@ -238,7 +238,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.74242, 15.3733, 25.5798)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.5186, -0.8185, -30.5571)
 
 [node name="ventilation" parent="." instance=ExtResource("6_2qcfi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.66786, -4.68485, -33.5129)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.66786, -4.68485, -29.1857)
 
 [node name="building_entry" parent="." instance=ExtResource("7_wyelg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0706, 0, -1.90866)
