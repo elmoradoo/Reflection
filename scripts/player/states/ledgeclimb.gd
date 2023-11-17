@@ -1,12 +1,19 @@
 extends BaseState
 
-var old_vel: Vector3 = Vector3.ZERO
-var push_player = false
-var finalize_player: bool = false
-var upward_speed: float = 2.0
+#Move up
 var initial_height: float
-var ledgeclimb_speed = 2.0
-var collided = false
+var up_goal: float = 1.7
+var up_speed: float = 3.0
+
+#Push forwards
+var push_player: bool = false
+var forward_goal: float = 1.0
+var forward_speed: float = 2.0
+
+#Finalize
+var finalize_player: bool = false
+var finalize_goal: float = 1.0
+var finalize_speed: float = 1.0
 
 func get_state_name():
 	return enums.player_states.LedgeClimb
@@ -23,46 +30,36 @@ func ledgeclimb_timer():
 	player.crouching_collision_shape.disabled = true
 
 func enter():
-	old_vel = player.velocity
 	player.crouching_collision_shape.disabled = false
 	player.standing_collision_shape.disabled = true
 	player.coiling_collision_shape.disabled = true
-	finalize_player = false
-	var forward_direction = player.global_transform.basis.z
-	player.velocity = -forward_direction * 4.0 * player.delta
-	if player.velocity.y < 0:
-		player.velocity.y = 0
-		
-	#TMP
-	player.velocity = Vector3.ZERO
-	collided = true
 	player.gravity_enabled = false
 	initial_height = player.position.y
+
 func exit():
 	player.gravity_enabled = true
 	finalize_player = false
 	push_player = false
-	collided = false
 	player.timers.get_node("ledgeclimb_time").stop()
 
 func move_up():
 	player.crouching_collision_shape.disabled = true
-	if player.position.y - initial_height >= 1.7 and not push_player:
+	if player.position.y - initial_height >= up_goal:
 		push_player = true
 		player.timers.get_node("ledgeclimb_time").start()
-	player.position.y = lerp(player.position.y, player.position.y + 1.7, 3.0 * player.delta)
+	player.position.y = lerp(player.position.y, player.position.y + up_goal, up_speed * player.delta)
 
 func move_forward():
 	var forward_direction = player.global_transform.basis.z
-	player.position.x = lerp(player.position.x, player.position.x + 1.0 , -forward_direction.x * ledgeclimb_speed * player.delta)
-	player.position.y = lerp(player.position.y, player.position.y + 1.0, -forward_direction.y * ledgeclimb_speed * player.delta)
-	player.position.z = lerp(player.position.z, player.position.z + 1.0, -forward_direction.z * ledgeclimb_speed * player.delta)
+	player.position.x = lerp(player.position.x, player.position.x + forward_goal , -forward_direction.x * forward_speed * player.delta)
+	player.position.y = lerp(player.position.y, player.position.y + forward_goal, -forward_direction.y * forward_speed * player.delta)
+	player.position.z = lerp(player.position.z, player.position.z + forward_goal, -forward_direction.z * forward_speed * player.delta)
 
 func finalize():
 	player.standing_collision_shape.disabled = false
 	player.crouching_collision_shape.disabled = true
 	player.coiling_collision_shape.disabled = true
-	player.position.y = lerp(player.position.y, player.position.y - 1.7, 1.0 * player.delta)
+	player.position.y = lerp(player.position.y, player.position.y - finalize_goal, finalize_speed * player.delta)
 
 func move_player():
 	if not finalize_player and push_player:

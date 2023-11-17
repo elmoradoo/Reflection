@@ -56,6 +56,7 @@ func _on_get_stats_timeout():
 	"WallClimbTimeLeft: " + str($timers/wallclimb_time.time_left),
 	"IsOnFloor: " + str(is_on_floor()),
 	"IsOnWall: " + str(is_on_wall()),
+	"IsOnWallOnly: " + str(is_on_wall_only()),
 	"Forward: " + str(transform.basis.z.normalized()),
 	"FOV: " + str(int(camera.fov))
 	]
