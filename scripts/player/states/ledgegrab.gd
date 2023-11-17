@@ -2,17 +2,24 @@ extends BaseState
 
 
 var move_speed: float = 2.0
-
+var collided = false
 
 func get_state_name():
 	return enums.player_states.LedgeGrab
 
-func enter():
-	player.gravity_enabled = false
-	player.velocity = Vector3.ZERO
+func _on_collision(previous_vel: Vector3, new_collision: KinematicCollision3D):
+	super._on_collision(previous_vel, new_collision)
+	collided = true
 	
+	
+func enter():
+	if player.velocity.y < 0:
+		player.velocity.y = 0
+	player.velocity = Vector3.ZERO	
+	player.gravity_enabled = false
 func exit():
-	player.gravity_enabled = true	
+	player.gravity_enabled = true
+	collided = false
 
 func move_player():
 	super.move_player()

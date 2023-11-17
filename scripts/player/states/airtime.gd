@@ -3,16 +3,21 @@ extends BaseState
 
 var velocity_before_landing: Vector3
 const roll_min_velocity = -8
-
+var collided = false
 
 func get_state_name():
 	return enums.player_states.AirTime
+
+func _on_collision(previous_vel: Vector3, new_collision: KinematicCollision3D):
+	super._on_collision(previous_vel, new_collision)
+	collided = true
 
 func enter():
 	velocity_before_landing = player.velocity
 
 func exit():
 	player.animation_player.play("land")
+	collided = false
 
 func move_player():
 	super.reset_head_bob()
@@ -32,13 +37,13 @@ func check_physics_next_state():
 		change_state.emit(enums.player_states.Sprinting)
 	elif player.is_on_floor():
 		change_state.emit(enums.player_states.Idle)
-	elif super.can_ledge_grab():
+	elif super.can_ledge_grab() and collided:
 		change_state.emit(enums.player_states.LedgeGrab)
-	elif super.can_ledgeclimb():
+	elif super.can_ledgeclimb() and collided:
 		change_state.emit(enums.player_states.LedgeClimb)
 	elif super.can_vault():
 		change_state.emit(enums.player_states.Vault)
-	elif super.can_wallclimb():
+	elif super.can_wallclimb() and collided:
 		change_state.emit(enums.player_states.WallClimb)
 	elif super.can_wallrun():
 		change_state.emit(enums.player_states.WallRun)
