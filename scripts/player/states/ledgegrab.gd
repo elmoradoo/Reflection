@@ -27,7 +27,10 @@ func check_input_next_state():
 	if Input.is_action_just_released("crouch"):
 		change_state.emit(enums.player_states.AirTime)
 	elif Input.is_action_pressed("jump"):
-		change_state.emit(enums.player_states.LedgeClimb)
+		if can_ledgeclimb():
+			change_state.emit(enums.player_states.LedgeClimb)
+		else:
+			change_state.emit(enums.player_states.Jumping)
 
 func check_physics_next_state():
 	if player.velocity.y > 2:
