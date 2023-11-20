@@ -15,7 +15,7 @@ func enter():
 		player.animation_player.play(player.animation_player.current_animation, -1, 2, false)
 		player.animation_player.seek(current_frame)
 	player.animation_player.queue("jump")
-	player.model.get_node("AnimationPlayer").play("jumping")
+	player.model.get_node("AnimationPlayer").play("basic/jump")
 
 func exit():
 	has_jumped = false

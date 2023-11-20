@@ -9,7 +9,7 @@ func get_state_name():
 	return enums.player_states.Sliding
 
 func enter():
-	player.model.get_node("AnimationPlayer").play("sliding")
+	player.model.get_node("AnimationPlayer").play("basic/sliding")
 	player.standing_collision_shape.disabled = true
 	player.crouching_collision_shape.disabled = false
 	player.velocity.x *= sliding_initial_force

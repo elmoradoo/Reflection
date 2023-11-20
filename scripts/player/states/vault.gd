@@ -17,6 +17,7 @@ func enter():
 	player.standing_collision_shape.disabled = true
 	player.crouching_collision_shape.disabled = true
 	player.coiling_collision_shape.disabled = false
+	player.model.get_node("AnimationPlayer").play("basic/vault")
 
 func vault_time():
 	vault_timer_end = true
