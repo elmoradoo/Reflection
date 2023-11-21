@@ -21,6 +21,7 @@ var state_scripts = {
 	enums.player_states.LedgeClimb: preload("res://scripts/player/states/ledgeclimb.gd").new(),
 	enums.player_states.Vault: preload("res://scripts/player/states/vault.gd").new(),
 	enums.player_states.Rolling: preload("res://scripts/player/states/rolling.gd").new(),
+	enums.player_states.Coiling: preload("res://scripts/player/states/coiling.gd").new(),
 }
 
 func debug_get_player_state():

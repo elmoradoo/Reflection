@@ -47,3 +47,6 @@ func check_physics_next_state():
 		change_state.emit(enums.player_states.WallClimb)
 	elif super.can_wallrun():
 		change_state.emit(enums.player_states.WallRun)
+	elif Input.is_action_pressed("crouch"):
+		change_state.emit(enums.player_states.Coiling)
+		

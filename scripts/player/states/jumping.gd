@@ -9,13 +9,13 @@ func get_state_name():
 	return enums.player_states.Jumping
 
 func enter():
+	player.model.get_node("AnimationPlayer").play("basic/jump")
 	if player.animation_player.is_playing():
 		var current_frame = player.animation_player.current_animation_position
 		# increase speed
 		player.animation_player.play(player.animation_player.current_animation, -1, 2, false)
 		player.animation_player.seek(current_frame)
 	player.animation_player.queue("jump")
-	player.model.get_node("AnimationPlayer").play("basic/jump")
 
 func exit():
 	has_jumped = false
