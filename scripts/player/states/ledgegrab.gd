@@ -12,6 +12,7 @@ func enter():
 		player.velocity.y = 0
 	player.gravity_enabled = false
 	is_on_end = false
+	# THIS CRASHES IF NULL
 	wall_normal = player.get_last_slide_collision().get_normal()
 
 

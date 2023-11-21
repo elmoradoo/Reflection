@@ -1,8 +1,6 @@
 extends BaseState
 
-
 const max_speed: float = 3.0
-
 
 func enter():
 	player.standing_collision_shape.disabled = true

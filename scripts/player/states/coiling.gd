@@ -1,6 +1,7 @@
 extends BaseState
 
-var coiling = true
+var coiling: bool = true
+
 func init(player_obj: Player):
 	super.init(player_obj)
 	player.timers.get_node("coiling_time").timeout.connect(coiling_timer)

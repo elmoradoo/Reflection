@@ -4,28 +4,28 @@ signal stats_update
 signal line_update
 
 # Raycasts
-@onready var raycasts = $raycasts
-@onready var rc_feets = $raycasts/feets
-@onready var rc_head = $raycasts/head
-@onready var rc_torso = $raycasts/torso
+@onready var raycasts: Node3D = $raycasts
+@onready var rc_feets: Node3D = $raycasts/feets
+@onready var rc_head: Node3D = $raycasts/head
+@onready var rc_torso: Node3D = $raycasts/torso
 
 # Timers
-@onready var timers = $timers
+@onready var timers: Node3D = $timers
 
 # Body
-@onready var neck = $neck
-@onready var head = $neck/head
-@onready var eyes = $neck/head/eyes
-@onready var camera = $neck/head/eyes/Camera3D
+@onready var neck: Node3D = $neck
+@onready var head: Node3D = $neck/head
+@onready var eyes: Node3D = $neck/head/eyes
+@onready var camera: Camera3D = $neck/head/eyes/Camera3D
 
 # Animations
-@onready var model = $player_model
-@onready var animation_player = $neck/head/eyes/AnimationPlayer
+@onready var model: Node3D = $player_model
+@onready var animation_player: AnimationPlayer = $neck/head/eyes/AnimationPlayer
 
 # Collisions
-@onready var standing_collision_shape = $standing_collision_shape
-@onready var crouching_collision_shape = $crouching_collision_shape
-@onready var coiling_collision_shape = $coiling_collision_shape
+@onready var standing_collision_shape: CollisionShape3D = $standing_collision_shape
+@onready var crouching_collision_shape: CollisionShape3D = $crouching_collision_shape
+@onready var coiling_collision_shape: CollisionShape3D = $coiling_collision_shape
 
 # State manager
 @onready var player_state_manager = load("res://scripts/player/player_state_manager.gd").new()

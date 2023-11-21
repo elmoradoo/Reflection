@@ -2,7 +2,7 @@ extends BaseState
 
 
 var old_vel: Vector3 = Vector3.ZERO
-var is_rolling = true
+var is_rolling: bool = true
 
 
 func init(player_obj: Player):

@@ -2,7 +2,7 @@ extends BaseState
 
 
 const max_speed: float = 8.0
-var acceleration = 3.0
+var acceleration: float = 3.0
 
 
 func get_state_name():

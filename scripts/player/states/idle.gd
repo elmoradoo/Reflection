@@ -1,13 +1,11 @@
 extends BaseState
 
 
-var idle_lerp_speed = 2.0 
-
+var idle_lerp_speed: float = 2.0 
 
 func enter():
 	player.standing_collision_shape.disabled = false
 	player.crouching_collision_shape.disabled = true
-	#player.model.get_node("AnimationPlayer").play("basic/idle")
 
 func get_state_name():
 	return enums.player_states.Idle

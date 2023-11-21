@@ -1,9 +1,8 @@
 extends BaseState
 
-
 var velocity_before_landing: Vector3
-const roll_min_velocity = -8.0
-var collided = false
+const roll_min_velocity: float = -8.0
+var collided: bool = false
 
 func get_state_name():
 	return enums.player_states.AirTime

@@ -12,7 +12,7 @@ const stand_up_lp: float = 10.0
 
 #Crouching vars
 const crouching_depth: float = -0.7
-const lerp_speed:float = 10.0
+const lerp_speed: float = 10.0
 
 #Head bobbing vars
 var head_bobbing_vector: Vector2 = Vector2.ZERO
