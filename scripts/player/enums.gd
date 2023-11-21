@@ -16,4 +16,5 @@ enum player_states {
 	Vault,
 	Rolling,
 	Coiling,
+	Climb,
 }

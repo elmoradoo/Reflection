@@ -14,7 +14,6 @@ func _on_collision(previous_vel: Vector3, new_collision: KinematicCollision3D):
 
 func enter():
 	velocity_before_landing = player.velocity
-	player.animation_player.play("idle")
 	player.model.get_node("AnimationPlayer").queue("basic/fall")
 
 
@@ -42,13 +41,14 @@ func check_physics_next_state():
 		player.position.x = lerp(player.position.x, player.position.x + (-forward.x * 4.0), 2.0 * player.delta)
 		player.position.z = lerp(player.position.z, player.position.z + (-forward.z * 4.0), 2.0 * player.delta)
 		change_state.emit(enums.player_states.Sprinting)
-
 	elif player.is_on_floor():
 		change_state.emit(enums.player_states.Idle)
 	elif super.can_ledge_grab() and collided:
 		change_state.emit(enums.player_states.LedgeGrab)
 	elif super.can_ledgeclimb() and collided:
 		change_state.emit(enums.player_states.LedgeClimb)
+	elif super.can_climb():
+		change_state.emit(enums.player_states.Climb)
 	elif super.can_vault():
 		change_state.emit(enums.player_states.Vault)
 	elif super.can_wallclimb() and collided:
@@ -56,4 +56,3 @@ func check_physics_next_state():
 	elif super.can_wallrun():
 		change_state.emit(enums.player_states.WallRun)
 
-		

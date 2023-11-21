@@ -119,11 +119,11 @@ func can_ledgeclimb() -> bool:
 	
 func can_vault() -> bool:
 	if (player.rc_feets.get_node("front").is_colliding() 
-		and not player.rc_head.get_node("front").is_colliding()
+		and not player.rc_torso.get_node("front").is_colliding()
 		and player.velocity.y > 1):
 			return true
 	if (player.rc_feets.get_node("front").is_colliding() 
-		and not player.rc_head.get_node("front").is_colliding()
+		and not player.rc_torso.get_node("front").is_colliding()
 		and player.velocity.y < 0):
 			return true
 	return false
@@ -139,6 +139,9 @@ func can_coil() -> bool:
 	if Input.is_action_pressed("crouch") and player.velocity.y >= 0:
 		return true
 	return false
+
+func can_climb() -> bool:
+	return can_vault() and player.rc_head.get_node("front_obstacle").is_colliding()
 
 func check_physics_next_state():
 	pass
