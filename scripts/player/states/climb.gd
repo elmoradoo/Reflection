@@ -16,4 +16,5 @@ func check_input_next_state():
 	pass
 
 func check_physics_next_state():
-	pass
+	if player.is_on_floor():
+		change_state.emit(enums.player_states.Idle)

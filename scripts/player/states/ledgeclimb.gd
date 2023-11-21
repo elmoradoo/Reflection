@@ -72,6 +72,10 @@ func move_player():
 		finalize()
 	super.move_player()
 
+func check_input_next_state():
+	if player.is_on_floor() and Input.is_action_pressed("forward"):
+		change_state.emit(enums.player_states.Sprinting)
+
 func check_physics_next_state():
 	if player.is_on_floor():
 		change_state.emit(enums.player_states.Idle)

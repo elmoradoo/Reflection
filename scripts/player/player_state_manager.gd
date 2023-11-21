@@ -1,12 +1,8 @@
 class_name StateManager extends Node
 
-
 var enums = preload("res://scripts/player/enums.gd")
 var current_state: BaseState
-
-
 var player: Player
-
 
 var state_scripts = {
 	enums.player_states.Idle: preload("res://scripts/player/states/idle.gd").new(),
@@ -22,6 +18,7 @@ var state_scripts = {
 	enums.player_states.Vault: preload("res://scripts/player/states/vault.gd").new(),
 	enums.player_states.Rolling: preload("res://scripts/player/states/rolling.gd").new(),
 	enums.player_states.Coiling: preload("res://scripts/player/states/coiling.gd").new(),
+	enums.player_states.Climb: preload("res://scripts/player/states/climb.gd").new(),
 }
 
 func debug_get_player_state():
