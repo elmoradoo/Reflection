@@ -135,6 +135,11 @@ func can_ledge_grab() -> bool:
 		return true
 	return false
 
+func can_coil() -> bool:
+	if Input.is_action_pressed("crouch") and player.velocity.y >= 0:
+		return true
+	return false
+
 func check_physics_next_state():
 	pass
 

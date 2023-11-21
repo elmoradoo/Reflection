@@ -9,7 +9,7 @@ func get_state_name():
 	return enums.player_states.Sprinting
 
 func enter():
-	player.model.get_node("AnimationPlayer").queue("basic/run")
+	player.model.get_node("AnimationPlayer").play("basic/run")
 
 func move_player():
 	super.stand_up()

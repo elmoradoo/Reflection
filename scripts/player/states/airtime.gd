@@ -2,7 +2,7 @@ extends BaseState
 
 
 var velocity_before_landing: Vector3
-const roll_min_velocity = -8
+const roll_min_velocity = -8.0
 var collided = false
 
 func get_state_name():
@@ -14,6 +14,9 @@ func _on_collision(previous_vel: Vector3, new_collision: KinematicCollision3D):
 
 func enter():
 	velocity_before_landing = player.velocity
+	player.animation_player.play("idle")
+	player.model.get_node("AnimationPlayer").queue("basic/fall")
+
 
 func exit():
 	player.animation_player.play("land")
@@ -28,6 +31,10 @@ func check_input_next_state():
 	super.check_input_next_state()
 	if Input.is_action_pressed("crouch") and player.is_on_floor() and velocity_before_landing.y <= roll_min_velocity:
 		change_state.emit(enums.player_states.Rolling)
+	elif super.can_coil():
+		change_state.emit(enums.player_states.Coiling)
+	elif player.is_on_floor() and Input.is_action_pressed("forward"):
+		change_state.emit(enums.player_states.Sprinting)
 
 func check_physics_next_state():
 	if player.is_on_floor() and velocity_before_landing.y < -5:
@@ -35,6 +42,7 @@ func check_physics_next_state():
 		player.position.x = lerp(player.position.x, player.position.x + (-forward.x * 4.0), 2.0 * player.delta)
 		player.position.z = lerp(player.position.z, player.position.z + (-forward.z * 4.0), 2.0 * player.delta)
 		change_state.emit(enums.player_states.Sprinting)
+
 	elif player.is_on_floor():
 		change_state.emit(enums.player_states.Idle)
 	elif super.can_ledge_grab() and collided:
@@ -47,6 +55,5 @@ func check_physics_next_state():
 		change_state.emit(enums.player_states.WallClimb)
 	elif super.can_wallrun():
 		change_state.emit(enums.player_states.WallRun)
-	elif Input.is_action_pressed("crouch"):
-		change_state.emit(enums.player_states.Coiling)
+
 		

@@ -25,3 +25,5 @@ func check_input_next_state():
 	if not Input.is_action_pressed("crouch"):
 		if not player.raycasts.get_node("top_of_head").is_colliding():
 			change_state.emit(enums.player_states.Idle)
+
+	
