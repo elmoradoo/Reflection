@@ -1,11 +1,12 @@
 extends BaseState
 
-var forward_goal = 2.0
-var forward_speed = 1.0
+var forward_goal = 1.0
+var forward_speed = 4.0
 var collided: bool = false
 
 func enter():
-	pass
+	if player.velocity.x == 0 or player.velocity.z == 0:
+		collided = true
 
 func exit():
 	player.gravity_enabled = true
@@ -34,7 +35,7 @@ func move_player():
 		super.move_player()
 		return
 	if player.rc_feets.get_node("front").is_colliding():# or player.rc_feets.get_node("downfront").is_colliding():
-		player.position.y += 5.0 * player.delta
+		player.position.y += 7.0 * player.delta
 	else:
 		var forward_direction = player.global_transform.basis.z
 		player.position.x = lerp(player.position.x, player.position.x + forward_goal , -forward_direction.x * forward_speed * player.delta)
