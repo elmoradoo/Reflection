@@ -108,6 +108,24 @@ use_collision = true
 size = Vector3(20, 1, 20)
 material = SubResource("StandardMaterial3D_lcn1r")
 
+[node name="CSGBox3D53" type="CSGBox3D" parent="stage"]
+transform = Transform3D(0.323007, 0, 0, 0, 3.48366, 0, 0, 0, 0.626202, 4.94191, -0.50699, -16.2944)
+use_collision = true
+size = Vector3(20, 1, 20)
+material = SubResource("StandardMaterial3D_lcn1r")
+
+[node name="CSGBox3D52" type="CSGBox3D" parent="stage"]
+transform = Transform3D(0.323007, 0, 0, 0, 3.48366, 0, 0, 0, 0.20528, 3.7347, 0.964828, -16.2944)
+use_collision = true
+size = Vector3(20, 1, 20)
+material = SubResource("StandardMaterial3D_lcn1r")
+
+[node name="CSGBox3D54" type="CSGBox3D" parent="stage"]
+transform = Transform3D(0.176983, 0, 0, 0, 3.48366, 0, 0, 0, 0.20528, -7.35806, 2.32848, -13.6217)
+use_collision = true
+size = Vector3(20, 1, 20)
+material = SubResource("StandardMaterial3D_lcn1r")
+
 [node name="CSGBox3D5" type="CSGBox3D" parent="stage"]
 transform = Transform3D(-8.74705e-09, 0.500273, 0, -0.200109, -2.18676e-08, 0, 0, 0, 0.150082, -9.99879, 1.638, 7.03945)
 use_collision = true
