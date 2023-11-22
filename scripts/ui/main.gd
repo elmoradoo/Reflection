@@ -20,3 +20,12 @@ func _on_level_0_pressed():
 	GameVars.PLAYER_NODE = load(GameVars.PLAYER_SCENE).instantiate()
 	get_tree().root.add_child(GameVars.PLAYER_NODE)
 	UI.hud(true)
+
+
+func _on_tutorial_pressed():
+	UI.main(false)
+	GameVars.LEVEL_NODE = load(GameVars.LEVEL_TUTORIAL).instantiate()
+	get_tree().root.add_child(GameVars.LEVEL_NODE)
+	GameVars.PLAYER_NODE = load(GameVars.PLAYER_SCENE).instantiate()
+	get_tree().root.add_child(GameVars.PLAYER_NODE)
+	UI.hud(true)

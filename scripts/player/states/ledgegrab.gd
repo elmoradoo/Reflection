@@ -15,7 +15,6 @@ func enter():
 	# THIS CRASHES IF NULL
 	wall_normal = player.get_last_slide_collision().get_normal()
 
-
 func exit():
 	player.gravity_enabled = true
 

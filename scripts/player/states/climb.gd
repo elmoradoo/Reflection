@@ -3,14 +3,18 @@ extends BaseState
 var forward_goal = 1.0
 var forward_speed = 4.0
 var collided: bool = false
+var old_vel: Vector3
 
 func enter():
+	old_vel = player.velocity
 	if player.velocity.x == 0 or player.velocity.z == 0:
 		collided = true
 
 func exit():
 	player.gravity_enabled = true
 	collided = false
+	player.velocity = old_vel
+	player.velocity.y = 0
 
 func _on_collision(previous_vel: Vector3, new_collision: KinematicCollision3D):
 	super._on_collision(previous_vel, new_collision)

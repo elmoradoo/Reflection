@@ -37,12 +37,12 @@ albedo_texture = ExtResource("1_kiwqp")
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_yvwuf"]
 panorama = ExtResource("4_4rsxx")
 
-[sub_resource type="Sky" id="Sky_ai0aq"]
+[sub_resource type="Sky" id="Sky_4fk6s"]
 sky_material = SubResource("PanoramaSkyMaterial_yvwuf")
 
 [sub_resource type="Environment" id="Environment_l5f6l"]
 background_mode = 2
-sky = SubResource("Sky_ai0aq")
+sky = SubResource("Sky_4fk6s")
 tonemap_mode = 2
 glow_enabled = true
 
@@ -122,6 +122,12 @@ size = Vector3(20, 1, 20)
 
 [node name="Ground17" type="CSGBox3D" parent="."]
 transform = Transform3D(0.252446, 0, 0, 0, 16.6886, 0, 0, 0, 0.65806, -31.0216, 15.2248, -30.824)
+material_override = SubResource("StandardMaterial3D_wt0nn")
+use_collision = true
+size = Vector3(20, 1, 20)
+
+[node name="Ground20" type="CSGBox3D" parent="."]
+transform = Transform3D(0.252446, 0, 0, 0, 16.6886, 0, 0, 0, 0.65806, -28.9556, 19.1004, -30.824)
 material_override = SubResource("StandardMaterial3D_wt0nn")
 use_collision = true
 size = Vector3(20, 1, 20)
