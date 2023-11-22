@@ -41,7 +41,6 @@ func move_player():
 		player.position.z = lerp(player.position.z, player.position.z + forward_goal, -forward_direction.z * forward_speed * player.delta)
 		if player.rc_feets.get_node("down").is_colliding():
 			player.gravity_enabled = true
-			
 	super.move_player()
 
 func check_input_next_state():

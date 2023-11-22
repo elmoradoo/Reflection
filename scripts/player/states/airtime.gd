@@ -15,7 +15,6 @@ func enter():
 	velocity_before_landing = player.velocity
 	player.model.get_node("AnimationPlayer").queue("basic/fall")
 
-
 func exit():
 	player.animation_player.play("land")
 	collided = false

@@ -113,7 +113,7 @@ func can_wallrun() -> bool:
 func can_ledgeclimb() -> bool:
 	if (player.rc_torso.get_node("front").is_colliding() 
 		and not player.rc_head.get_node("front").is_colliding()
-		and player.velocity.y > 1):
+		):
 			return true
 	return false
 	
