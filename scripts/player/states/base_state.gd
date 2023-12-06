@@ -39,7 +39,6 @@ func get_state_name():
 func init(player_obj: Player):
 	player = player_obj
 
-
 func stand_up():
 	player.neck.rotation.y = lerp(player.neck.rotation.y, 0.0, player.delta * stand_up_lp)
 	player.head.position.y = lerp(player.head.position.y, 0.0, stand_up_lp * player.delta)
@@ -52,6 +51,7 @@ func reset_neck(lerp_speed_local):
 	player.neck.rotation.y = lerp(player.neck.rotation.y, 0.0, player.delta * lerp_speed_local)
 
 func head_bob(intensity, bobbing_speed):
+	#return
 	head_bobbing_index += bobbing_speed * player.delta
 	head_bobbing_vector.y = sin(head_bobbing_index)
 	head_bobbing_vector.x = sin(head_bobbing_index / 2) + 0.5
@@ -112,19 +112,20 @@ func can_wallrun() -> bool:
 
 func can_ledgeclimb() -> bool:
 	if (player.rc_torso.get_node("front").is_colliding() 
-		and not player.rc_head.get_node("front").is_colliding()
-		):
+		and not player.rc_head.get_node("front").is_colliding()):
 			return true
 	return false
 	
 func can_vault() -> bool:
 	if (player.rc_feets.get_node("front").is_colliding() 
-		and not player.rc_head.get_node("front").is_colliding()
-		and player.velocity.y > 1):
+		and not player.rc_head.get_node("front").is_colliding()):
 			return true
+	return false
+	#why?
 	if (player.rc_head.get_node("front").is_colliding() 
 		and not player.rc_torso.get_node("front").is_colliding()
 		and player.velocity.y < 0):
+			print("type 2")
 			return true
 	return false
 

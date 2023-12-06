@@ -20,7 +20,7 @@ func exit():
 	player.timers.get_node("coiling_time").stop()
 	player.coiling_collision_shape.disabled = true
 	player.standing_collision_shape.disabled = false
-	player.crouching_collision_shape.disabled = false
+	player.crouching_collision_shape.disabled = true
 
 func get_state_name():
 	return enums.player_states.Coiling

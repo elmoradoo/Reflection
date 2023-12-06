@@ -1,11 +1,10 @@
-[gd_scene load_steps=21 format=3 uid="uid://c1fcfemj7xiub"]
+[gd_scene load_steps=20 format=3 uid="uid://c1fcfemj7xiub"]
 
 [ext_resource type="Texture2D" uid="uid://b4shnqatybm45" path="res://addons/kenney_prototype_textures/dark/texture_01.png" id="1_kiwqp"]
 [ext_resource type="PackedScene" uid="uid://duxrcgafm7iia" path="res://scenes/prefabs/fence.tscn" id="1_uapdx"]
 [ext_resource type="Texture2D" uid="uid://b0c0r8itf0yod" path="res://addons/kenney_prototype_textures/dark/texture_08.png" id="2_8ndsi"]
 [ext_resource type="PackedScene" uid="uid://ck21h0ogp541a" path="res://scenes/prefabs/door.tscn" id="2_ldbum"]
 [ext_resource type="PackedScene" uid="uid://bw7lo6nqwp727" path="res://scenes/prefabs/ramp.tscn" id="3_a1w7a"]
-[ext_resource type="Texture2D" uid="uid://bawjh34i4i8my" path="res://assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="4_4rsxx"]
 [ext_resource type="PackedScene" uid="uid://cejkmj3jtb8sg" path="res://scenes/prefabs/building_01.tscn" id="5_8u3rp"]
 [ext_resource type="PackedScene" uid="uid://gekk2su7ecck" path="res://scenes/prefabs/ventilation01.tscn" id="6_2qcfi"]
 [ext_resource type="PackedScene" uid="uid://0hnjuqva7o34" path="res://scenes/prefabs/building_entry.tscn" id="7_wyelg"]
@@ -34,11 +33,10 @@ uv1_triplanar = true
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yhuuy"]
 albedo_texture = ExtResource("1_kiwqp")
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_yvwuf"]
-panorama = ExtResource("4_4rsxx")
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cnjhd"]
 
 [sub_resource type="Sky" id="Sky_4fk6s"]
-sky_material = SubResource("PanoramaSkyMaterial_yvwuf")
+sky_material = SubResource("ProceduralSkyMaterial_cnjhd")
 
 [sub_resource type="Environment" id="Environment_l5f6l"]
 background_mode = 2
@@ -55,7 +53,7 @@ use_collision = true
 size = Vector3(20, 1, 20)
 
 [node name="Ground6" type="CSGBox3D" parent="."]
-transform = Transform3D(4.26968, 0, 0, 0, 1, 0, 0, 0, 7.83249, 0.00201225, -26.0776, -0.168785)
+transform = Transform3D(4.26968, 0, 0, 0, 1, 0, 0, 0, 7.83249, 5.69282, -26.0776, -0.168785)
 material_override = SubResource("StandardMaterial3D_jbh21")
 use_collision = true
 size = Vector3(20, 1, 20)
@@ -228,6 +226,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.1711, -0.8185, -10.0162)
 [node name="building04" parent="buildings" instance=ExtResource("5_8u3rp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.9596, -0.8185, 0.0841084)
 
+[node name="building13" parent="buildings" instance=ExtResource("5_8u3rp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.6955, -0.8185, 27.279)
+
+[node name="building14" parent="buildings" instance=ExtResource("5_8u3rp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.3035, -0.8185, -0.130792)
+
+[node name="building15" parent="buildings" instance=ExtResource("5_8u3rp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.8947, -0.8185, 20)
+
+[node name="building16" parent="buildings" instance=ExtResource("5_8u3rp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.2774, -0.8185, 36.3061)
+
 [node name="building10" parent="buildings" instance=ExtResource("5_8u3rp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0403881, -30.8185, 0.0841084)
 
@@ -235,10 +245,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0403881, -30.8185, 0.08410
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.08357, -35.0358, -30.9958)
 
 [node name="building05" parent="buildings" instance=ExtResource("5_8u3rp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2613, 8.61432, 20.2407)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2613, 2.28812, 20.2407)
 
 [node name="building06" parent="buildings" instance=ExtResource("5_8u3rp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.74242, 15.3733, 25.5798)
+transform = Transform3D(1, 0, 0, 0, 1.48879, 0, 0, 0, 1, -2.74242, 15.3733, 25.5798)
 
 [node name="building02" parent="buildings" instance=ExtResource("5_8u3rp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.5186, -0.8185, -30.5571)

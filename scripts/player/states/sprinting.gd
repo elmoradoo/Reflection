@@ -14,8 +14,11 @@ func enter():
 func move_player():
 	super.stand_up()
 	super.head_bob(0.2, 22.0 + acceleration)
+
 	var target_velocity = (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized() * max_speed
 	player.velocity = player.velocity.lerp(target_velocity, acceleration * player.delta)
+	var acceleration_normalized = player.velocity.length() / max_speed
+	player.model.get_node("AnimationPlayer").speed_scale = acceleration_normalized + 0.3
 	super.move_player()
 
 func check_input_next_state():
@@ -33,4 +36,5 @@ func check_physics_next_state():
 		if player.input_dir == Vector2.ZERO:
 			change_state.emit(enums.player_states.Idle)
 	else:
+		player.model.get_node("AnimationPlayer").play("basic/fall")
 		change_state.emit(enums.player_states.AirTime)

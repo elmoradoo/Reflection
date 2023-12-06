@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b0sh18cn4rpbs"]
+[gd_scene load_steps=7 format=3 uid="uid://bsclv6e0v1ije"]
 
 [ext_resource type="Texture2D" uid="uid://c3w8ru7jpavew" path="res://assets/grids/dark.png" id="1_fqjqu"]
 [ext_resource type="Texture2D" uid="uid://bawjh34i4i8my" path="res://assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_atadw"]
