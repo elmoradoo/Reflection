@@ -3,6 +3,7 @@ class_name Player extends CharacterBody3D
 signal stats_update
 signal line_update
 
+
 # Raycasts
 @onready var raycasts: Node3D = $raycasts
 @onready var rc_feets: Node3D = $raycasts/feets
@@ -93,3 +94,32 @@ func _input(event):
 func _physics_process(physics_delta):
 	delta = physics_delta
 	player_state_manager.run()
+
+func stand_up(lerp_speed=10.0):
+	neck.rotation.y = lerp(neck.rotation.y, 0.0, delta * lerp_speed)
+	head.position.y = lerp(head.position.y, 0.0, lerp_speed * delta)
+
+func stand_down(crouching_depth=-0.7, lerp_speed=10.0):
+	head.position.y = lerp(head.position.y, crouching_depth, lerp_speed * delta)
+
+func reset_neck(lerp_speed_local):
+	neck.rotation.x = lerp(neck.rotation.x, 0.0, delta * lerp_speed_local)
+	neck.rotation.y = lerp(neck.rotation.y, 0.0, delta * lerp_speed_local)
+
+@export_group("Head bobbing")
+@export var head_bobbing_speed: float = 22.0
+@export var head_bobbing_lerp: float = 10.0
+
+func head_bob(intensity, bobbing_speed):
+	#return
+	var head_bobbing_vector: Vector2 = Vector2.ZERO
+	var head_bobbing_index: float = 0.0
+	head_bobbing_index += bobbing_speed * delta
+	head_bobbing_vector.y = sin(head_bobbing_index)
+	head_bobbing_vector.x = sin(head_bobbing_index / 2) + 0.5
+	eyes.position.y = lerp(eyes.position.y, head_bobbing_vector.y * (intensity / 2.0), delta * head_bobbing_lerp)
+	eyes.position.x = lerp(eyes.position.x, head_bobbing_vector.x * intensity, delta * head_bobbing_lerp)
+
+func reset_head_bob():
+	eyes.position.y = lerp(eyes.position.y, 0.0, delta * head_bobbing_lerp)
+	eyes.position.x = lerp(eyes.position.x, 0.0, delta * head_bobbing_lerp)

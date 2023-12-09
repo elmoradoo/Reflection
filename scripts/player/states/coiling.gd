@@ -5,9 +5,14 @@ var coiling: bool = true
 func init(player_obj: Player):
 	super.init(player_obj)
 	player.timers.get_node("coiling_time").timeout.connect(coiling_timer)
-	
+
 func coiling_timer():
 	coiling = false
+
+func can_enter() -> bool:
+	if Input.is_action_pressed("crouch") and player.velocity.y >= 0:
+		return true
+	return false
 
 func enter():
 	player.timers.get_node("coiling_time").start()

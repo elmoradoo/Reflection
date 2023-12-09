@@ -1,8 +1,8 @@
 extends State
 
 
-const sliding_initial_force: float = 1.2
-const min_sliding_speed: float = 4
+@export var sliding_initial_force: float = 1.2
+@export var min_sliding_speed: float = 4
 
 
 func enter():
@@ -13,7 +13,7 @@ func enter():
 	player.velocity.z *= sliding_initial_force
 
 func move_player():
-	super.stand_down()
+	player.stand_down()
 	player.velocity.x = lerp(player.velocity.x, 0.0, player.delta * 1)
 	player.velocity.z = lerp(player.velocity.z, 0.0, player.delta * 1)
 	super.move_player()

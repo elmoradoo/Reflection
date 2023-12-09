@@ -1,16 +1,15 @@
 extends State
 
-
-var idle_lerp_speed: float = 2.0 
+@export var idle_lerp_speed: float = 2.0 
 
 func enter():
 	player.standing_collision_shape.disabled = false
 	player.crouching_collision_shape.disabled = true
 
 func move_player():
-	super.stand_up()
-	super.reset_neck(2.0)
-	super.reset_head_bob()
+	player.stand_up()
+	player.reset_neck(2.0)
+	player.reset_head_bob()
 	player.velocity.x = move_toward(player.velocity.x, 0, idle_lerp_speed)
 	player.velocity.z = move_toward(player.velocity.z, 0, idle_lerp_speed)
 	super.move_player()

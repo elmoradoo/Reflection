@@ -1,24 +1,28 @@
 extends State
 
-#Timers boolean
-var climb_is_over: bool = false
-var rotate_air_time_is_over: bool = false
 
 #Climbing vars
-var climbing_speed: float = 4.0
+@export_group("Climbing")
+@export var climbing_speed: float = 4.0
+@export var climbable_min_velocity: float = 2.0
+
 
 #Rotation vars
+@export_group("Rotation")
+@export var forward_velocity: float = 5.0
+@export var rotation_speed: float = 15.0
 var player_pressed_rotate = false
 var is_rotating = false
 var has_rotated = false
-var forward_velocity: float = 5.0
-var rotation_speed: float = 15.0
+
 var rotation_y_when_pressing_rotate: float
 var target_rotation: float
 
 var exit_velocity: Vector3 = Vector3.ZERO
 
 #Timers
+var climb_is_over: bool = false
+var rotate_air_time_is_over: bool = false
 func climbing_timer(): climb_is_over = true
 func wallclimb_jump_timer(): rotate_air_time_is_over = true
 
@@ -26,6 +30,17 @@ func init(player_obj: Player):
 	super.init(player_obj)
 	player.timers.get_node("wallclimb_time").timeout.connect(climbing_timer)
 	player.timers.get_node("wallclimb_jump_time").timeout.connect(wallclimb_jump_timer)
+
+func can_enter() -> bool:
+	if not player.rc_torso.get_node("front").is_colliding() or player.velocity.y < climbable_min_velocity:
+		return false
+	var col = player.rc_torso.get_node("front").get_collision_normal()
+	var ray_direction = player.rc_torso.get_node("front").global_transform.basis.z.normalized()
+	var dot_product = abs(col.dot(ray_direction))
+	if dot_product < 0.8:
+		return false
+	else:
+		return true
 
 func enter():
 	player.timers.get_node("wallclimb_time").start()
@@ -70,7 +85,7 @@ func update_mouse(event):
 		player.neck.rotation.y = clamp(player.neck.rotation.y, deg_to_rad(-44.5), deg_to_rad(44.5))
 
 func move_player():
-	super.reset_head_bob()
+	player.reset_head_bob()
 	if is_rotating:
 		rotate_player()
 	player.velocity.y += climbing_speed * player.timers.get_node("wallclimb_time").time_left * player.delta
@@ -101,9 +116,9 @@ func check_physics_next_state():
 		change_state.emit("Sprinting")
 	elif player.is_on_floor():
 		change_state.emit("Idle")
-	elif super.can_ledge_grab():
+	elif can_change_to("LedgeGrab"):
 		change_state.emit("LedgeGrab")
-	elif super.can_ledgeclimb():
+	elif can_change_to("LedgeClimb"):
 		change_state.emit("LedgeClimb")
 	elif player_pressed_rotate:
 		if rotate_air_time_is_over:

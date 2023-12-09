@@ -1,16 +1,17 @@
 extends State
 
 
-var old_vel: Vector3 = Vector3.ZERO
+@export var base_y_speed: float = 0.1
+@export var lerp_speed: float = 5.0
 
-var is_jumping: bool = false
+@export_group("Jumping")
+@export var jumping_speed: float = 0.2
+@export var jumping_velocity: float = 7.0
 
-
-const base_wallrun_y_speed: float = 0.1
-const wallrun_jumping_speed: float = 0.2
 
 var wall_normal: Vector3 = Vector3.ZERO
-
+var old_vel: Vector3 = Vector3.ZERO
+var is_jumping: bool = false
 
 func _on_collision(previous_vel: Vector3, new_collision: KinematicCollision3D):
 	super._on_collision(previous_vel, new_collision)
@@ -69,6 +70,16 @@ func can_rotate_player_on_wall(rotation=0):
 	angle = angle + abs(rotation)
 	return clamp(angle, limit_min, limit_max) == angle
 
+func can_enter() -> bool:
+	if not player.rc_torso.get_node("front").is_colliding():
+		return false
+	var col = player.rc_torso.get_node("front").get_collision_normal()
+	var ray_direction = player.rc_torso.get_node("front").global_transform.basis.z.normalized()
+	var dot_product = abs(col.dot(ray_direction))
+	if dot_product < 0.8:
+		return true
+	else:
+		return false
 
 func enter():
 	old_vel = player.velocity
@@ -90,14 +101,14 @@ func exit():
 	if is_jumping:
 		player.velocity = \
 			(player.transform.basis * Vector3(player.input_dir.x, 1, player.input_dir.y)).normalized() * \
-			(wallrun_jumping_velocity + player.timers.get_node("wallrun_time").time_left)
+			(jumping_velocity + player.timers.get_node("wallrun_time").time_left)
 	player.timers.get_node("wallrun_time").stop()
 	wall_normal = Vector3.ZERO
 	player.velocity.y = 0.0	
 
 func move_player():
-	player.velocity.y += base_wallrun_y_speed * player.timers.get_node("wallrun_time").time_left
-	super.reset_neck(wallrun_lerp)
+	player.velocity.y += base_y_speed * player.timers.get_node("wallrun_time").time_left
+	player.reset_neck(lerp_speed)
 	super.move_player()
 
 func check_input_next_state():
@@ -112,5 +123,5 @@ func check_physics_next_state():
 		change_state.emit("Sprinting")
 	elif player.is_on_floor():
 		change_state.emit("Idle")
-	elif not (super.can_wallrun() or player.is_on_wall_only()):
+	elif not (can_change_to("WallRun") or player.is_on_wall_only()):
 		change_state.emit("AirTime")

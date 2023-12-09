@@ -1,18 +1,18 @@
 extends State
 
-const max_speed: float = 3.0
+@export var max_speed: float = 3.0
 
 func enter():
 	player.standing_collision_shape.disabled = true
 	player.crouching_collision_shape.disabled = false
 
 func move_player():
-	super.stand_down()
+	player.stand_down()
 	if player.input_dir != Vector2.ZERO:
-		super.head_bob(0.1, 22.0)
+		player.head_bob(0.1, 22.0)
 	player.velocity.x = player.direction.x * max_speed
 	player.velocity.z = player.direction.z * max_speed
-	player.direction = lerp(player.direction, (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized(), lerp_speed * player.delta)
+	player.direction = lerp(player.direction, (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized(), 10.0 * player.delta)
 	super.move_player()
 
 func check_input_next_state():

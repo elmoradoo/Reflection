@@ -1,16 +1,16 @@
 extends State
 
 
-const max_speed: float = 8.0
-var acceleration: float = 3.0
-
+@export var max_speed: float = 8.0
+@export var acceleration: float = 3.0
+@export var minimum_velocity: float = 5.0
 
 func enter():
 	player.model.get_node("AnimationPlayer").play("basic/run")
 
 func move_player():
-	super.stand_up()
-	super.head_bob(0.2, 22.0 + acceleration)
+	player.stand_up()
+	player.head_bob(0.2, 22.0 + acceleration)
 
 	var target_velocity = (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized() * max_speed
 	player.velocity = player.velocity.lerp(target_velocity, acceleration * player.delta)
@@ -21,7 +21,7 @@ func move_player():
 func check_input_next_state():
 	super.check_input_next_state()
 	if Input.is_action_pressed("crouch") and player.is_on_floor():
-		if player.velocity.length() >= sliding_minimum_velocity:
+		if player.velocity.length() >= minimum_velocity:
 			change_state.emit("Sliding")
 		else:
 			change_state.emit("Crouching")

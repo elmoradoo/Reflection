@@ -1,9 +1,14 @@
 extends State
 
-var forward_goal = 1.0
-var forward_speed = 4.0
+@export var forward_goal = 1.0
+@export var forward_speed = 4.0
+
 var collided: bool = false
 var old_vel: Vector3
+
+func can_enter() -> bool:
+	return can_change_to("Vault") and player.rc_head.get_node("front_obstacle").is_colliding()
+
 
 func enter():
 	old_vel = player.velocity

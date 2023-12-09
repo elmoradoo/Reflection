@@ -1,19 +1,22 @@
 extends State
 
 #Move up
+@export_group("Up")
 var initial_height: float
-var up_goal: float = 1.7
-var up_speed: float = 3.0
+@export var up_goal: float = 1.7
+@export var up_speed: float = 3.0
 
 #Push forwards
+@export_group("Forward")
 var push_player: bool = false
-var forward_goal: float = 1.0
-var forward_speed: float = 2.0
+@export var forward_goal: float = 1.0
+@export var forward_speed: float = 2.0
 
 #Finalize
+@export_group("Finalize")
 var finalize_player: bool = false
-var finalize_goal: float = 1.0
-var finalize_speed: float = 1.0
+@export var finalize_goal: float = 1.0
+@export var finalize_speed: float = 1.0
 
 func init(player_obj: Player):
 	super.init(player_obj)
@@ -25,6 +28,12 @@ func ledgeclimb_timer():
 	player.coiling_collision_shape.disabled = false
 	player.standing_collision_shape.disabled = false
 	player.crouching_collision_shape.disabled = true
+
+func can_enter() -> bool:
+	if (player.rc_torso.get_node("front").is_colliding() 
+		and not player.rc_head.get_node("front").is_colliding()):
+			return true
+	return false
 
 func enter():
 	player.crouching_collision_shape.disabled = false
@@ -60,7 +69,7 @@ func finalize():
 
 func move_player():
 	if not finalize_player and push_player:
-		super.stand_down()
+		player.stand_down()
 	if not push_player:
 		move_up()
 	if push_player and not finalize_player:

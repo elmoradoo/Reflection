@@ -1,10 +1,10 @@
 extends State
 
 
-const jump_velocity: float = 4.5
-const forward_velocity: float = 1.1
-var has_jumped: bool = false
+@export var jump_velocity: float = 4.5
+@export var forward_velocity: float = 1.1
 
+var has_jumped: bool = false
 
 func enter():
 	player.model.get_node("AnimationPlayer").play("basic/jump")
@@ -19,7 +19,7 @@ func exit():
 	has_jumped = false
 
 func move_player():
-	super.reset_neck(2.0)
+	player.reset_neck(2.0)
 	has_jumped = true
 	player.velocity.y += jump_velocity
 	var forward = player.transform.basis.z.normalized()

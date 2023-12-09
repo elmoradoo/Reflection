@@ -1,14 +1,28 @@
 extends State
 
 
+@export var vault_speed: float = 2.0
+
+
 var vault_timer_end: bool = false
 var old_vel: Vector3 = Vector3.ZERO
-var vault_speed: float = 2.0
-
 
 func init(player_obj: Player):
 	super.init(player_obj)
 	player.timers.get_node("vault_time").timeout.connect(vault_time)
+
+func can_enter() -> bool:
+	if (player.rc_feets.get_node("front").is_colliding() 
+		and not player.rc_head.get_node("front").is_colliding()):
+			return true
+	return false
+	#why?
+	if (player.rc_head.get_node("front").is_colliding() 
+		and not player.rc_torso.get_node("front").is_colliding()
+		and player.velocity.y < 0):
+			print("type 2")
+			return true
+	return false
 
 func enter():
 	player.timers.get_node("vault_time").start()
