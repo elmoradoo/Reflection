@@ -22,10 +22,6 @@ func _on_collision(previous_vel: Vector3, new_collision: KinematicCollision3D):
 	if not collided:
 		player.velocity = Vector3.ZERO
 	collided = true
-	
-	
-func get_state_name():
-	return enums.player_states.Climb
 
 func update_mouse(event):
 	if event is InputEventMouseMotion:
@@ -53,4 +49,4 @@ func check_input_next_state():
 
 func check_physics_next_state():
 	if player.is_on_floor():
-		change_state.emit(enums.player_states.Idle)
+		change_state.emit("Idle")

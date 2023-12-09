@@ -4,9 +4,6 @@ var move_speed: float = 2.0
 var wall_normal: Vector3 = Vector3.ZERO
 var is_on_end: bool = false
 
-func get_state_name():
-	return enums.player_states.LedgeGrab
-
 func enter():
 	if player.velocity.y < 0:
 		player.velocity.y = 0
@@ -31,13 +28,13 @@ func move_player():
 func check_input_next_state():
 	super.check_input_next_state()
 	if Input.is_action_just_released("crouch"):
-		change_state.emit(enums.player_states.AirTime)
+		change_state.emit("AirTime")
 	elif Input.is_action_pressed("jump"):
 		if can_ledgeclimb():
-			change_state.emit(enums.player_states.LedgeClimb)
+			change_state.emit("LedgeClimb")
 		else:
-			change_state.emit(enums.player_states.Jumping)
+			change_state.emit("Jumping")
 
 func check_physics_next_state():
 	if player.velocity.y > 2:
-		change_state.emit(enums.player_states.LedgeClimb)
+		change_state.emit("LedgeClimb")

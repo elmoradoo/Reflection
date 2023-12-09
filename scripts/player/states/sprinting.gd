@@ -5,9 +5,6 @@ const max_speed: float = 8.0
 var acceleration: float = 3.0
 
 
-func get_state_name():
-	return enums.player_states.Sprinting
-
 func enter():
 	player.model.get_node("AnimationPlayer").play("basic/run")
 
@@ -25,16 +22,16 @@ func check_input_next_state():
 	super.check_input_next_state()
 	if Input.is_action_pressed("crouch") and player.is_on_floor():
 		if player.velocity.length() >= sliding_minimum_velocity:
-			change_state.emit(enums.player_states.Sliding)
+			change_state.emit("Sliding")
 		else:
-			change_state.emit(enums.player_states.Crouching)
+			change_state.emit("Crouching")
 	elif Input.is_action_pressed("jump") and player.is_on_floor():
-		change_state.emit(enums.player_states.Jumping)
+		change_state.emit("Jumping")
 
 func check_physics_next_state():
 	if player.is_on_floor():
 		if player.input_dir == Vector2.ZERO:
-			change_state.emit(enums.player_states.Idle)
+			change_state.emit("Idle")
 	else:
 		player.model.get_node("AnimationPlayer").play("basic/fall")
-		change_state.emit(enums.player_states.AirTime)
+		change_state.emit("AirTime")

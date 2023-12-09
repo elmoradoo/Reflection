@@ -43,16 +43,13 @@ func exit():
 	player.velocity = old_vel
 	player.velocity.y = 0.0
 
-func get_state_name(): 
-	return enums.player_states.Vault
-
 func check_physics_next_state():
 	if not vault_timer_end:
 		return
 	if player.is_on_floor():
 		if player.velocity.length() >= 2:
-			change_state.emit(enums.player_states.Sprinting)
+			change_state.emit("Sprinting")
 		else:
-			change_state.emit(enums.player_states.Idle)
+			change_state.emit("Idle")
 	elif not player.rc_feets.get_node("down").is_colliding():
-		change_state.emit(enums.player_states.AirTime)
+		change_state.emit("AirTime")

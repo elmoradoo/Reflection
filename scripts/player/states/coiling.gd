@@ -22,19 +22,16 @@ func exit():
 	player.standing_collision_shape.disabled = false
 	player.crouching_collision_shape.disabled = true
 
-func get_state_name():
-	return enums.player_states.Coiling
-
 func move_player():
 	super.move_player()
 
 func check_input_next_state():
 	if player.is_on_floor() and Input.is_action_pressed("crouch"):
-		change_state.emit(enums.player_states.Sliding)
+		change_state.emit("Sliding")
 	elif player.is_on_floor() and Input.is_action_pressed("forward"):
-		change_state.emit(enums.player_states.Sprinting)
+		change_state.emit("Sprinting")
 
 func check_physics_next_state():
 	if player.is_on_floor() or not coiling:
-		change_state.emit(enums.player_states.Idle)
+		change_state.emit("Idle")
 

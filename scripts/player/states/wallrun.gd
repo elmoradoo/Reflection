@@ -11,9 +11,6 @@ const wallrun_jumping_speed: float = 0.2
 
 var wall_normal: Vector3 = Vector3.ZERO
 
-func get_state_name():
-	return enums.player_states.WallRun
-
 
 func _on_collision(previous_vel: Vector3, new_collision: KinematicCollision3D):
 	super._on_collision(previous_vel, new_collision)
@@ -108,12 +105,12 @@ func check_input_next_state():
 	if Input.is_action_just_pressed("jump"):
 		if not is_jumping:
 			is_jumping = true
-			change_state.emit(enums.player_states.Jumping)
+			change_state.emit("Jumping")
 
 func check_physics_next_state():
 	if player.is_on_floor() and player.velocity.length() >= 2:
-		change_state.emit(enums.player_states.Sprinting)
+		change_state.emit("Sprinting")
 	elif player.is_on_floor():
-		change_state.emit(enums.player_states.Idle)
+		change_state.emit("Idle")
 	elif not (super.can_wallrun() or player.is_on_wall_only()):
-		change_state.emit(enums.player_states.AirTime)
+		change_state.emit("AirTime")

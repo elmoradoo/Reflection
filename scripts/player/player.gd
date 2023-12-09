@@ -28,7 +28,7 @@ signal line_update
 @onready var coiling_collision_shape: CollisionShape3D = $coiling_collision_shape
 
 # State manager
-@onready var player_state_manager = load("res://scripts/player/player_state_manager.gd").new()
+@onready var player_state_manager: StateManager = $StateManager
 
 
 #Movement
@@ -46,7 +46,7 @@ func _enter_tree():
 
 func _on_get_stats_timeout():
 	var DEBUG_ARRAY = [
-	"Current State: " + str(player_state_manager.debug_get_player_state()),
+	"Current State: " + player_state_manager.current_state.name,
 	"Velocity: " + str(velocity.length()),
 	"VelocityX: " + str(velocity.x),
 	"VelocityY: " + str(velocity.y),

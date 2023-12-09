@@ -12,9 +12,6 @@ func init(player_obj: Player):
 func timer_end():
 	is_rolling = false
 
-func get_state_name():
-	return enums.player_states.Rolling
-
 func enter():
 	old_vel = player.velocity
 	is_rolling = true
@@ -30,5 +27,5 @@ func move_player():
 
 func check_physics_next_state():
 	if not is_rolling:
-		change_state.emit(enums.player_states.Idle)
+		change_state.emit("Idle")
 

@@ -31,7 +31,6 @@ const sliding_minimum_velocity: float = 5.0
 const wallrun_jumping_velocity: float = 7.0
 const wallrun_lerp: float = 5.0
 
-var enums = preload("res://scripts/player/enums.gd")
 
 func get_state_name():
 	return null
@@ -72,8 +71,7 @@ func check_input_next_state():
 	player.input_dir = Input.get_vector("left", "right", "forward", "backward")
 
 func _on_collision(_old_vel: Vector3, _collision: KinematicCollision3D):
-	print(str(enums.player_states.keys()[self.get_state_name()]) + " collided with: " + str(_collision.get_collider_id()))
-	pass
+	print(self.name + " collided with: " + str(_collision.get_collider_id()))
 
 func move_player():
 	var oldvel = player.velocity

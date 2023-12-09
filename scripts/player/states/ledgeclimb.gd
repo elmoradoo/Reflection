@@ -15,9 +15,6 @@ var finalize_player: bool = false
 var finalize_goal: float = 1.0
 var finalize_speed: float = 1.0
 
-func get_state_name():
-	return enums.player_states.LedgeClimb
-
 func init(player_obj: Player):
 	super.init(player_obj)
 	player.timers.get_node("ledgeclimb_time").timeout.connect(ledgeclimb_timer)
@@ -74,8 +71,8 @@ func move_player():
 
 func check_input_next_state():
 	if player.is_on_floor() and Input.is_action_pressed("forward"):
-		change_state.emit(enums.player_states.Sprinting)
+		change_state.emit("Sprinting")
 
 func check_physics_next_state():
 	if player.is_on_floor():
-		change_state.emit(enums.player_states.Idle)
+		change_state.emit("Idle")

@@ -27,8 +27,6 @@ func init(player_obj: Player):
 	player.timers.get_node("wallclimb_time").timeout.connect(climbing_timer)
 	player.timers.get_node("wallclimb_jump_time").timeout.connect(wallclimb_jump_timer)
 
-func get_state_name(): return enums.player_states.WallClimb
-
 func enter():
 	player.timers.get_node("wallclimb_time").start()
 	exit_velocity = Vector3.ZERO
@@ -85,7 +83,7 @@ func wall_jump():
 	player.velocity.x += -forward.x * forward_velocity
 	player.velocity.z += -forward.z * forward_velocity
 	exit_velocity = player.velocity
-	change_state.emit(enums.player_states.Jumping)
+	change_state.emit("Jumping")
 
 func check_input_next_state():
 	super.check_input_next_state()
@@ -100,15 +98,15 @@ func check_input_next_state():
 
 func check_physics_next_state():
 	if player.is_on_floor() and player.velocity.length() >= 2:
-		change_state.emit(enums.player_states.Sprinting)
+		change_state.emit("Sprinting")
 	elif player.is_on_floor():
-		change_state.emit(enums.player_states.Idle)
+		change_state.emit("Idle")
 	elif super.can_ledge_grab():
-		change_state.emit(enums.player_states.LedgeGrab)
+		change_state.emit("LedgeGrab")
 	elif super.can_ledgeclimb():
-		change_state.emit(enums.player_states.LedgeClimb)
+		change_state.emit("LedgeClimb")
 	elif player_pressed_rotate:
 		if rotate_air_time_is_over:
-			change_state.emit(enums.player_states.AirTime)
+			change_state.emit("AirTime")
 	elif climb_is_over:
-		change_state.emit(enums.player_states.AirTime)
+		change_state.emit("AirTime")
