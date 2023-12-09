@@ -1,10 +1,18 @@
-[gd_scene load_steps=39 format=3 uid="uid://2hrv6xqbuna8"]
+[gd_scene load_steps=42 format=3 uid="uid://2hrv6xqbuna8"]
 
+[ext_resource type="Texture2D" uid="uid://bawjh34i4i8my" path="res://assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_p38ns"]
 [ext_resource type="Texture2D" uid="uid://b4shnqatybm45" path="res://addons/kenney_prototype_textures/dark/texture_01.png" id="2_fmm2i"]
 [ext_resource type="PackedScene" uid="uid://cshhglfttbvhw" path="res://scenes/prefabs/portal/portal.tscn" id="3_npdh1"]
 
-[sub_resource type="Environment" id="Environment_lrjwf"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_kdyrl"]
+panorama = ExtResource("1_p38ns")
+
+[sub_resource type="Sky" id="Sky_4ojls"]
+sky_material = SubResource("PanoramaSkyMaterial_kdyrl")
+
+[sub_resource type="Environment" id="Environment_3j1ky"]
 background_mode = 2
+sky = SubResource("Sky_4ojls")
 tonemap_mode = 2
 glow_enabled = true
 
@@ -151,7 +159,7 @@ data = PackedVector3Array(-5, 0.5, 5, 5, 0.5, 5, -5, -0.5, 5, 5, 0.5, 5, 5, -0.5
 [node name="Environment" type="Node3D" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_lrjwf")
+environment = SubResource("Environment_3j1ky")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
 transform = Transform3D(-0.110108, 0.620803, -0.776196, -0.0427325, 0.777265, 0.62772, 0.993001, 0.102286, -0.0590548, -80.1826, 55.0768, -11.1544)
