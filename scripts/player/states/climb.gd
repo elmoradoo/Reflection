@@ -7,7 +7,20 @@ var collided: bool = false
 var old_vel: Vector3
 
 func can_enter(_prev_state: String) -> bool:
-	return can_change_to("Vault") and player.rc_head.get_node("front_obstacle").is_colliding()
+	if not player.rc_head.get_node("front_obstacle").is_colliding():
+		return false
+	if (player.rc_feets.get_node("front").is_colliding() 
+		and not player.rc_head.get_node("front").is_colliding()):
+			return true
+	return false
+	#why?
+	if (player.rc_head.get_node("front").is_colliding() 
+		and not player.rc_torso.get_node("front").is_colliding()
+		and player.velocity.y < 0):
+			print("type 2")
+			return true
+	return false
+	#return can_change_to("Vault") and player.rc_head.get_node("front_obstacle").is_colliding()
 
 func enter(_prev_state: String) -> void:
 	old_vel = player.velocity

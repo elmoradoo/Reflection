@@ -12,15 +12,10 @@ func init(player_obj: Player):
 	player.timers.get_node("vault_time").timeout.connect(vault_time)
 
 func can_enter(_prev_state: String) -> bool:
-	if (player.rc_feets.get_node("front").is_colliding() 
-		and not player.rc_head.get_node("front").is_colliding()):
-			return true
-	return false
-	#why?
-	if (player.rc_head.get_node("front").is_colliding() 
-		and not player.rc_torso.get_node("front").is_colliding()
-		and player.velocity.y < 0):
-			print("type 2")
+	if player.vault_shapecasts.get_node("first").is_colliding():
+		var normal = player.vault_shapecasts.get_node("first").get_collision_normal(0)
+		var collision_second = player.vault_shapecasts.get_node("second").is_colliding()
+		if normal.y == 1 and not collision_second:
 			return true
 	return false
 

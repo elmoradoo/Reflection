@@ -14,7 +14,6 @@ func enter(_prev_state: String) -> void:
 func move_player():
 	player.stand_up()
 	player.head_bob(0.2, 22.0 + acceleration)
-
 	var target_velocity = (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized() * max_speed
 	player.velocity = player.velocity.lerp(target_velocity, acceleration * player.delta)
 	var acceleration_normalized = player.velocity.length() / max_speed
