@@ -1,6 +1,6 @@
 class_name StateManager extends Node
 
-var current_state: BaseState
+var current_state: State
 var player: Player
 
 @export var initial_state: Node

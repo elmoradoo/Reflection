@@ -1,4 +1,4 @@
-extends BaseState
+extends State
 
 #Move up
 var initial_height: float

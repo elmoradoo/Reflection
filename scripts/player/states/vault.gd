@@ -1,4 +1,4 @@
-extends BaseState
+extends State
 
 
 var vault_timer_end: bool = false

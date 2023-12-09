@@ -1,4 +1,4 @@
-extends BaseState
+extends State
 
 var velocity_before_landing: Vector3
 const roll_min_velocity: float = -8.0

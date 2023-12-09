@@ -1,4 +1,4 @@
-extends BaseState
+extends State
 
 
 const jump_velocity: float = 4.5

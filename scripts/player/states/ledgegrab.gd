@@ -1,4 +1,4 @@
-extends BaseState
+extends State
 
 var move_speed: float = 2.0
 var wall_normal: Vector3 = Vector3.ZERO

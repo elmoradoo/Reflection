@@ -1,4 +1,4 @@
-extends BaseState
+extends State
 
 var forward_goal = 1.0
 var forward_speed = 4.0

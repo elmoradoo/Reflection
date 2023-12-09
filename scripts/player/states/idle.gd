@@ -1,4 +1,4 @@
-extends BaseState
+extends State
 
 
 var idle_lerp_speed: float = 2.0 

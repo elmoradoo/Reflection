@@ -1,4 +1,4 @@
-extends BaseState
+extends State
 
 var coiling: bool = true
 

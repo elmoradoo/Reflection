@@ -1,4 +1,4 @@
-extends BaseState
+extends State
 
 
 const max_speed: float = 8.0

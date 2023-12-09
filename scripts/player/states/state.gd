@@ -1,6 +1,6 @@
 extends Node
 
-class_name BaseState
+class_name State
 
 var player: Player
 

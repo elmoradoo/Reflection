@@ -1,4 +1,4 @@
-extends BaseState
+extends State
 
 
 const sliding_initial_force: float = 1.2

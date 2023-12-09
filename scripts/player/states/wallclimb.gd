@@ -1,4 +1,4 @@
-extends BaseState
+extends State
 
 #Timers boolean
 var climb_is_over: bool = false

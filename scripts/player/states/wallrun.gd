@@ -1,4 +1,4 @@
-extends BaseState
+extends State
 
 
 var old_vel: Vector3 = Vector3.ZERO
