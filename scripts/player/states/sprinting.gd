@@ -5,7 +5,10 @@ extends State
 @export var acceleration: float = 3.0
 @export var minimum_velocity: float = 5.0
 
-func enter():
+func can_enter(_prev_state: String):
+	return player.is_on_floor() and player.input_dir != Vector2.ZERO
+
+func enter(_prev_state: String) -> void:
 	player.model.get_node("AnimationPlayer").play("basic/run")
 
 func move_player():
@@ -18,6 +21,10 @@ func move_player():
 	player.model.get_node("AnimationPlayer").speed_scale = acceleration_normalized + 0.3
 	super.move_player()
 
+func exit(next_state: String) -> void:
+	if next_state == "AirTime":
+		player.model.get_node("AnimationPlayer").play("basic/fall")
+
 func check_input_next_state():
 	super.check_input_next_state()
 	if Input.is_action_pressed("crouch") and player.is_on_floor():
@@ -27,11 +34,3 @@ func check_input_next_state():
 			change_state.emit("Crouching")
 	elif Input.is_action_pressed("jump") and player.is_on_floor():
 		change_state.emit("Jumping")
-
-func check_physics_next_state():
-	if player.is_on_floor():
-		if player.input_dir == Vector2.ZERO:
-			change_state.emit("Idle")
-	else:
-		player.model.get_node("AnimationPlayer").play("basic/fall")
-		change_state.emit("AirTime")

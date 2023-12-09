@@ -11,7 +11,7 @@ func init(player_obj: Player):
 	super.init(player_obj)
 	player.timers.get_node("vault_time").timeout.connect(vault_time)
 
-func can_enter() -> bool:
+func can_enter(_prev_state: String) -> bool:
 	if (player.rc_feets.get_node("front").is_colliding() 
 		and not player.rc_head.get_node("front").is_colliding()):
 			return true
@@ -24,7 +24,7 @@ func can_enter() -> bool:
 			return true
 	return false
 
-func enter():
+func enter(_prev_state: String) -> void:
 	player.timers.get_node("vault_time").start()
 	old_vel = player.velocity
 	player.velocity = Vector3.ZERO
@@ -48,7 +48,7 @@ func move_player():
 		player.position.z = lerp(player.position.z, player.position.z + (-forward.z * 4.0), vault_speed * player.delta)
 	super.move_player()
 
-func exit():
+func exit(_next_state: String) -> void:
 	vault_timer_end = false
 	player.timers.get_node("vault_time").stop()
 	player.coiling_collision_shape.disabled = true
@@ -60,10 +60,4 @@ func exit():
 func check_physics_next_state():
 	if not vault_timer_end:
 		return
-	if player.is_on_floor():
-		if player.velocity.length() >= 2:
-			change_state.emit("Sprinting")
-		else:
-			change_state.emit("Idle")
-	elif not player.rc_feets.get_node("down").is_colliding():
-		change_state.emit("AirTime")
+	super.check_physics_next_state()

@@ -2,10 +2,9 @@ extends State
 
 
 @export var sliding_initial_force: float = 1.2
-@export var min_sliding_speed: float = 4
 
 
-func enter():
+func enter(_prev_state: String) -> void:
 	player.model.get_node("AnimationPlayer").play("basic/sliding")
 	player.standing_collision_shape.disabled = true
 	player.crouching_collision_shape.disabled = false
@@ -25,7 +24,3 @@ func check_input_next_state():
 			change_state.emit("Idle")
 		else:
 			change_state.emit("Crouching")
-
-func check_physics_next_state():
-	if player.velocity.length() < min_sliding_speed:
-		change_state.emit("Crouching")

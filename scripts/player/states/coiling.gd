@@ -9,18 +9,18 @@ func init(player_obj: Player):
 func coiling_timer():
 	coiling = false
 
-func can_enter() -> bool:
+func can_enter(_prev_state: String) -> bool:
 	if Input.is_action_pressed("crouch") and player.velocity.y >= 0:
 		return true
 	return false
 
-func enter():
+func enter(_prev_state: String) -> void:
 	player.timers.get_node("coiling_time").start()
 	player.coiling_collision_shape.disabled = false
 	player.standing_collision_shape.disabled = true
 	player.crouching_collision_shape.disabled = true
 
-func exit():
+func exit(_next_state: String) -> void:
 	coiling = true
 	player.timers.get_node("coiling_time").stop()
 	player.coiling_collision_shape.disabled = true
@@ -29,14 +29,3 @@ func exit():
 
 func move_player():
 	super.move_player()
-
-func check_input_next_state():
-	if player.is_on_floor() and Input.is_action_pressed("crouch"):
-		change_state.emit("Sliding")
-	elif player.is_on_floor() and Input.is_action_pressed("forward"):
-		change_state.emit("Sprinting")
-
-func check_physics_next_state():
-	if player.is_on_floor() or not coiling:
-		change_state.emit("Idle")
-

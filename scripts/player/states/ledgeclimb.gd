@@ -29,20 +29,24 @@ func ledgeclimb_timer():
 	player.standing_collision_shape.disabled = false
 	player.crouching_collision_shape.disabled = true
 
-func can_enter() -> bool:
+func can_enter(_prev_state: String) -> bool:
+	if not player.get_last_slide_collision():
+		return false
+	if not player.velocity.y > 2:
+		return false
 	if (player.rc_torso.get_node("front").is_colliding() 
 		and not player.rc_head.get_node("front").is_colliding()):
 			return true
 	return false
 
-func enter():
+func enter(_prev_state: String) -> void:
 	player.crouching_collision_shape.disabled = false
 	player.standing_collision_shape.disabled = true
 	player.coiling_collision_shape.disabled = true
 	player.gravity_enabled = false
 	initial_height = player.position.y
 
-func exit():
+func exit(_next_state: String) -> void:
 	player.gravity_enabled = true
 	finalize_player = false
 	push_player = false
@@ -77,11 +81,3 @@ func move_player():
 	if finalize_player:
 		finalize()
 	super.move_player()
-
-func check_input_next_state():
-	if player.is_on_floor() and Input.is_action_pressed("forward"):
-		change_state.emit("Sprinting")
-
-func check_physics_next_state():
-	if player.is_on_floor():
-		change_state.emit("Idle")

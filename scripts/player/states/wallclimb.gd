@@ -31,7 +31,9 @@ func init(player_obj: Player):
 	player.timers.get_node("wallclimb_time").timeout.connect(climbing_timer)
 	player.timers.get_node("wallclimb_jump_time").timeout.connect(wallclimb_jump_timer)
 
-func can_enter() -> bool:
+func can_enter(_prev_state: String) -> bool:
+	if not player.get_last_slide_collision():
+		return false
 	if not player.rc_torso.get_node("front").is_colliding() or player.velocity.y < climbable_min_velocity:
 		return false
 	var col = player.rc_torso.get_node("front").get_collision_normal()
@@ -42,14 +44,14 @@ func can_enter() -> bool:
 	else:
 		return true
 
-func enter():
+func enter(_prev_state: String) -> void:
 	player.timers.get_node("wallclimb_time").start()
 	exit_velocity = Vector3.ZERO
 	player.velocity.y = 6.0 if player.velocity.y < 6.0 else player.velocity.y
 	player.velocity.x = 0
 	player.velocity.z = 0
 
-func exit():
+func exit(_next_state: String) -> void:
 	#Stopping timers
 	player.timers.get_node("wallclimb_time").stop()
 	player.timers.get_node("wallclimb_jump_time").stop()
@@ -112,15 +114,8 @@ func check_input_next_state():
 		target_rotation = fmod(target_rotation + PI, TAU) - PI
 
 func check_physics_next_state():
-	if player.is_on_floor() and player.velocity.length() >= 2:
-		change_state.emit("Sprinting")
-	elif player.is_on_floor():
-		change_state.emit("Idle")
-	elif can_change_to("LedgeGrab"):
-		change_state.emit("LedgeGrab")
-	elif can_change_to("LedgeClimb"):
-		change_state.emit("LedgeClimb")
-	elif player_pressed_rotate:
+	super.check_physics_next_state()
+	if player_pressed_rotate:
 		if rotate_air_time_is_over:
 			change_state.emit("AirTime")
 	elif climb_is_over:

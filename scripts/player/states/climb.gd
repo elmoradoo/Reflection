@@ -6,16 +6,15 @@ extends State
 var collided: bool = false
 var old_vel: Vector3
 
-func can_enter() -> bool:
+func can_enter(_prev_state: String) -> bool:
 	return can_change_to("Vault") and player.rc_head.get_node("front_obstacle").is_colliding()
 
-
-func enter():
+func enter(_prev_state: String) -> void:
 	old_vel = player.velocity
-	if player.velocity.x == 0 or player.velocity.z == 0:
+	if player.get_last_slide_collision():
 		collided = true
 
-func exit():
+func exit(_next_state: String) -> void:
 	player.gravity_enabled = true
 	collided = false
 	player.velocity = old_vel
@@ -48,10 +47,3 @@ func move_player():
 		if player.rc_feets.get_node("down").is_colliding():
 			player.gravity_enabled = true
 	super.move_player()
-
-func check_input_next_state():
-	pass
-
-func check_physics_next_state():
-	if player.is_on_floor():
-		change_state.emit("Idle")

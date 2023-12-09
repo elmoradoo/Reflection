@@ -5,14 +5,16 @@ extends State
 var wall_normal: Vector3 = Vector3.ZERO
 var is_on_end: bool = false
 
-func can_enter() -> bool:
+func can_enter(_prev_state: String) -> bool:
+	if not player.get_last_slide_collision():
+		return false
 	if (player.rc_torso.get_node("front").is_colliding() 
 		and not player.rc_head.get_node("front").is_colliding()
 		and player.velocity.y < 1):
 		return true
 	return false
 
-func enter():
+func enter(_prev_state: String) -> void:
 	if player.velocity.y < 0:
 		player.velocity.y = 0
 	player.gravity_enabled = false
@@ -20,7 +22,7 @@ func enter():
 	# THIS CRASHES IF NULL
 	wall_normal = player.get_last_slide_collision().get_normal()
 
-func exit():
+func exit(_next_state: String) -> void:
 	player.gravity_enabled = true
 
 func move_player():
@@ -42,7 +44,3 @@ func check_input_next_state():
 			change_state.emit("LedgeClimb")
 		else:
 			change_state.emit("Jumping")
-
-func check_physics_next_state():
-	if player.velocity.y > 2:
-		change_state.emit("LedgeClimb")

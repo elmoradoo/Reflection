@@ -6,7 +6,16 @@ extends State
 
 var has_jumped: bool = false
 
-func enter():
+func can_enter(_prev_state: String):
+	if Input.is_action_just_pressed("jump"):
+		if player.is_on_floor():
+			return true
+		# Allow only one jump if on a wall
+		elif player.is_on_wall():
+			return player.touched_floor
+	return false
+
+func enter(_prev_state: String) -> void:
 	player.model.get_node("AnimationPlayer").play("basic/jump")
 	if player.animation_player.is_playing():
 		var current_frame = player.animation_player.current_animation_position
@@ -15,7 +24,7 @@ func enter():
 		player.animation_player.seek(current_frame)
 	player.animation_player.queue("jump")
 
-func exit():
+func exit(_next_state: String) -> void:
 	has_jumped = false
 
 func move_player():
@@ -30,5 +39,4 @@ func move_player():
 func check_physics_next_state():
 	if not has_jumped:
 		return
-	if not player.is_on_floor():
-		change_state.emit("AirTime")
+	super.check_physics_next_state()

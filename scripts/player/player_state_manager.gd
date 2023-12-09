@@ -28,11 +28,12 @@ func init(player_obj):
 
 func _on_change_state(next_state):
 	if next_state and next_state != current_state.name:
-		current_state.exit()
+		current_state.exit(next_state)
 		current_state.disconnect("collision", current_state._on_collision)
+		var prev_state_name = current_state.name
 		current_state = state_nodes[next_state]
 		current_state.connect("collision", current_state._on_collision)
-		current_state.enter()
+		current_state.enter(prev_state_name)
 		debug_print_player_state()
 
 

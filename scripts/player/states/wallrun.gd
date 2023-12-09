@@ -70,7 +70,9 @@ func can_rotate_player_on_wall(rotation=0):
 	angle = angle + abs(rotation)
 	return clamp(angle, limit_min, limit_max) == angle
 
-func can_enter() -> bool:
+func can_enter(_prev_state: String) -> bool:
+	if not player.get_last_slide_collision():
+		return false
 	if not player.rc_torso.get_node("front").is_colliding():
 		return false
 	var col = player.rc_torso.get_node("front").get_collision_normal()
@@ -81,7 +83,7 @@ func can_enter() -> bool:
 	else:
 		return false
 
-func enter():
+func enter(_previous_state: String) -> void:
 	old_vel = player.velocity
 
 	#player.velocity.y += 1
@@ -96,15 +98,15 @@ func enter():
 		rotate_player_outside_wall()
 	# Collision has not happened yet, we need to wait for _on_collision to trigger.
 
-func exit():
+func exit(next_state: String) -> void:
 	player.velocity = old_vel
-	if is_jumping:
+	if next_state == "Jumping":
 		player.velocity = \
 			(player.transform.basis * Vector3(player.input_dir.x, 1, player.input_dir.y)).normalized() * \
 			(jumping_velocity + player.timers.get_node("wallrun_time").time_left)
 	player.timers.get_node("wallrun_time").stop()
 	wall_normal = Vector3.ZERO
-	player.velocity.y = 0.0	
+	player.velocity.y = 0.0
 
 func move_player():
 	player.velocity.y += base_y_speed * player.timers.get_node("wallrun_time").time_left
@@ -113,15 +115,9 @@ func move_player():
 
 func check_input_next_state():
 	super.check_input_next_state()
-	if Input.is_action_just_pressed("jump"):
-		if not is_jumping:
-			is_jumping = true
-			change_state.emit("Jumping")
+	if can_change_to("Jumping"):
+		change_state.emit("Jumping")
 
 func check_physics_next_state():
-	if player.is_on_floor() and player.velocity.length() >= 2:
-		change_state.emit("Sprinting")
-	elif player.is_on_floor():
-		change_state.emit("Idle")
-	elif not (can_change_to("WallRun") or player.is_on_wall_only()):
+	if not (can_change_to("WallRun") or player.is_on_wall_only()):
 		change_state.emit("AirTime")

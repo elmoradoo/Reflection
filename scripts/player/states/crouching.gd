@@ -1,8 +1,12 @@
 extends State
 
 @export var max_speed: float = 3.0
+@export var min_sliding_speed: float = 4
 
-func enter():
+func can_enter(_prev_state: String):
+	return player.is_on_floor() and Input.is_action_pressed("crouch") and player.velocity.length() < min_sliding_speed
+
+func enter(_prev_state: String) -> void:
 	player.standing_collision_shape.disabled = true
 	player.crouching_collision_shape.disabled = false
 
