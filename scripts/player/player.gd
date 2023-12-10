@@ -3,6 +3,9 @@ class_name Player extends CharacterBody3D
 signal stats_update
 signal line_update
 
+#Shapecasts
+@onready var vault_shapecasts = $vault_shapecasts
+
 
 # Raycasts
 @onready var raycasts: Node3D = $raycasts
@@ -111,7 +114,7 @@ func reset_neck(lerp_speed_local):
 @export var head_bobbing_lerp: float = 10.0
 
 func head_bob(intensity, bobbing_speed):
-	#return
+	return
 	var head_bobbing_vector: Vector2 = Vector2.ZERO
 	var head_bobbing_index: float = 0.0
 	head_bobbing_index += bobbing_speed * delta

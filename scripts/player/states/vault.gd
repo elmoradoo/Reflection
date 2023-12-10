@@ -12,6 +12,8 @@ func init(player_obj: Player):
 	player.timers.get_node("vault_time").timeout.connect(vault_time)
 
 func can_enter(_prev_state: String) -> bool:
+	if player.rc_head.get_node("front").is_colliding():
+		return false
 	if player.vault_shapecasts.get_node("first").is_colliding():
 		var normal = player.vault_shapecasts.get_node("first").get_collision_normal(0)
 		var collision_second = player.vault_shapecasts.get_node("second").is_colliding()

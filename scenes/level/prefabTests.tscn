@@ -199,8 +199,7 @@ transform = Transform3D(-1, -8.36391e-09, -8.70218e-08, 0, 0.995413, -0.095672, 
 environment = SubResource("Environment_l5f6l")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="env"]
-transform = Transform3D(-0.110108, 0.620803, -0.776196, -0.0427325, 0.777265, 0.62772, 0.993001, 0.102286, -0.0590548, -80.1826, 55.0768, -11.1544)
-light_energy = 0.732
+transform = Transform3D(-0.117154, 0.789545, -0.602406, -0.0149913, 0.605108, 0.796002, 0.993001, 0.102286, -0.0590546, -22.8363, 58.8651, -11.1544)
 shadow_enabled = true
 
 [node name="buildings" type="Node3D" parent="."]
