@@ -46,12 +46,15 @@ func move_player():
 func can_enter(_prev_state: String):
 	return true
 
+func can_exit(_next_state: String):
+	return true
+
 func can_change_to(state_name: String):
 	return player.player_state_manager.state_nodes[state_name].can_enter(state_name)
 
 func check_physics_next_state():
 	for state in next_states_physics:
-		if state.can_enter(self.name):
+		if state.can_enter(self.name) and self.can_exit(state.name):
 			change_state.emit(state.name)
 			return
 

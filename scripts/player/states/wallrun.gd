@@ -98,6 +98,9 @@ func enter(_previous_state: String) -> void:
 		rotate_player_outside_wall()
 	# Collision has not happened yet, we need to wait for _on_collision to trigger.
 
+func can_exit(_next_state: String) -> bool:
+	return not player.is_on_wall_only()
+
 func exit(next_state: String) -> void:
 	player.velocity = old_vel
 	if next_state == "Jumping":
@@ -113,11 +116,3 @@ func move_player():
 	player.reset_neck(lerp_speed)
 	super.move_player()
 
-func check_input_next_state():
-	super.check_input_next_state()
-	if can_change_to("Jumping"):
-		change_state.emit("Jumping")
-
-func check_physics_next_state():
-	if not (can_change_to("WallRun") or player.is_on_wall_only()):
-		change_state.emit("AirTime")
