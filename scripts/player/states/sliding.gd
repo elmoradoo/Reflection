@@ -5,7 +5,7 @@ extends State
 @export var min_sliding_speed: float = 4
 
 func can_enter(_prev_state: String) -> bool:
-	return player.is_on_floor() and player.velocity.length() >= min_sliding_speed
+	return Input.is_action_pressed("crouch") and player.is_on_floor() and player.velocity.length() >= min_sliding_speed
 
 func enter(_prev_state: String) -> void:
 	player.model.get_node("AnimationPlayer").play("basic/sliding")
