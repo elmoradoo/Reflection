@@ -25,15 +25,17 @@ func enter(_prev_state: String) -> void:
 	player.timers.get_node("vault_time").start()
 	old_vel = player.velocity
 	player.velocity = Vector3.ZERO
-	player.standing_collision_shape.disabled = true
-	player.crouching_collision_shape.disabled = true
-	player.coiling_collision_shape.disabled = false
+	#player.standing_collision_shape.disabled = true
+	#player.crouching_collision_shape.disabled = true
+	#player.coiling_collision_shape.disabled = false
 	player.model.get_node("AnimationPlayer").play("basic/vault")
+	
 
 func vault_time():
 	vault_timer_end = true
 
 func move_player():
+	player.coil_legs(20.0)
 	if vault_timer_end:
 		player.position.y = lerp(player.position.y, 0.0, vault_speed * player.delta)
 		player.velocity.x = clamp(old_vel.x, 0.0, vault_speed)
@@ -48,9 +50,6 @@ func move_player():
 func exit(_next_state: String) -> void:
 	vault_timer_end = false
 	player.timers.get_node("vault_time").stop()
-	player.coiling_collision_shape.disabled = true
-	player.standing_collision_shape.disabled = false
-	player.crouching_collision_shape.disabled = false
 	player.velocity = old_vel
 	player.velocity.y = 0.0
 

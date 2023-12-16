@@ -16,16 +16,14 @@ func can_enter(_prev_state: String) -> bool:
 
 func enter(_prev_state: String) -> void:
 	player.timers.get_node("coiling_time").start()
-	player.coiling_collision_shape.disabled = false
-	player.standing_collision_shape.disabled = true
-	player.crouching_collision_shape.disabled = true
 
 func exit(_next_state: String) -> void:
 	coiling = true
 	player.timers.get_node("coiling_time").stop()
-	player.coiling_collision_shape.disabled = true
-	player.standing_collision_shape.disabled = false
-	player.crouching_collision_shape.disabled = true
 
 func move_player():
+	if coiling:
+		player.coil_legs()
+	else:
+		player.stand_up()
 	super.move_player()

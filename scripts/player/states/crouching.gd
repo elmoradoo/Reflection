@@ -6,8 +6,9 @@ func can_enter(_prev_state: String):
 	return player.is_on_floor() and Input.is_action_pressed("crouch") and not can_change_to("Sliding")
 
 func enter(_prev_state: String) -> void:
-	player.standing_collision_shape.disabled = true
-	player.crouching_collision_shape.disabled = false
+	#player.standing_collision_shape.disabled = true
+	#player.crouching_collision_shape.disabled = false
+	print(player.standing_collision_shape.shape.height)
 
 func move_player():
 	player.stand_down()

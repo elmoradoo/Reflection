@@ -5,10 +5,6 @@ extends State
 func can_enter(_prev_state: String):
 	return player.is_on_floor() and player.input_dir == Vector2.ZERO
 
-func enter(_prev_state: String) -> void:
-	player.standing_collision_shape.disabled = false
-	player.crouching_collision_shape.disabled = true
-
 func move_player():
 	player.stand_up()
 	player.reset_neck(2.0)

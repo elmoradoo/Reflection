@@ -27,9 +27,9 @@ signal line_update
 @onready var animation_player: AnimationPlayer = $neck/head/eyes/AnimationPlayer
 
 # Collisions
-@onready var standing_collision_shape: CollisionShape3D = $standing_collision_shape
-@onready var crouching_collision_shape: CollisionShape3D = $crouching_collision_shape
-@onready var coiling_collision_shape: CollisionShape3D = $coiling_collision_shape
+@onready var collision_shape: CollisionShape3D = $collision_shape
+#@onready var crouching_collision_shape: CollisionShape3D = $crouching_collision_shape
+#@onready var coiling_collision_shape: CollisionShape3D = $coiling_collision_shape
 
 # State manager
 @onready var player_state_manager: StateManager = $StateManager
@@ -100,11 +100,16 @@ func _physics_process(physics_delta):
 
 func stand_up(lerp_speed=10.0):
 	neck.rotation.y = lerp(neck.rotation.y, 0.0, delta * lerp_speed)
-	head.position.y = lerp(head.position.y, 0.0, lerp_speed * delta)
+	collision_shape.shape.height = lerp(collision_shape.shape.height, 2.0, lerp_speed * delta)
+	#head.position.y = lerp(head.position.y, 0.0, lerp_speed * delta)
 
 func stand_down(crouching_depth=-0.7, lerp_speed=10.0):
-	head.position.y = lerp(head.position.y, crouching_depth, lerp_speed * delta)
+	collision_shape.shape.height = lerp(collision_shape.shape.height, 1.0, lerp_speed * delta)
+	#head.position.y = lerp(head.position.y, crouching_depth, lerp_speed * delta)
 
+func coil_legs(lerp_speed=10.0):
+	collision_shape.shape.height = lerp(collision_shape.shape.height, 1.0, lerp_speed * delta)
+	
 func reset_neck(lerp_speed_local):
 	neck.rotation.x = lerp(neck.rotation.x, 0.0, delta * lerp_speed_local)
 	neck.rotation.y = lerp(neck.rotation.y, 0.0, delta * lerp_speed_local)
