@@ -40,9 +40,6 @@ func can_enter(_prev_state: String) -> bool:
 	return false
 
 func enter(_prev_state: String) -> void:
-	#player.crouching_collision_shape.disabled = false
-	#player.standing_collision_shape.disabled = true
-	#player.coiling_collision_shape.disabled = true
 	player.gravity_enabled = false
 	initial_height = player.position.y
 
@@ -53,7 +50,6 @@ func exit(_next_state: String) -> void:
 	player.timers.get_node("ledgeclimb_time").stop()
 
 func move_up():
-	player.collision_shape.disabled = true
 	if player.position.y - initial_height >= up_goal:
 		push_player = true
 		player.timers.get_node("ledgeclimb_time").start()
@@ -66,9 +62,6 @@ func move_forward():
 	player.position.z = lerp(player.position.z, player.position.z + forward_goal, -forward_direction.z * forward_speed * player.delta)
 
 func finalize():
-	player.standing_collision_shape.disabled = false
-	player.crouching_collision_shape.disabled = true
-	player.coiling_collision_shape.disabled = true
 	player.position.y = lerp(player.position.y, player.position.y - finalize_goal, finalize_speed * player.delta)
 
 func move_player():

@@ -25,9 +25,6 @@ func enter(_prev_state: String) -> void:
 	player.timers.get_node("vault_time").start()
 	old_vel = player.velocity
 	player.velocity = Vector3.ZERO
-	#player.standing_collision_shape.disabled = true
-	#player.crouching_collision_shape.disabled = true
-	#player.coiling_collision_shape.disabled = false
 	player.model.get_node("AnimationPlayer").play("basic/vault")
 	
 

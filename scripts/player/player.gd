@@ -28,8 +28,6 @@ signal line_update
 
 # Collisions
 @onready var collision_shape: CollisionShape3D = $collision_shape
-#@onready var crouching_collision_shape: CollisionShape3D = $crouching_collision_shape
-#@onready var coiling_collision_shape: CollisionShape3D = $coiling_collision_shape
 
 # State manager
 @onready var player_state_manager: StateManager = $StateManager
