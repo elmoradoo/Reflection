@@ -13,6 +13,14 @@ var wall_normal: Vector3 = Vector3.ZERO
 var old_vel: Vector3 = Vector3.ZERO
 var is_jumping: bool = false
 
+var wallrun_time: Timer
+
+func init(player_obj: Player):
+	super.init(player_obj)
+	wallrun_time = Timer.new()
+	add_child(wallrun_time)
+	wallrun_time.wait_time = 0.5
+
 func _on_collision(previous_vel: Vector3, new_collision: KinematicCollision3D):
 	super._on_collision(previous_vel, new_collision)
 	# Compute velocity compensation while avoiding y (we are on a wall, so we should not compensate y)
@@ -87,7 +95,8 @@ func enter(_previous_state: String) -> void:
 	old_vel = player.velocity
 
 	#player.velocity.y += 1
-	player.timers.get_node("wallrun_time").start()
+	#player.timers.get_node("wallrun_time").start()
+	wallrun_time.start()
 	if player.touched_floor:
 		is_jumping = false
 
@@ -106,13 +115,13 @@ func exit(next_state: String) -> void:
 	if next_state == "Jumping":
 		player.velocity = \
 			(player.transform.basis * Vector3(player.input_dir.x, 1, player.input_dir.y)).normalized() * \
-			(jumping_velocity + player.timers.get_node("wallrun_time").time_left)
-	player.timers.get_node("wallrun_time").stop()
+			(jumping_velocity + wallrun_time.time_left)
+	wallrun_time.stop()
 	wall_normal = Vector3.ZERO
 	player.velocity.y = 0.0
 
 func move_player():
-	player.velocity.y += base_y_speed * player.timers.get_node("wallrun_time").time_left
+	player.velocity.y += base_y_speed * wallrun_time.time_left
 	player.reset_neck(lerp_speed)
 	super.move_player()
 
