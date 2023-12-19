@@ -109,10 +109,10 @@ func move_player():
 	super.move_player()
 
 func wall_jump():
-	var forward = player.transform.basis.z.normalized()
+	var forward = player.neck.transform.basis.z.normalized()
 	player.velocity.y = 0.0
-	player.velocity.x += -forward.x * forward_velocity
-	player.velocity.z += -forward.z * forward_velocity
+	player.velocity.x += forward.x * forward_velocity
+	player.velocity.z += forward.z * forward_velocity
 	exit_velocity = player.velocity
 	change_state.emit("Jumping")
 
