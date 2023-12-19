@@ -6,10 +6,14 @@ extends State
 
 var vault_timer_end: bool = false
 var old_vel: Vector3 = Vector3.ZERO
+var vault_time: Timer
 
 func init(player_obj: Player):
 	super.init(player_obj)
-	player.timers.get_node("vault_time").timeout.connect(vault_time)
+	vault_time = Timer.new()
+	vault_time.wait_time = 0.3
+	add_child(vault_time)
+	vault_time.timeout.connect(vault_timer)
 
 func can_enter(_prev_state: String) -> bool:
 	if player.rc_head.get_node("front").is_colliding():
@@ -22,13 +26,13 @@ func can_enter(_prev_state: String) -> bool:
 	return false
 
 func enter(_prev_state: String) -> void:
-	player.timers.get_node("vault_time").start()
+	vault_time.start()
 	old_vel = player.velocity
 	player.velocity = Vector3.ZERO
 	player.model.get_node("AnimationPlayer").play("basic/vault")
 	
 
-func vault_time():
+func vault_timer():
 	vault_timer_end = true
 
 func move_player():
@@ -46,7 +50,7 @@ func move_player():
 
 func exit(_next_state: String) -> void:
 	vault_timer_end = false
-	player.timers.get_node("vault_time").stop()
+	vault_time.stop()
 	player.velocity = old_vel
 	player.velocity.y = 0.0
 

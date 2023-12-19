@@ -5,9 +5,6 @@ extends State
 var old_vel: Vector3 = Vector3.ZERO
 var is_rolling: bool = true
 
-func init(player_obj: Player):
-	super.init(player_obj)
-	player.timers.get_node("roll_time").timeout.connect(func() : is_rolling = false)
 
 #region Rolling
 
@@ -16,7 +13,6 @@ func can_roll() -> bool:
 
 func start_roll() -> void:
 	is_rolling = true
-	player.timers.get_node("roll_time").start()
 	player.animation_player.play("roll")
 	
 #endregion
