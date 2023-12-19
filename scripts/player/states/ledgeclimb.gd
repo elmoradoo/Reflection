@@ -25,9 +25,6 @@ func init(player_obj: Player):
 func ledgeclimb_timer():
 	finalize_player = true
 	player.gravity_enabled = true
-	#player.coiling_collision_shape.disabled = false
-	#player.standing_collision_shape.disabled = false
-	#player.crouching_collision_shape.disabled = true
 
 func can_enter(_prev_state: String) -> bool:
 	if not player.get_last_slide_collision():

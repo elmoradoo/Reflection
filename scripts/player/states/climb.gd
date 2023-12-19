@@ -6,9 +6,51 @@ extends State
 var collided: bool = false
 var old_vel: Vector3
 
+func can_climb_above_shoulder() -> bool:
+	return false
+
+func climb_above_shoulder():
+	pass
+
+func can_climb_above_torso() -> bool:
+	return false
+	
+func climb_above_torso():
+	pass
+
+func can_climb_above_waist() -> bool:
+	return false
+
+func climb_above_waist():
+	pass
+
+func can_climb_above_knees() -> bool: 
+	return false
+
+func climb_above_knees():
+	pass
+
+func can_climb_above_feets() -> bool:
+	return false
+
+func climb_above_feets():
+	pass
+
 func can_enter(_prev_state: String) -> bool:
 	if not player.get_last_slide_collision():
 		return false
+	if can_climb_above_feets():
+		return true
+	elif can_climb_above_knees():
+		return true
+	elif can_climb_above_waist():
+		return true
+	elif can_climb_above_torso():
+		return true
+	elif can_climb_above_shoulder():
+		return true
+
+	#OLD method
 	if player.vault_shapecasts.get_node("first").is_colliding() and player.vault_shapecasts.get_node("second").is_colliding():
 		var normal = player.vault_shapecasts.get_node("first").get_collision_normal(0)
 		var collision_second = player.vault_shapecasts.get_node("second").get_collision_normal(0)
