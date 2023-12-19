@@ -21,6 +21,9 @@ var target_rotation: float
 var exit_velocity: Vector3 = Vector3.ZERO
 
 #Timers
+var wallclimb_time: Timer
+var wallclimb_jump_time: Timer
+
 var climb_is_over: bool = false
 var rotate_air_time_is_over: bool = false
 func climbing_timer(): climb_is_over = true
@@ -28,8 +31,16 @@ func wallclimb_jump_timer(): rotate_air_time_is_over = true
 
 func init(player_obj: Player):
 	super.init(player_obj)
-	player.timers.get_node("wallclimb_time").timeout.connect(climbing_timer)
-	player.timers.get_node("wallclimb_jump_time").timeout.connect(wallclimb_jump_timer)
+	#Setup wallclimb timer
+	wallclimb_time = Timer.new()
+	wallclimb_time.wait_time = 0.7
+	add_child(wallclimb_time)
+	wallclimb_time.timeout.connect(climbing_timer)
+	
+	wallclimb_jump_time = Timer.new()
+	wallclimb_jump_time.wait_time = 0.7
+	add_child(wallclimb_jump_time)
+	wallclimb_jump_time.timeout.connect(wallclimb_jump_timer)
 
 func can_enter(_prev_state: String) -> bool:
 	if not player.get_last_slide_collision():
@@ -45,7 +56,8 @@ func can_enter(_prev_state: String) -> bool:
 		return true
 
 func enter(_prev_state: String) -> void:
-	player.timers.get_node("wallclimb_time").start()
+	wallclimb_time.start()
+	#player.timers.get_node("wallclimb_time").start()
 	exit_velocity = Vector3.ZERO
 	player.velocity.y = 6.0 if player.velocity.y < 6.0 else player.velocity.y
 	player.velocity.x = 0
@@ -53,8 +65,10 @@ func enter(_prev_state: String) -> void:
 
 func exit(_next_state: String) -> void:
 	#Stopping timers
-	player.timers.get_node("wallclimb_time").stop()
-	player.timers.get_node("wallclimb_jump_time").stop()
+	wallclimb_time.stop()
+	wallclimb_jump_time.stop()
+	#player.timers.get_node("wallclimb_time").stop()
+	#player.timers.get_node("wallclimb_jump_time").stop()
 	#Reseting climbing vars
 	climb_is_over = false
 	#Reseting rotation vars
@@ -75,7 +89,7 @@ func rotate_player():
 		player.rotation.y = target_rotation
 		is_rotating = false
 		has_rotated = true
-		player.timers.get_node("wallclimb_jump_time").start()
+		wallclimb_jump_time.start()
 
 func update_mouse(event):
 	if is_rotating:
@@ -90,7 +104,7 @@ func move_player():
 	player.reset_head_bob()
 	if is_rotating:
 		rotate_player()
-	player.velocity.y += climbing_speed * player.timers.get_node("wallclimb_time").time_left * player.delta
+	player.velocity.y += climbing_speed * wallclimb_time.time_left * player.delta
 	player.velocity.y = clamp(player.velocity.y, 0, 8.0)
 	super.move_player()
 

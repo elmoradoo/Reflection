@@ -55,7 +55,6 @@ func _on_get_stats_timeout():
 	"VelocityZ: " + str(velocity.z),
 	"Inputs: " + str(input_dir),
 	"FeetDownRC: " + str($raycasts/feets/down.is_colliding()),
-	"WallClimbTimeLeft: " + str($timers/wallclimb_time.time_left),
 	"IsOnFloor: " + str(is_on_floor()),
 	"IsOnWall: " + str(is_on_wall()),
 	"IsOnWallOnly: " + str(is_on_wall_only()),
