@@ -41,6 +41,8 @@ const mouse_sensitivity: float = 0.2
 var gravity_enabled: bool = true
 @onready var delta = get_physics_process_delta_time()
 var touched_floor = true
+var target_rotation = Vector3.ZERO
+var is_rotating = false
 
 func _enter_tree():
 	if str(name).is_valid_int():
@@ -128,3 +130,13 @@ func head_bob(intensity, bobbing_speed):
 func reset_head_bob():
 	eyes.position.y = lerp(eyes.position.y, 0.0, delta * head_bobbing_lerp)
 	eyes.position.x = lerp(eyes.position.x, 0.0, delta * head_bobbing_lerp)
+
+
+func smooth_rotate(angle: float):
+	if angle != 0:
+		self.target_rotation = self.rotation.y + angle
+		self.is_rotating = true
+	elif self.is_rotating:
+		if angle_difference(self.target_rotation, self.rotation.y) <= 15.0 * delta:
+			self.is_rotating = false
+		self.rotation.y = lerp_angle(self.rotation.y, self.target_rotation, 15.0 * delta)
