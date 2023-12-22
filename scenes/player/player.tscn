@@ -337,11 +337,6 @@ libraries = {
 "": SubResource("AnimationLibrary_y1atu")
 }
 
-[node name="timers" type="Node3D" parent="."]
-
-[node name="get_stats" type="Timer" parent="timers"]
-wait_time = 0.1
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 visible = false
@@ -366,4 +361,3 @@ shape = SubResource("BoxShape3D_1uddt")
 debug_shape_custom_color = Color(0.0156863, 0.0156863, 0.0156863, 1)
 
 [connection signal="line_update" from="." to="raycasts/torso/debug_velocity" method="_on_player_line_update"]
-[connection signal="timeout" from="timers/get_stats" to="." method="_on_get_stats_timeout"]

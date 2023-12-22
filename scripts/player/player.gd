@@ -87,8 +87,12 @@ func _ready():
 	player_state_manager.init(self)
 	model_component.init()
 	model_anim.root_node = model_component.model_instance.get_path()
+
 	# HUD update timer
-	$timers/get_stats.start()
+	var hud_timer = Timer.new()
+	hud_timer.timeout.connect(self._on_get_stats_timeout)
+	add_child(hud_timer)
+	hud_timer.start(0.1)
 
 
 # This is only used for mouse events.
