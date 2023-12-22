@@ -5,6 +5,9 @@ extends State
 @export var acceleration: float = 3.0
 @export var minimum_velocity: float = 5.0
 
+var pressed_rotate: bool = false
+
+
 func can_enter(_prev_state: String):
 	return player.is_on_floor() and player.input_dir != Vector2.ZERO
 
@@ -24,7 +27,6 @@ func exit(next_state: String) -> void:
 	if next_state == "AirTime":
 		player.model.get_node("AnimationPlayer").play("basic/fall")
 
-var pressed_rotate: bool = false
 func check_input_next_state():
 	super.check_input_next_state()
 	if Input.is_action_just_pressed("rotate") and not pressed_rotate:
@@ -32,11 +34,3 @@ func check_input_next_state():
 		player.smooth_rotate(PI, 15.0)
 	elif not player.is_rotating:
 		pressed_rotate = false
-	#TO UPDATE
-	if Input.is_action_pressed("crouch") and player.is_on_floor():
-		if player.velocity.length() >= minimum_velocity:
-			change_state.emit("Sliding")
-		else:
-			change_state.emit("Crouching")
-	elif Input.is_action_pressed("jump") and player.is_on_floor():
-		change_state.emit("Jumping")
