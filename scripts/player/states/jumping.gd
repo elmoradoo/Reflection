@@ -16,7 +16,7 @@ func can_enter(_prev_state: String):
 	return false
 
 func enter(_prev_state: String) -> void:
-	player.model.get_node("AnimationPlayer").play("basic/jump")
+	player.model_anim.play("basic/jump")
 	if player.animation_player.is_playing():
 		var current_frame = player.animation_player.current_animation_position
 		# increase speed

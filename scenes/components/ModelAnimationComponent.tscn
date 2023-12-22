@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dyaorgs32q3gg"]
+
+[ext_resource type="Script" path="res://scripts/components/ModelAnimationComponent.gd" id="1_pia8u"]
+
+[node name="ModelAnimationComponent" type="Node3D"]
+script = ExtResource("1_pia8u")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

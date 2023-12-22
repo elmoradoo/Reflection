@@ -23,8 +23,8 @@ signal line_update
 @onready var camera: Camera3D = $neck/head/eyes/Camera3D
 
 # Animations
-@onready var model: Node3D = $player_model
 @onready var animation_player: AnimationPlayer = $neck/head/eyes/AnimationPlayer
+@onready var model_anim = $AnimationPlayer
 
 # Collisions
 @onready var collision_shape: CollisionShape3D = $collision_shape
@@ -32,6 +32,7 @@ signal line_update
 # State manager
 @onready var player_state_manager: StateManager = $StateManager
 
+@onready var model_component = $ModelComponent
 
 #Movement
 var input_dir: Vector2 = Vector2.ZERO
@@ -84,7 +85,8 @@ func _ready():
 
 	# Initialize state manager
 	player_state_manager.init(self)
-
+	model_component.init()
+	model_anim.root_node = model_component.model_instance.get_path()
 	# HUD update timer
 	$timers/get_stats.start()
 

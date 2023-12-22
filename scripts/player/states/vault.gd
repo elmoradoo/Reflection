@@ -29,7 +29,7 @@ func enter(_prev_state: String) -> void:
 	vault_time.start()
 	old_vel = player.velocity
 	player.velocity = Vector3.ZERO
-	player.model.get_node("AnimationPlayer").play("basic/vault")
+	player.model_anim.play("basic/vault")
 	
 
 func vault_timer():

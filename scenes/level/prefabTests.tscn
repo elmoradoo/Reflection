@@ -33,16 +33,18 @@ uv1_triplanar = true
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yhuuy"]
 albedo_texture = ExtResource("1_kiwqp")
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cnjhd"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rbvuk"]
+sky_energy_multiplier = 2.24
 
-[sub_resource type="Sky" id="Sky_4fk6s"]
-sky_material = SubResource("ProceduralSkyMaterial_cnjhd")
+[sub_resource type="Sky" id="Sky_icoe8"]
+sky_material = SubResource("ProceduralSkyMaterial_rbvuk")
 
-[sub_resource type="Environment" id="Environment_l5f6l"]
+[sub_resource type="Environment" id="Environment_1ubly"]
 background_mode = 2
-sky = SubResource("Sky_4fk6s")
+sky = SubResource("Sky_icoe8")
+reflected_light_source = 2
 tonemap_mode = 2
-glow_enabled = true
+sdfgi_enabled = true
 
 [node name="Node3D" type="Node3D"]
 
@@ -70,6 +72,12 @@ material_override = SubResource("StandardMaterial3D_wt0nn")
 use_collision = true
 size = Vector3(20, 1, 20)
 
+[node name="Ground21" type="CSGBox3D" parent="."]
+transform = Transform3D(0.344826, 0, 0, 0, 0.400526, 0, 0, 0, 0.197418, 21.1887, 3.51107, -41.6923)
+material_override = SubResource("StandardMaterial3D_wt0nn")
+use_collision = true
+size = Vector3(20, 2.14551, 20)
+
 [node name="Ground7" type="CSGBox3D" parent="."]
 transform = Transform3D(1.14942, 0, 0, 0, 16.6886, 0, 0, 0, 0.65806, 9.27172, -8.46311, -47.0667)
 material_override = SubResource("StandardMaterial3D_wt0nn")
@@ -95,7 +103,7 @@ use_collision = true
 size = Vector3(20, 1, 20)
 
 [node name="Ground19" type="CSGBox3D" parent="."]
-transform = Transform3D(-6.3699e-09, 0, 0.65806, 0, 10.2883, 0, -0.145726, 0, -2.87647e-08, -31.4779, 34.0147, -17.3351)
+transform = Transform3D(-6.3699e-09, 0, 0.65806, 0, 10.2883, 0, -0.145726, 0, -2.87647e-08, -3.75007, 38.9945, 15.8141)
 material_override = SubResource("StandardMaterial3D_wt0nn")
 use_collision = true
 size = Vector3(20, 1, 20)
@@ -196,10 +204,10 @@ transform = Transform3D(-1, -8.36391e-09, -8.70218e-08, 0, 0.995413, -0.095672, 
 [node name="env" type="Node3D" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="env"]
-environment = SubResource("Environment_l5f6l")
+environment = SubResource("Environment_1ubly")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="env"]
-transform = Transform3D(-0.117154, 0.789545, -0.602406, -0.0149913, 0.605108, 0.796002, 0.993001, 0.102286, -0.0590546, -22.8363, 58.8651, -11.1544)
+transform = Transform3D(-0.0806453, 0.995185, 0.0557042, 0.0862908, -0.0487056, 0.995079, 0.993001, 0.0850552, -0.0819474, -21.9078, 85.8567, -11.9012)
 shadow_enabled = true
 
 [node name="buildings" type="Node3D" parent="."]
@@ -253,12 +261,15 @@ transform = Transform3D(1, 0, 0, 0, 1.48879, 0, 0, 0, 1, -2.74242, 15.3733, 25.5
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.5186, -0.8185, -30.5571)
 
 [node name="ventilation" parent="." instance=ExtResource("6_2qcfi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.66786, -4.68485, -29.1857)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.66786, -4.68485, -31.6061)
 
 [node name="building_entry" parent="." instance=ExtResource("7_wyelg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0706, 0, -1.90866)
 
 [node name="building_entry2" parent="." instance=ExtResource("7_wyelg")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 13.8614, 0, -44.9609)
+
+[node name="building_entry5" parent="." instance=ExtResource("7_wyelg")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 13.8614, 0, -44.9609)
 
 [node name="building_entry3" parent="." instance=ExtResource("7_wyelg")]

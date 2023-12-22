@@ -12,7 +12,7 @@ func can_enter(_prev_state: String):
 	return player.is_on_floor() and player.input_dir != Vector2.ZERO
 
 func enter(_prev_state: String) -> void:
-	player.model.get_node("AnimationPlayer").play("basic/run")
+	player.model_anim.play("basic/run")
 
 func move_player():
 	player.stand_up()
@@ -25,12 +25,12 @@ func move_player():
 
 	player.velocity = player.velocity.lerp(target_velocity, acceleration * player.delta)
 	var acceleration_normalized = player.velocity.length() / max_speed
-	player.model.get_node("AnimationPlayer").speed_scale = acceleration_normalized + 0.3
+	player.model_anim.speed_scale = acceleration_normalized + 0.3
 	super.move_player()
 
 func exit(next_state: String) -> void:
 	if next_state == "AirTime":
-		player.model.get_node("AnimationPlayer").play("basic/fall")
+		player.model_anim.play("basic/fall")
 
 func check_input_next_state():
 	super.check_input_next_state()
