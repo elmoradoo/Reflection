@@ -18,6 +18,11 @@ func move_player():
 	player.stand_up()
 	player.head_bob(0.2, 22.0 + acceleration)
 	var target_velocity = (player.transform.basis * Vector3(player.input_dir.x, 0, player.input_dir.y)).normalized() * max_speed
+
+	# Running backwards
+	if player.input_dir.y > 0 or (player.input_dir.x != 0 and player.input_dir.y == 0):
+		target_velocity /= 1.5
+
 	player.velocity = player.velocity.lerp(target_velocity, acceleration * player.delta)
 	var acceleration_normalized = player.velocity.length() / max_speed
 	player.model.get_node("AnimationPlayer").speed_scale = acceleration_normalized + 0.3
