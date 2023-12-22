@@ -40,7 +40,7 @@ func check_input_next_state():
 	if Input.is_action_just_released("crouch"):
 		change_state.emit("AirTime")
 	elif Input.is_action_pressed("jump"):
-		if can_change_to("LedgeClimb"):
-			change_state.emit("LedgeClimb")
+		if can_change_to("Climb"):
+			change_state.emit("Climb")
 		else:
 			change_state.emit("Jumping")

@@ -56,15 +56,13 @@ func enter(_prev_state: String) -> void:
 func exit(_next_state: String) -> void:
 	wallclimb_time.stop()
 	wallclimb_jump_time.stop()
-
 	pressed_rotate = false
-
 	player.velocity = exit_velocity
 	player.is_rotating = false
 
 func update_mouse(event):
-	if player.is_rotating:
-		return
+	if pressed_rotate:
+		super.update_mouse(event)
 	elif event is InputEventMouseMotion:
 		player.head.rotate_x(deg_to_rad(-event.relative.y * player.mouse_sensitivity))
 		player.head.rotation.x = clamp(player.head.rotation.x, deg_to_rad(-89), deg_to_rad(89))
@@ -91,7 +89,7 @@ func check_input_next_state():
 	if Input.is_action_just_pressed("jump") and pressed_rotate:
 		wall_jump()
 
-	if Input.is_action_just_pressed("rotate"):
+	if Input.is_action_just_pressed("rotate") and not pressed_rotate:
 		pressed_rotate = true
 		wallclimb_jump_time.start(rotation_time_limit)
 		player.smooth_rotate(PI)
