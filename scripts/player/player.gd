@@ -36,13 +36,14 @@ signal line_update
 #Movement
 var input_dir: Vector2 = Vector2.ZERO
 var direction: Vector3 = Vector3.ZERO
-var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 const mouse_sensitivity: float = 0.2
 var gravity_enabled: bool = true
-@onready var delta = get_physics_process_delta_time()
-var touched_floor = true
-var target_rotation = Vector3.ZERO
-var is_rotating = false
+@onready var delta: float = get_physics_process_delta_time()
+var touched_floor: bool = true
+var target_rotation: float = 0
+var is_rotating: bool = false
+var rotation_lerp: float = 0
 
 func _enter_tree():
 	if str(name).is_valid_int():
@@ -135,10 +136,11 @@ func reset_head_bob():
 func smooth_rotate(angle: float, lerp_speed: float):
 	if angle != 0:
 		self.target_rotation = self.rotation.y + angle
+		self.rotation_lerp = lerp_speed
 		self.is_rotating = true
 	elif self.is_rotating:
-		if angle_difference(self.target_rotation, self.rotation.y) <= lerp_speed * delta:
+		if abs(angle_difference(self.target_rotation, self.rotation.y)) <= self.rotation_lerp * delta:
 			self.is_rotating = false
 			self.rotation.y = self.target_rotation
 		else:
-			self.rotation.y = lerp_angle(self.rotation.y, self.target_rotation, lerp_speed * delta)
+			self.rotation.y = lerp_angle(self.rotation.y, self.target_rotation, self.rotation_lerp * delta)

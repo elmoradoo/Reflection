@@ -13,7 +13,7 @@ var wall_normal: Vector3 = Vector3.ZERO
 var old_vel: Vector3 = Vector3.ZERO
 var is_jumping: bool = false
 var wallrun_time: Timer
-var wallrun_type: String = "undefined"
+var wallrun_rotation: float = 0
 
 func init(player_obj: Player):
 	super.init(player_obj)
@@ -57,12 +57,12 @@ func rotate_player_outside_wall():
 		# This is the angle between what the player is looking at and the wall
 		var angle = abs(player.transform.basis.z.signed_angle_to(wall_normal, player.transform.basis.x))
 		if player_angle < 0:
-			wallrun_type = "left"
+			wallrun_rotation = PI/2
 			player.animation_player.play("wallrun_left")
 			player.rotate_y(PI/2-angle)
 			player.neck.rotate_y(-(PI/2-angle))
 		else:
-			wallrun_type = "right"
+			wallrun_rotation = -PI/2
 			player.animation_player.play("wallrun_right")
 			player.rotate_y(-(PI/2-angle))
 			player.neck.rotate_y(PI/2-angle)
@@ -98,6 +98,7 @@ func enter(_previous_state: String) -> void:
 
 	#player.velocity.y += 1
 	#player.timers.get_node("wallrun_time").start()
+	wallrun_rotation = 0
 	wallrun_time.start()
 	if player.touched_floor:
 		is_jumping = false
@@ -121,7 +122,6 @@ func exit(next_state: String) -> void:
 	wallrun_time.stop()
 	wall_normal = Vector3.ZERO
 	player.velocity.y = 0.0
-	wallrun_type = "undefined"
 
 func move_player():
 	player.velocity.y += base_y_speed * wallrun_time.time_left
@@ -133,10 +133,6 @@ func check_input_next_state():
 	super.check_input_next_state()
 	if Input.is_action_just_pressed("rotate") and not pressed_rotate:
 		pressed_rotate = true
-		if wallrun_type == "left":
-			player.smooth_rotate(PI / 2, 1.0)
-		else:
-			player.smooth_rotate(-PI / 2, 1.0)
-			
+		player.smooth_rotate(wallrun_rotation, 10)
 	elif not player.is_rotating:
 		pressed_rotate = false
