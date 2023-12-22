@@ -24,8 +24,15 @@ func exit(next_state: String) -> void:
 	if next_state == "AirTime":
 		player.model.get_node("AnimationPlayer").play("basic/fall")
 
+var pressed_rotate: bool = false
 func check_input_next_state():
 	super.check_input_next_state()
+	if Input.is_action_just_pressed("rotate") and not pressed_rotate:
+		pressed_rotate = true
+		player.smooth_rotate(PI, 15.0)
+	elif not player.is_rotating:
+		pressed_rotate = false
+	#TO UPDATE
 	if Input.is_action_pressed("crouch") and player.is_on_floor():
 		if player.velocity.length() >= minimum_velocity:
 			change_state.emit("Sliding")

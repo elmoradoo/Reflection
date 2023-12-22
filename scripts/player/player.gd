@@ -132,11 +132,13 @@ func reset_head_bob():
 	eyes.position.x = lerp(eyes.position.x, 0.0, delta * head_bobbing_lerp)
 
 
-func smooth_rotate(angle: float):
+func smooth_rotate(angle: float, lerp_speed: float):
 	if angle != 0:
 		self.target_rotation = self.rotation.y + angle
 		self.is_rotating = true
 	elif self.is_rotating:
-		if angle_difference(self.target_rotation, self.rotation.y) <= 15.0 * delta:
+		if angle_difference(self.target_rotation, self.rotation.y) <= lerp_speed * delta:
 			self.is_rotating = false
-		self.rotation.y = lerp_angle(self.rotation.y, self.target_rotation, 15.0 * delta)
+			self.rotation.y = self.target_rotation
+		else:
+			self.rotation.y = lerp_angle(self.rotation.y, self.target_rotation, lerp_speed * delta)

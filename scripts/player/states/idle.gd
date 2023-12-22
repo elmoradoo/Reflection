@@ -45,3 +45,13 @@ func move_player():
 	player.velocity.x = move_toward(player.velocity.x, 0, idle_lerp_speed)
 	player.velocity.z = move_toward(player.velocity.z, 0, idle_lerp_speed)
 	super.move_player()
+
+var pressed_rotate: bool = false
+
+func check_input_next_state():
+	super.check_input_next_state()
+	if Input.is_action_just_pressed("rotate") and not pressed_rotate:
+		pressed_rotate = true
+		player.smooth_rotate(PI, 15.0)
+	elif not player.is_rotating:
+		pressed_rotate = false

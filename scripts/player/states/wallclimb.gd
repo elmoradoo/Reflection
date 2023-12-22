@@ -88,11 +88,10 @@ func check_input_next_state():
 	super.check_input_next_state()
 	if Input.is_action_just_pressed("jump") and pressed_rotate:
 		wall_jump()
-
 	if Input.is_action_just_pressed("rotate") and not pressed_rotate:
 		pressed_rotate = true
 		wallclimb_jump_time.start(rotation_time_limit)
-		player.smooth_rotate(PI)
+		player.smooth_rotate(PI, 15.0)
 
 func check_physics_next_state():
 	super.check_physics_next_state()
