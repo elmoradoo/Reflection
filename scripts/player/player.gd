@@ -113,7 +113,8 @@ func _ready():
 	# Initialize state manager
 	player_state_manager.init(self)
 	model_component.init()
-	model_anim.root_node = model_component.model_instance.get_path()
+	print(model_component.get_child(0))
+	model_anim.root_node = model_component.get_child(0).get_path()
 
 	# HUD update timer
 	var hud_timer = Timer.new()

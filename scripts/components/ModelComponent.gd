@@ -6,11 +6,10 @@ var model_instance = null
 
 func init():
 	print(loaded_model)
-	if loaded_model == null:
-		model_instance = default_model.instantiate()
-	else:
+	if loaded_model != null:
 		model_instance = loaded_model.instantiate()
-	add_child(model_instance)
+		remove_child($defaulty)
+		add_child(model_instance)
 
 func switch_model():
 	pass

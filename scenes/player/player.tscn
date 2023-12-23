@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://ba1e2q3t5cyfk"]
+[gd_scene load_steps=31 format=3 uid="uid://ba1e2q3t5cyfk"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_nfg6f"]
 [ext_resource type="Script" path="res://scripts/player/player_state_manager.gd" id="2_d3hr8"]
@@ -17,8 +17,7 @@
 [ext_resource type="Script" path="res://scripts/player/states/vault.gd" id="14_lceho"]
 [ext_resource type="Script" path="res://scripts/player/states/wallclimb.gd" id="15_adxn5"]
 [ext_resource type="Script" path="res://scripts/player/states/wallrun.gd" id="16_lg3wk"]
-[ext_resource type="PackedScene" uid="uid://clkrqpuff3lpq" path="res://assets/player/default/defaulty.tscn" id="17_gtqka"]
-[ext_resource type="Script" path="res://scripts/components/ModelComponent.gd" id="19_fqmfe"]
+[ext_resource type="PackedScene" uid="uid://daynbbvgk2qj6" path="res://scenes/components/ModelComponent.tscn" id="16_qj1ii"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_c8erx"]
 properties/0/path = NodePath(".:position")
@@ -263,10 +262,7 @@ script = ExtResource("16_lg3wk")
 next_states_input = [NodePath("../Jumping")]
 next_states_physics = [NodePath("../Sprinting"), NodePath("../Idle"), NodePath("../AirTime")]
 
-[node name="ModelComponent" type="Node3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-script = ExtResource("19_fqmfe")
-loaded_model = ExtResource("17_gtqka")
+[node name="ModelComponent" parent="." instance=ExtResource("16_qj1ii")]
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_c8erx")
@@ -332,7 +328,7 @@ current = true
 near = 0.08
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="neck/head/eyes"]
-root_node = NodePath("../../../..")
+root_node = NodePath("")
 libraries = {
 "": SubResource("AnimationLibrary_y1atu")
 }
@@ -343,7 +339,7 @@ visible = false
 mesh = SubResource("CapsuleMesh_wqrwg")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-root_node = NodePath("../ModelComponent")
+root_node = NodePath("")
 libraries = {
 "basic": ExtResource("7_sqnnv")
 }
