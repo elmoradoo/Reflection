@@ -82,7 +82,7 @@ func init_raycasts(num_raycasts):
 
 func get_ledge_height(i: int = 0):
 	var raycast_max: int = len(raycasts_left)
-	while i < raycast_max and raycasts_left[i].is_colliding() and raycasts_right[i].is_colliding():
+	while i < raycast_max and (raycasts_left[i].is_colliding() or raycasts_right[i].is_colliding()):
 		i += 1
 	if i == raycast_max:
 		return 10000
@@ -91,7 +91,7 @@ func get_ledge_height(i: int = 0):
 func get_roof_height():
 	var i: int = get_ledge_height() * 10
 	var raycast_max: int = len(raycasts_left)
-	while i < raycast_max and not raycasts_left[i].is_colliding() and not raycasts_right[i].is_colliding():
+	while i < raycast_max and not (raycasts_left[i].is_colliding() or not raycasts_right[i].is_colliding()):
 		i += 1
 	if i == raycast_max:
 		return 10000

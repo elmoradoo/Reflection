@@ -53,6 +53,11 @@ func enter(_prev_state: String) -> void:
 	player.velocity.x = 0
 	player.velocity.z = 0
 
+func can_exit(next_state: String) -> bool:
+	if next_state == "AirTime":
+		return pressed_rotate and wallclimb_jump_time.is_stopped() or wallclimb_time.is_stopped()
+	return true
+
 func exit(_next_state: String) -> void:
 	wallclimb_time.stop()
 	wallclimb_jump_time.stop()
@@ -92,11 +97,3 @@ func check_input_next_state():
 		pressed_rotate = true
 		wallclimb_jump_time.start(rotation_time_limit)
 		player.smooth_rotate(PI, 15.0)
-
-func check_physics_next_state():
-	super.check_physics_next_state()
-	if pressed_rotate:
-		if wallclimb_jump_time.is_stopped():
-			change_state.emit("AirTime")
-	elif wallclimb_time.is_stopped():
-		change_state.emit("AirTime")

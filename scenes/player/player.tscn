@@ -208,7 +208,7 @@ initial_state = NodePath("Idle")
 [node name="AirTime" type="Node" parent="StateManager" node_paths=PackedStringArray("next_states_input", "next_states_physics")]
 script = ExtResource("3_r7v1a")
 next_states_input = [NodePath("../Landing"), NodePath("../Coiling"), NodePath("../Sprinting")]
-next_states_physics = [NodePath("../Landing"), NodePath("../LedgeGrab"), NodePath("../Climb"), NodePath("../Vault"), NodePath("../WallClimb"), NodePath("../WallRun")]
+next_states_physics = [NodePath("../Landing"), NodePath("../LedgeGrab"), NodePath("../Vault"), NodePath("../WallRun"), NodePath("../Climb"), NodePath("../WallClimb")]
 
 [node name="Climb" type="Node" parent="StateManager" node_paths=PackedStringArray("next_states_physics")]
 script = ExtResource("4_1tp42")
@@ -254,7 +254,7 @@ next_states_physics = [NodePath("../Sprinting"), NodePath("../Idle"), NodePath("
 
 [node name="WallClimb" type="Node" parent="StateManager" node_paths=PackedStringArray("next_states_physics")]
 script = ExtResource("15_adxn5")
-next_states_physics = [NodePath("../Sprinting"), NodePath("../Idle"), NodePath("../LedgeGrab"), NodePath("../Climb")]
+next_states_physics = [NodePath("../Sprinting"), NodePath("../Idle"), NodePath("../LedgeGrab"), NodePath("../Climb"), NodePath("../AirTime")]
 
 [node name="WallRun" type="Node" parent="StateManager" node_paths=PackedStringArray("next_states_input", "next_states_physics")]
 script = ExtResource("16_lg3wk")
@@ -274,7 +274,7 @@ shape = SubResource("CapsuleShape3D_6pobs")
 [node name="raycasts" type="Node3D" parent="."]
 
 [node name="top_of_head" type="RayCast3D" parent="raycasts"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.88506, 0)
 exclude_parent = false
 target_position = Vector3(0, 2, 0)
 
@@ -327,7 +327,7 @@ current = true
 near = 0.198
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="neck/head/eyes"]
-root_node = NodePath("")
+root_node = NodePath("../../../..")
 libraries = {
 "": SubResource("AnimationLibrary_y1atu")
 }

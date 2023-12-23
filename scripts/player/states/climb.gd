@@ -32,7 +32,8 @@ func climb_above_knees():
 	print("Knees")
 
 func can_climb_above_feet() -> bool:
-	return player.get_ledge_height() < player.feet_height * player.standing_height
+	var ledge_height = player.get_ledge_height()
+	return ledge_height > 0 and ledge_height < player.feet_height * player.standing_height
 
 func climb_above_feet():
 	print("Feet")
@@ -55,13 +56,6 @@ func can_enter(_prev_state: String) -> bool:
 	elif can_climb_above_shoulder():
 		climb_above_shoulder()
 		return true
-
-	#OLD method
-	if player.vault_shapecasts.get_node("first").is_colliding() and player.vault_shapecasts.get_node("second").is_colliding():
-		var normal = player.vault_shapecasts.get_node("first").get_collision_normal(0)
-		var collision_second = player.vault_shapecasts.get_node("second").get_collision_normal(0)
-		if normal.y == 1 and collision_second.y == 1:
-			return true
 	return false
 
 func enter(_prev_state: String) -> void:
