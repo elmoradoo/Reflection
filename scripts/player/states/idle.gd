@@ -5,7 +5,6 @@ extends State
 func init(player_obj: Player):
 	super.init(player_obj)
 
-
 func can_enter(_prev_state: String):
 	return player.is_on_floor() and player.input_dir == Vector2.ZERO
 

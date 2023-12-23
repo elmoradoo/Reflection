@@ -13,9 +13,6 @@ signal line_update
 @onready var rc_head: Node3D = $raycasts/head
 @onready var rc_torso: Node3D = $raycasts/torso
 
-# Timers
-@onready var timers: Node3D = $timers
-
 # Body
 @onready var neck: Node3D = $neck
 @onready var head: Node3D = $neck/head
@@ -49,6 +46,17 @@ var rotation_lerp: float = 0
 var raycasts_left: Array[RayCast3D] = []
 var raycasts_right: Array[RayCast3D] = []
 
+@onready var standing_height: float = $collision_shape.shape.height
+
+# Raycasts
+# These height variables should always be between 0 and 1
+@export_group("Height")
+@export var feet_height: float = 0.1
+@export var knees_height: float = 0.3
+@export var waist_height: float = 0.5
+@export var torso_height: float = 0.7
+@export var shoulder_height: float = 0.8
+
 func init_raycasts(num_raycasts):
 	for i in range(num_raycasts):
 		var raycast_left: RayCast3D = RayCast3D.new()
@@ -71,6 +79,23 @@ func init_raycasts(num_raycasts):
 
 		self.add_child(raycast_left)
 		self.add_child(raycast_right)
+
+func get_ledge_height(i: int = 0):
+	var raycast_max: int = len(raycasts_left)
+	while i < raycast_max and raycasts_left[i].is_colliding() and raycasts_right[i].is_colliding():
+		i += 1
+	if i == raycast_max:
+		return 10000
+	return i * 0.1
+
+func get_roof_height():
+	var i: int = get_ledge_height() * 10
+	var raycast_max: int = len(raycasts_left)
+	while i < raycast_max and not raycasts_left[i].is_colliding() and not raycasts_right[i].is_colliding():
+		i += 1
+	if i == raycast_max:
+		return 10000
+	return i * 0.1
 
 
 func _enter_tree():

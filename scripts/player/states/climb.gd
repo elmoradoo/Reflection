@@ -6,48 +6,54 @@ extends State
 var collided: bool = false
 var old_vel: Vector3
 
+
 func can_climb_above_shoulder() -> bool:
-	return false
+	return player.get_ledge_height() < player.shoulder_height * player.standing_height
 
 func climb_above_shoulder():
-	pass
+	print("Shoulder")
 
 func can_climb_above_torso() -> bool:
-	return false
+	return player.get_ledge_height() < player.torso_height * player.standing_height
 	
 func climb_above_torso():
-	pass
+	print("Torso")
 
 func can_climb_above_waist() -> bool:
-	return false
+	return player.get_ledge_height() < player.waist_height * player.standing_height
 
 func climb_above_waist():
-	pass
+	print("Waist")
 
 func can_climb_above_knees() -> bool: 
-	return false
+	return player.get_ledge_height() < player.knees_height * player.standing_height
 
 func climb_above_knees():
-	pass
+	print("Knees")
 
-func can_climb_above_feets() -> bool:
-	return false
+func can_climb_above_feet() -> bool:
+	return player.get_ledge_height() < player.feet_height * player.standing_height
 
-func climb_above_feets():
-	pass
+func climb_above_feet():
+	print("Feet")
 
 func can_enter(_prev_state: String) -> bool:
 	if not player.get_last_slide_collision():
 		return false
-	if can_climb_above_feets():
+	if can_climb_above_feet():
+		climb_above_feet()
 		return true
 	elif can_climb_above_knees():
+		climb_above_knees()
 		return true
 	elif can_climb_above_waist():
+		climb_above_waist()
 		return true
 	elif can_climb_above_torso():
+		climb_above_torso()
 		return true
 	elif can_climb_above_shoulder():
+		climb_above_shoulder()
 		return true
 
 	#OLD method

@@ -195,6 +195,10 @@ size = Vector3(1.5, 1, 0.5)
 [node name="player" type="CharacterBody3D"]
 collision_layer = 2
 script = ExtResource("1_nfg6f")
+feet_height = 0.3
+knees_height = 0.5
+waist_height = 0.6
+shoulder_height = 1.1
 
 [node name="StateManager" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_d3hr8")
@@ -219,7 +223,6 @@ script = ExtResource("6_3cv17")
 
 [node name="Idle" type="Node" parent="StateManager" node_paths=PackedStringArray("next_states_input", "next_states_physics")]
 script = ExtResource("7_nce4d")
-idle_lerp_speed = null
 next_states_input = [NodePath("../Crouching"), NodePath("../Jumping")]
 next_states_physics = [NodePath("../Sprinting")]
 
@@ -250,11 +253,6 @@ next_states_physics = [NodePath("../Sprinting"), NodePath("../Idle"), NodePath("
 
 [node name="WallClimb" type="Node" parent="StateManager" node_paths=PackedStringArray("next_states_physics")]
 script = ExtResource("15_adxn5")
-climbing_speed = null
-climbable_min_velocity = null
-climb_time_limit = null
-forward_velocity = null
-rotation_time_limit = null
 next_states_physics = [NodePath("../Sprinting"), NodePath("../Idle"), NodePath("../LedgeGrab"), NodePath("../Climb")]
 
 [node name="WallRun" type="Node" parent="StateManager" node_paths=PackedStringArray("next_states_input", "next_states_physics")]
