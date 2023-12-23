@@ -162,7 +162,7 @@ func _physics_process(physics_delta):
 
 func stand_up(lerp_speed=10.0):
 	neck.rotation.y = lerp(neck.rotation.y, 0.0, delta * lerp_speed)
-	collision_shape.shape.height = lerp(collision_shape.shape.height, 2.0, lerp_speed * delta)
+	collision_shape.shape.height = lerp(collision_shape.shape.height, standing_height, lerp_speed * delta)
 	#head.position.y = lerp(head.position.y, 0.0, lerp_speed * delta)
 
 func stand_down(crouching_depth=-0.7, lerp_speed=10.0):

@@ -31,6 +31,7 @@ properties/2/spawn = true
 properties/2/replication_mode = 1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6pobs"]
+height = 1.8
 
 [sub_resource type="Animation" id="Animation_rcd5g"]
 length = 0.001
@@ -261,6 +262,7 @@ next_states_input = [NodePath("../Jumping")]
 next_states_physics = [NodePath("../Sprinting"), NodePath("../Idle"), NodePath("../AirTime")]
 
 [node name="ModelComponent" parent="." instance=ExtResource("16_qj1ii")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0872425, 0.207731)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_c8erx")
@@ -314,8 +316,7 @@ debug_shape_custom_color = Color(0.756863, 0.564706, 0, 1)
 script = ExtResource("2_en4pu")
 
 [node name="neck" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 
 [node name="head" type="Node3D" parent="neck"]
 
@@ -323,7 +324,7 @@ visible = false
 
 [node name="Camera3D" type="Camera3D" parent="neck/head/eyes"]
 current = true
-near = 0.08
+near = 0.198
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="neck/head/eyes"]
 root_node = NodePath("")
@@ -343,6 +344,7 @@ libraries = {
 }
 
 [node name="vault_shapecasts" type="Node3D" parent="."]
+visible = false
 
 [node name="first" type="ShapeCast3D" parent="vault_shapecasts"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -1)
