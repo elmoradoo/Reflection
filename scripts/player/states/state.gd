@@ -33,7 +33,7 @@ func _on_collision(_old_vel: Vector3, _collision: KinematicCollision3D):
 
 func move_player():
 	var oldvel = player.velocity
-	player.camera.fov = lerp(player.camera.fov, 75 + player.velocity.length(), 0.1)
+	#player.camera.fov = lerp(player.camera.fov, 75 + player.velocity.length(), 0.1)
 	player.smooth_rotate(0, 0)
 	player.move_and_slide()
 	if abs(oldvel.length() - player.velocity.length()) > 0:

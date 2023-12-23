@@ -4,8 +4,10 @@ extends State
 @export var forward_speed = 4.0
 
 var collided: bool = false
-var old_vel: Vector3
-
+var old_velocity: Vector3
+var old_position: Vector3
+var target_position: Vector3
+var climbing_type: String = "undefined"
 
 func can_climb_above_shoulder() -> bool:
 	return player.get_ledge_height() < player.shoulder_height * player.standing_height
@@ -32,50 +34,57 @@ func climb_above_knees():
 	print("Knees")
 
 func can_climb_above_feet() -> bool:
-	var ledge_height = player.get_ledge_height()
-	return ledge_height > 0 and ledge_height < player.feet_height * player.standing_height
+	return player.get_ledge_height() < player.feet_height * player.standing_height
 
+var tmp = false
 func climb_above_feet():
-	print("Feet")
+	if true:
+		player.gravity_enabled = false
+		player.position = lerp(player.position, target_position, 5.0 * player.delta)
+		if player.position.distance_squared_to(target_position) < 0.01:
+			done = true
+		tmp = true
 
 func can_enter(_prev_state: String) -> bool:
 	if not player.get_last_slide_collision():
 		return false
 	if can_climb_above_feet():
-		climb_above_feet()
+		climbing_type = "can_climb_above_feet"
 		return true
 	elif can_climb_above_knees():
-		climb_above_knees()
+		climbing_type = "can_climb_above_knees"
 		return true
 	elif can_climb_above_waist():
-		climb_above_waist()
+		climbing_type = "can_climb_above_waist"
 		return true
 	elif can_climb_above_torso():
-		climb_above_torso()
+		climbing_type = "can_climb_above_torso"
 		return true
 	elif can_climb_above_shoulder():
-		climb_above_shoulder()
+		climbing_type = "can_climb_above_shoulder"
 		return true
 	return false
 
+
 func enter(_prev_state: String) -> void:
-	old_vel = player.velocity
-	if player.get_last_slide_collision():
-		collided = true
+	old_velocity = player.velocity
+	player.velocity = Vector3.ZERO
+	old_position = player.position
+	var forward = player.transform.basis.z.normalized()
+	player.position.x += -forward.x * 1.0
+	player.position.z += -forward.z * 1.0
+	target_position = Vector3\
+	(player.position.x + -forward.x * 1.0,\
+	player.position.y + player.get_ledge_height(),\
+	player.position.z + -forward.z * 1.0)
+	player.collision_shape.disabled = true
 
 func exit(_next_state: String) -> void:
 	player.gravity_enabled = true
-	collided = false
-	player.velocity = old_vel
+	player.velocity = old_velocity
 	player.velocity.y = 0
-
-func _on_collision(previous_vel: Vector3, new_collision: KinematicCollision3D):
-	super._on_collision(previous_vel, new_collision)
-	player.gravity_enabled = false
-	if not collided:
-		player.velocity = Vector3.ZERO
-	collided = true
-
+	tmp = false
+	player.collision_shape.disabled = false	
 func update_mouse(event):
 	if event is InputEventMouseMotion:
 		player.head.rotate_x(deg_to_rad(-event.relative.y * player.mouse_sensitivity))
@@ -83,16 +92,11 @@ func update_mouse(event):
 		player.neck.rotate_y(deg_to_rad(-event.relative.x * player.mouse_sensitivity))
 		player.neck.rotation.y = clamp(player.neck.rotation.y, deg_to_rad(-44.5), deg_to_rad(44.5))
 
+var done = false
 func move_player():
-	if not collided:
-		super.move_player()
-		return
-	if player.rc_feets.get_node("front").is_colliding():# or player.rc_feets.get_node("downfront").is_colliding():
-		player.position.y += 7.0 * player.delta
-	else:
-		var forward_direction = player.global_transform.basis.z
-		player.position.x = lerp(player.position.x, player.position.x + forward_goal , -forward_direction.x * forward_speed * player.delta)
-		player.position.z = lerp(player.position.z, player.position.z + forward_goal, -forward_direction.z * forward_speed * player.delta)
-		if player.rc_feets.get_node("down").is_colliding():
-			player.gravity_enabled = true
+	#if climbing_type == "can_climb_above_feet":
+	climb_above_feet()
+	if done:
+		done = false
+		change_state.emit("Idle")
 	super.move_player()
