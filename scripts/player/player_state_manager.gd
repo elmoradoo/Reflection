@@ -28,6 +28,7 @@ func init(player_obj):
 
 func _on_change_state(next_state):
 	if next_state and next_state != current_state.name:
+		player.model_component.current_state = next_state
 		current_state.exit(next_state)
 		current_state.disconnect("collision", current_state._on_collision)
 		var prev_state_name = current_state.name

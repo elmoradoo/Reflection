@@ -134,12 +134,11 @@ func _ready():
 
 	# Activate camera
 	$neck/head/eyes/Camera3D.current = true
-
+	#$Camera3D.current = true
 	# Initialize state manager
 	player_state_manager.init(self)
 	model_component.init()
-	print(model_component.get_child(0))
-	model_anim.root_node = model_component.get_child(0).get_path()
+	#model_anim.root_node = model_component.get_child(0).get_path()
 
 	# HUD update timer
 	var hud_timer = Timer.new()

@@ -40,12 +40,20 @@ var tmp = false
 func climb_above_feet():
 	if true:
 		player.gravity_enabled = false
-		player.position = lerp(player.position, target_position, 5.0 * player.delta)
-		if player.position.distance_squared_to(target_position) < 0.01:
+		if player.position.y != target_position.y:
+			player.position.y = move_toward(player.position.y, target_position.y, 5.0 * player.delta)
+			#player.position.x = move_toward(player.position.x, -target_position.x, 1.0 * player.delta)
+			#player.position.z = move_toward(player.position.z, -target_position.z, 1.0 * player.delta)
+		else:
+			player.position = player.position.move_toward(target_position, 5.0 * player.delta)
+
+		if player.position == target_position:
 			done = true
 		tmp = true
 
 func can_enter(_prev_state: String) -> bool:
+	if player.get_ledge_height() == 0:
+		return false
 	if not player.get_last_slide_collision():
 		return false
 	if can_climb_above_feet():

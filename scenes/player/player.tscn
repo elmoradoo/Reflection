@@ -262,7 +262,7 @@ next_states_input = [NodePath("../Jumping")]
 next_states_physics = [NodePath("../Sprinting"), NodePath("../Idle"), NodePath("../AirTime")]
 
 [node name="ModelComponent" parent="." instance=ExtResource("16_qj1ii")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0872425, 0.207731)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.296973)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_c8erx")
@@ -324,7 +324,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 
 [node name="Camera3D" type="Camera3D" parent="neck/head/eyes"]
 current = true
-near = 0.198
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="neck/head/eyes"]
 root_node = NodePath("../../../..")
@@ -338,13 +337,11 @@ visible = false
 mesh = SubResource("CapsuleMesh_wqrwg")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-root_node = NodePath("")
 libraries = {
 "basic": ExtResource("7_sqnnv")
 }
 
 [node name="vault_shapecasts" type="Node3D" parent="."]
-visible = false
 
 [node name="first" type="ShapeCast3D" parent="vault_shapecasts"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -1)
@@ -355,5 +352,8 @@ debug_shape_custom_color = Color(0.00392157, 0.00392157, 0.00392157, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -2)
 shape = SubResource("BoxShape3D_1uddt")
 debug_shape_custom_color = Color(0.0156863, 0.0156863, 0.0156863, 1)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3, 1.35896, 0)
 
 [connection signal="line_update" from="." to="raycasts/torso/debug_velocity" method="_on_player_line_update"]
