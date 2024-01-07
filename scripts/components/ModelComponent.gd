@@ -11,6 +11,8 @@ var current_state = null : set = _set_state
 #TMP
 const SprintingScript = preload("res://scripts/player/animations/sprinting_anim.gd")
 var sprintingAnim = SprintingScript.new()
+const CoilScript = preload("res://scripts/player/animations/coil_anim.gd")
+var coilAnim = CoilScript.new()
 
 func init():
 	var num_children = get_child_count()
@@ -19,15 +21,16 @@ func init():
 		remove_child($defaulty)
 		add_child(model_instance)
 	sprintingAnim.init(animation_tree)
-
+	coilAnim.init(animation_tree)
 
 func switch_model():
 	pass
 	
 func _physics_process(delta):
-	if current_state != "Sprinting":
-		return
-	sprintingAnim.run_animation(delta)
+	if current_state == "Sprinting":
+		sprintingAnim.run_animation(delta)
+	elif current_state == "Coiling":
+		coilAnim.run_animation(delta)
 
 func _set_state(new_state):
 	current_state = new_state

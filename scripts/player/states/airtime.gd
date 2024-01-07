@@ -15,7 +15,6 @@ func can_enter(prev_state: String) -> bool:
 
 func enter(_prev_state: String) -> void:
 	velocity_before_landing = player.velocity
-	player.model_anim.queue("basic/fall")
 
 func exit(_next_state: String) -> void:
 	player.animation_player.play("land")

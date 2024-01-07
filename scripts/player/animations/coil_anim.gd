@@ -70,7 +70,7 @@ func update_blending_direction() -> void:
 		blending = 1.0
 
 func run_animation(delta):
-	state_machine.travel("BlendTree")
+	state_machine.travel("BlendTreet")
 	return
 	var current_letter: String = animation_sequence[sequence_index]
 	var current_path: String = get_path_from_letter(current_letter)
